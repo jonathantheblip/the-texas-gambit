@@ -1,0 +1,38 @@
+{
+  "name": "Hill Country Estate — Helen",
+  "short_name": "HCE · Helen",
+  "id": "/the-texas-gambit/helen",
+  "start_url": "./helen.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#FAF5E8",
+  "background_color": "#FAF5E8",
+  "description": "A living lookbook for the Hill Country Compound — Helen's view.",
+  "icons": [
+    {
+      "src": "favicon-helen.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-helen-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-helen-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-helen-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

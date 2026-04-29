@@ -1,0 +1,38 @@
+{
+  "name": "Hill Country Estate — Jon",
+  "short_name": "HCE · Jon",
+  "id": "/the-texas-gambit/jon",
+  "start_url": "./jon.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1E3A8A",
+  "background_color": "#1E3A8A",
+  "description": "A living lookbook for the Hill Country Compound — Jon's view.",
+  "icons": [
+    {
+      "src": "favicon-jon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-jon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-jon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-jon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

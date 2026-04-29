@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Hill Country Estate · Companion</title>
-<meta name="description" content="A living lookbook for the Hill Country Compound — DiBello, Imber, Sundt · 2026 → 2038" />
-<meta name="theme-color" content="#1E3A8A" />
+<title>Helen · Hill Country Estate</title>
+<meta name="description" content="A living lookbook for the Hill Country Compound — Helen's view" />
+<meta name="theme-color" content="#FAF5E8" />
 
-<link rel="icon" id="favicon" href="favicon-helen.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-helen.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-helen-180.png" />
 <link rel="manifest" href="manifest-helen.webmanifest" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-title" content="HCE" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="HCE · Helen" />
 
 <!-- Type stack: Playfair Display (display serif) · Source Serif 4 (text serif) · Inter (sans) · JetBrains Mono -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,6 +21,11 @@
 
 <link rel="stylesheet" href="styles.css?v=p4lens-fix" />
 <link rel="stylesheet" href="styles-floorplan.css" />
+
+<script>
+  // PWA entry: lock this install to Helen's view.
+  try { localStorage.setItem('hce.mode', 'helen'); } catch (e) {}
+</script>
 </head>
 <body data-mode="helen">
 <div id="app"></div>

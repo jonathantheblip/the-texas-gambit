@@ -75,6 +75,9 @@
       if (mode === 'jon') {
         document.body.setAttribute('data-tone', 'day');
       }
+      // Swap the browser-tab favicon to match the current mode
+      const fav = document.getElementById('favicon');
+      if (fav) fav.setAttribute('href', mode === 'jon' ? 'favicon-jon.svg' : 'favicon-helen.svg');
     }, [mode]);
 
     // ── Hash routing
