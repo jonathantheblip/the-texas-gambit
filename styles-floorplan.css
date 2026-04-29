@@ -1,0 +1,66 @@
+/* Floor-plan SVG defaults — these styles are referenced by class names inside the SVGs */
+.fp-svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--parchment-0);
+}
+.fp-svg .wall-exterior { fill: none; stroke: #2a241b; stroke-width: 12; stroke-linejoin: miter; }
+.fp-svg .wall-interior { fill: none; stroke: #2a241b; stroke-width: 5; }
+.fp-svg .door-arc { fill: none; stroke: #87795f; stroke-width: 1.4; stroke-dasharray: 3 3; }
+.fp-svg .door-panel { stroke: #87795f; stroke-width: 2.4; }
+.fp-svg .window { stroke: #345980; stroke-width: 5; }
+.fp-svg .room-title { font-family: 'Sorts Mill Goudy', 'EB Garamond', serif; font-size: 17px; font-weight: 600; fill: #2a241b; letter-spacing: .04em; }
+.fp-svg .room-desc { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; fill: #5a4f3e; }
+.fp-svg .annotation { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; fill: #87795f; letter-spacing: .04em; }
+.fp-svg .radiant-text { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: #b87a30; letter-spacing: .12em; }
+.fp-svg .plumbing { fill: rgba(52,89,128,.08); stroke: #345980; stroke-width: 1.4; stroke-dasharray: 4 3; }
+.fp-svg .storage { stroke: #b03c2c; stroke-width: 1; }
+
+/* Jon mode: invert the floor-plan tonality to dark */
+body[data-mode="jon"] .fp-svg svg { background: var(--tech-bg-1); }
+body[data-mode="jon"] .fp-svg .wall-exterior { stroke: #d6dde6; }
+body[data-mode="jon"] .fp-svg .wall-interior { stroke: #8d97a6; }
+body[data-mode="jon"] .fp-svg .door-arc { stroke: #6ea2c8; }
+body[data-mode="jon"] .fp-svg .door-panel { stroke: #6ea2c8; }
+body[data-mode="jon"] .fp-svg .window { stroke: #d5a056; }
+body[data-mode="jon"] .fp-svg .room-title { fill: #d6dde6; font-family: 'IBM Plex Sans'; font-weight: 500; }
+body[data-mode="jon"] .fp-svg .room-desc { fill: #8d97a6; }
+body[data-mode="jon"] .fp-svg .annotation { fill: #8d97a6; }
+.fp-svg svg rect[fill="#fdfaf0"], .fp-svg svg rect[fill="#fffaf0"] { /* SVG paper bg — let CSS bg show through */ }
+body[data-mode="jon"] .fp-svg svg rect[fill="#fdfaf0"]:first-of-type,
+body[data-mode="jon"] .fp-svg svg rect[fill="#fffaf0"]:first-of-type { fill: #1c2128; }
+.fp-svg svg rect[fill="#fdfaf0"]:first-of-type { fill: var(--parchment-0); }
+
+/* Floor plan stage */
+.fp-stage {
+  background: var(--parchment-0);
+  border: 1px solid var(--rule);
+  position: relative;
+  margin: 18px 8px 24px;
+  overflow: hidden;
+}
+body[data-mode="jon"] .fp-stage { background: var(--tech-bg-1); border-color: var(--tech-line); }
+.fp-stage .fp-svg { padding: 14px; aspect-ratio: 3/2; }
+.fp-stage .fp-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 16px; border-bottom: 1px solid var(--rule-soft);
+  font-family: 'IBM Plex Sans'; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+body[data-mode="jon"] .fp-stage .fp-toolbar { border-bottom-color: var(--tech-line); color: var(--tech-text-soft); }
+
+/* View toggle */
+.view-toggle {
+  display: inline-flex; background: rgba(42,36,27,.06); border: 1px solid var(--rule); border-radius: 999px; padding: 3px; gap: 2px;
+}
+body[data-mode="jon"] .view-toggle { background: rgba(255,255,255,.04); border-color: var(--tech-line); }
+.view-toggle button {
+  border: 0; background: transparent; padding: 5px 12px; border-radius: 999px; cursor: pointer;
+  font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit;
+}
+.view-toggle button.active { background: var(--ink); color: var(--parchment-0); }
+body[data-mode="jon"] .view-toggle button.active { background: var(--tech-amber); color: var(--tech-bg-0); }
+
+/* Real images don't need vignetting */
+.real-img { display: block; width: 100%; height: 100%; object-fit: cover; }

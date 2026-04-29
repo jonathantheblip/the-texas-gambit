@@ -1,0 +1,134 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        
+        <pattern id="storage-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#e6b0aa" stroke-width="2"></line>
+        </pattern>
+        <pattern id="concrete-slab" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect width="40" height="40" fill="#f8f9f9"></rect>
+            <circle cx="10" cy="10" r="1" fill="#e5e8e8"></circle>
+            <circle cx="30" cy="25" r="1.5" fill="#e5e8e8"></circle>
+            <circle cx="20" cy="35" r="1" fill="#eaeded"></circle>
+        </pattern>
+        <pattern id="botanical" width="15" height="15" patternUnits="userSpaceOnUse">
+            <rect width="15" height="15" fill="#e8f8f5"></rect>
+            <circle cx="7.5" cy="7.5" r="2" fill="#1abc9c" opacity="0.4"></circle>
+        </pattern>
+    </defs>
+
+    <rect width="1200" height="800" fill="#fcfbf8"></rect>
+
+    <g transform="translate(100, 100)">
+        <circle cx="0" cy="0" r="25" fill="none" stroke="#2c3e50" stroke-width="2"></circle>
+        <path d="M 0 -20 L 7 7 L 0 3 L -7 7 Z" fill="#2c3e50"></path>
+        <text x="0" y="-30" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">N</text>
+    </g>
+
+    <rect x="270" y="250" width="660" height="300" fill="none" stroke="#dcd7cb" stroke-width="20" opacity="0.4"></rect>
+    <text x="600" y="235" class="annotation" fill="#7f8c8d" opacity="0.8" text-anchor="middle">60&#34; CRUSHED GRAVEL DRY ZONE</text>
+
+    <rect x="300" y="280" width="600" height="240" fill="url(#concrete-slab)"></rect>
+    <rect x="300" y="280" width="120" height="240" fill="url(#botanical)"></rect>
+
+    <path d="M 300 520 L 300 280 L 900 280 L 900 520 L 720 520" class="wall-exterior-outline"></path>
+    <path d="M 300 520 L 300 280 L 900 280 L 900 520 L 720 520" class="wall-exterior-core"></path>
+    
+    <line x1="420" y1="280" x2="420" y2="520" class="wall-interior"></line>
+    <line x1="720" y1="280" x2="720" y2="520" class="wall-interior"></line>
+
+    <line x1="300" y1="520" x2="420" y2="520" class="wall-glass"></line>
+    <text x="360" y="540" class="annotation" fill="#2980b9" text-anchor="middle">SOUTH GLASS WALL &amp; ARCHED WINDOW</text>
+
+    <rect x="420" y="510" width="300" height="20" fill="#f8f9f9"></rect> 
+    <path d="M 450 520 C 450 500, 550 500, 550 520" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="6,4"></path>
+    <line x1="450" y1="520" x2="550" y2="520" stroke="#2c3e50" stroke-width="6"></line>
+    <text x="500" y="540" class="dimension" text-anchor="middle">Heavy Arched Door</text>
+    <path d="M 590 520 C 590 500, 690 500, 690 520" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="6,4"></path>
+    <line x1="590" y1="520" x2="690" y2="520" stroke="#2c3e50" stroke-width="6"></line>
+    <text x="640" y="540" class="dimension" text-anchor="middle">Heavy Arched Door</text>
+
+    <rect x="416" y="440" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 420 480 A 40 40 0 0 0 380 440" class="door-arc"></path>
+    <line x1="420" y1="480" x2="380" y2="440" class="door-panel"></line>
+
+    <rect x="716" y="440" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 720 480 A 40 40 0 0 1 760 440" class="door-arc"></path>
+    <line x1="720" y1="480" x2="760" y2="440" class="door-panel"></line>
+
+    <rect x="830" y="516" width="40" height="8" fill="#fdfaf0"></rect>
+    <path d="M 870 520 A 40 40 0 0 1 830 560" class="door-arc"></path>
+    <line x1="870" y1="520" x2="830" y2="560" class="door-panel"></line>
+
+    <line x1="900" y1="360" x2="900" y2="440" class="window"></line>
+    <text x="925" y="405" class="annotation" transform="rotate(90 925,405)" text-anchor="middle">12-OVER-12 SASH</text>
+    
+    <line x1="300" y1="320" x2="300" y2="480" class="window"></line>
+
+    <rect x="310" y="290" width="40" height="220" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"></rect>
+    <text x="330" y="400" class="room-desc" font-weight="bold" fill="#145a32" transform="rotate(-90 330,400)" text-anchor="middle">POTTING BENCHES</text>
+    <circle cx="380" cy="320" r="15" fill="#a9dfbf" stroke="#229954" stroke-width="1"></circle>
+    <circle cx="370" cy="380" r="20" fill="#a9dfbf" stroke="#229954" stroke-width="1"></circle>
+    <circle cx="380" cy="460" r="12" fill="#a9dfbf" stroke="#229954" stroke-width="1"></circle>
+
+    <rect x="460" y="320" width="80" height="160" class="car-outline" rx="10"></rect>
+    <text x="500" y="405" class="dimension" text-anchor="middle">EV Bay 1</text>
+    
+    <rect x="600" y="320" width="80" height="160" class="car-outline" rx="10"></rect>
+    <text x="640" y="405" class="dimension" text-anchor="middle">EV Bay 2</text>
+
+    <rect x="730" y="290" width="80" height="40" fill="#fdfaf0" stroke="#34495e" stroke-width="2"></rect>
+    <line x1="730" y1="290" x2="730" y2="330" class="wall-interior" stroke-width="10"></line>
+    <line x1="730" y1="330" x2="810" y2="330" class="wall-interior" stroke-width="10"></line>
+    <line x1="810" y1="290" x2="810" y2="330" class="wall-interior" stroke-width="10"></line>
+    
+    <line x1="740" y1="290" x2="740" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="750" y1="290" x2="750" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="760" y1="290" x2="760" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="770" y1="290" x2="770" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="780" y1="290" x2="780" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="790" y1="290" x2="790" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <line x1="800" y1="290" x2="800" y2="330" stroke="#34495e" stroke-width="1"></line>
+    <path d="M 770 310 L 730 310 L 740 300 M 730 310 L 740 320" fill="none" stroke="#2c3e50" stroke-width="2"></path> <text x="770" y="345" class="dimension" text-anchor="middle">Up to Loft</text>
+    
+    <line x1="770" y1="330" x2="770" y2="360" stroke="#c0392b" stroke-width="2"></line>
+    <text x="770" y="370" class="annotation" text-anchor="middle">STORM SHELTER TUCKED UNDER STAIRS</text>
+
+    <rect x="820" y="290" width="30" height="20" class="span-panel"></rect>
+    <text x="835" y="320" class="dimension" fill="#c0392b" font-weight="bold" text-anchor="middle">SPAN</text>
+    
+    <rect x="850" y="290" width="40" height="30" class="energy-forge"></rect>
+    <rect x="850" y="290" width="10" height="30" fill="#555"></rect> <rect x="865" y="290" width="10" height="30" fill="#555"></rect>
+    <text x="870" y="335" class="dimension" fill="#1a1a1a" font-weight="bold" text-anchor="middle">7× FranklinWH</text>
+    <text x="870" y="348" class="dimension" fill="#1a1a1a" text-anchor="middle">aPower 2</text>
+    <text x="870" y="360" class="dimension" fill="#1a1a1a" text-anchor="middle">105 kWh</text>
+
+    <rect x="860" y="380" width="30" height="120" class="storage" fill="url(#storage-hatch)"></rect>
+    <text x="845" y="440" class="room-desc" transform="rotate(-90 845,440)" text-anchor="middle">WORKBENCH</text>
+
+    <line x1="880" y1="520" x2="1050" y2="650" stroke="#1a1610" stroke-width="2" stroke-dasharray="8,4"></line>
+    <path d="M 1045 640 L 1050 650 L 1040 650 Z" fill="#1a1610"></path>
+    <text x="965" y="605" font-family="Arial" font-size="10" font-weight="bold" fill="#1a1610" text-anchor="middle" transform="rotate(37 965,605)">200&#39; MIN TO OBSERVATORY / 150&#39; MIN (EMI)</text>
+    <text x="965" y="618" font-family="Arial" font-size="9" fill="#1a1610" text-anchor="middle" transform="rotate(37 965,618)">(Prevents thermal/vibration interference)</text>
+
+    <line x1="840" y1="280" x2="840" y2="100" stroke="#d35400" stroke-width="6" opacity="0.3"></line>
+    <line x1="838" y1="280" x2="838" y2="100" stroke="#2980b9" stroke-width="1.5"></line>
+    <line x1="842" y1="280" x2="842" y2="100" stroke="#c0392b" stroke-width="1.5"></line>
+    <text x="850" y="180" class="annotation" fill="#333" transform="rotate(-90 850,180)" text-anchor="middle">24&#34; DIVIDED TRENCH (POWER/FIBER + CAT6a) TO MAIN BLOCK</text>
+
+    <rect x="350" y="580" width="500" height="120" fill="#e0ddd5" opacity="0.2" rx="8"></rect>
+    <text x="600" y="640" class="room-title" font-weight="bold" text-anchor="middle" fill="#7f8c8d" opacity="0.8">CRUSHED GRAVEL MOTOR COURT</text>
+
+    <text x="360" y="440" class="room-title" text-anchor="middle" fill="#0e6251">GREENHOUSE</text>
+    <text x="360" y="455" class="room-desc" text-anchor="middle" fill="#117864">&#34;Grandma Cornelia&#39;s&#34;</text>
+
+    <text x="570" y="440" class="room-title" text-anchor="middle">THE GARAGE</text>
+    <text x="570" y="455" class="room-desc" text-anchor="middle">Double Arch Bays</text>
+
+    <text x="810" y="440" class="room-title" text-anchor="middle">UTILITY &amp; WORKSHOP</text>
+    <text x="810" y="455" class="room-desc" text-anchor="middle">The Energy Forge</text>
+    <text x="810" y="470" class="dimension" text-anchor="middle">High-Volume Loft Above</text>
+
+    <rect x="450" y="350" width="240" height="25" fill="#fdfdfd" stroke="#34495e" stroke-width="1" rx="4" opacity="0.9"></rect>
+    <text x="570" y="367" class="dimension" text-anchor="middle" font-weight="bold">ROOF ABOVE: 40kW CONCEALED SOLAR ARRAY</text>
+
+</svg>

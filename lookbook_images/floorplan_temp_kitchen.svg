@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="100%" height="100%">
+  <defs>
+    <pattern id="pex-slab" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="#fffaf0"></rect>
+      <path d="M 0 10 Q 5 0 10 10 T 20 10" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0.4"></path>
+      <path d="M 0 20 Q 5 10 10 20 T 20 20" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0.4"></path>
+    </pattern>
+
+    <pattern id="decking" width="40" height="12" patternUnits="userSpaceOnUse">
+      <rect width="40" height="12" fill="#fcf3cf" opacity="0.4"></rect>
+      <line x1="0" y1="12" x2="40" y2="12" stroke="#d4ac0d" stroke-width="1" opacity="0.6"></line>
+    </pattern>
+
+    <pattern id="stoneVeneer" width="40" height="20" patternUnits="userSpaceOnUse">
+      <rect width="40" height="20" fill="#d9cdbc"></rect>
+      <path d="M 0,10 L 40,10 M 20,0 L 20,10 M 5,10 L 5,20 M 30,10 L 30,20" stroke="#a39686" stroke-width="1.5"></path>
+      <rect x="2" y="2" width="16" height="6" fill="#c7bba8" rx="1"></rect>
+      <rect x="22" y="2" width="16" height="6" fill="#e3d8c8" rx="1"></rect>
+      <rect x="2" y="12" width="2" height="6" fill="#c7bba8" rx="1"></rect>
+      <rect x="7" y="12" width="21" height="6" fill="#bfae99" rx="1"></rect>
+    </pattern>
+    
+    <linearGradient id="stainless" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eaeded"></stop>
+      <stop offset="50%" stop-color="#fcfcfc"></stop>
+      <stop offset="100%" stop-color="#d5d8dc"></stop>
+    </linearGradient>
+
+    <linearGradient id="darkMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#566573"></stop>
+      <stop offset="100%" stop-color="#2c3e50"></stop>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="800" fill="#fcfbf8"></rect>
+
+  <g transform="translate(80, 80)">
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#2c3e50" stroke-width="2"></circle>
+    <path d="M 0 -20 L 7 7 L 0 3 L -7 7 Z" fill="#2c3e50"></path>
+    <text x="0" y="-30" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#2c3e50">N</text>
+  </g>
+
+  <rect x="420" y="50" width="550" height="700" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="8,8" opacity="0.5"></rect>
+  <text x="695" y="40" font-family="Arial" font-size="12" font-weight="bold" fill="#7f8c8d" text-anchor="middle" opacity="0.8">MAIN BLOCK (THE GLEBE) - NORTH-CENTRAL</text>
+
+  <rect x="140" y="240" width="360" height="320" fill="url(#decking)" stroke="#8b5e3c" stroke-width="4" stroke-dasharray="12,8"></rect>
+  <text x="320" y="540" font-family="Georgia" font-size="18" font-weight="bold" fill="#8b5e3c" text-anchor="middle" opacity="0.3">OUTDOOR PREP ANNEX</text>
+
+  <rect x="500" y="200" width="320" height="400" fill="url(#pex-slab)"></rect>
+  <text x="660" y="400" font-family="Georgia" font-size="24" font-weight="bold" fill="#2c3e50" text-anchor="middle" opacity="0.15">EVERYDAY DINING</text>
+  <text x="660" y="425" font-family="Arial" font-size="14" font-weight="bold" fill="#d35400" text-anchor="middle" opacity="0.4">GEOTHERMAL PEX SLAB</text>
+
+  <rect x="500" y="170" width="320" height="30" fill="url(#stoneVeneer)" stroke="#2c3e50" stroke-width="3"></rect>
+  
+  <rect x="820" y="200" width="10" height="400" fill="#e0ddd5" stroke="#34495e" stroke-width="2"></rect>
+  
+  <rect x="500" y="600" width="330" height="10" fill="#e0ddd5" stroke="#34495e" stroke-width="2"></rect>
+  
+  <rect x="490" y="200" width="10" height="400" fill="#e0ddd5" stroke="#34495e" stroke-width="2"></rect>
+
+  <rect x="500" y="200" width="20" height="180" fill="#ebf5fb" stroke="#2980b9" stroke-width="3"></rect>
+  <rect x="500" y="440" width="20" height="160" fill="#ebf5fb" stroke="#2980b9" stroke-width="3"></rect>
+  
+  <circle cx="510" cy="240" r="4" fill="#3498db"></circle>
+  <circle cx="510" cy="300" r="4" fill="#e74c3c"></circle>
+  <circle cx="510" cy="315" r="4" fill="#3498db"></circle>
+  <circle cx="510" cy="500" r="5" fill="#2c3e50"></circle> <rect x="485" y="380" width="40" height="60" fill="#fcfbf8"></rect> <path d="M 500 380 A 60 60 0 0 0 440 440" fill="none" stroke="#c0392b" stroke-width="2" stroke-dasharray="4,4"></path>
+  <line x1="500" y1="380" x2="440" y2="440" stroke="#c0392b" stroke-width="4" stroke-linecap="round"></line>
+
+  <g transform="translate(520, 0)">
+    
+    <rect x="0" y="220" width="60" height="60" fill="url(#stainless)" stroke="#7f8c8d" stroke-width="2" rx="4"></rect>
+    <line x1="10" y1="225" x2="50" y2="225" stroke="#bdc3c7" stroke-width="2"></line> <rect x="5" y="220" width="50" height="4" fill="#2c3e50" opacity="0.5"></rect> <rect x="0" y="290" width="60" height="80" fill="url(#stainless)" stroke="#7f8c8d" stroke-width="2"></rect>
+    <rect x="15" y="295" width="40" height="30" fill="#d5d8dc" stroke="#555" stroke-width="1.5" rx="3"></rect>
+    <rect x="15" y="335" width="40" height="30" fill="#d5d8dc" stroke="#555" stroke-width="1.5" rx="3"></rect>
+    <circle cx="35" cy="310" r="3" fill="#2c3e50"></circle>
+    <circle cx="35" cy="350" r="3" fill="#2c3e50"></circle>
+    <path d="M 0 325 L 10 325 M 10 310 L 10 340" fill="none" stroke="#555" stroke-width="3"></path>
+    <circle cx="5" cy="325" r="2" fill="#c0392b"></circle> <rect x="0" y="480" width="60" height="60" fill="url(#darkMetal)" stroke="#333" stroke-width="2" rx="2"></rect>
+    <rect x="10" y="485" width="45" height="50" fill="#17202a" stroke="#555" stroke-width="1"></rect> <circle cx="22" cy="497" r="8" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="2,2"></circle>
+    <circle cx="42" cy="497" r="8" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="2,2"></circle>
+    <circle cx="22" cy="522" r="8" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="2,2"></circle>
+    <circle cx="42" cy="522" r="8" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="2,2"></circle>
+
+    <rect x="120" y="360" width="40" height="80" fill="url(#stainless)" stroke="#7f8c8d" stroke-width="2" rx="2"></rect>
+    <circle cx="125" cy="365" r="3" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="1"></circle>
+    <circle cx="155" cy="365" r="3" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="1"></circle>
+    <circle cx="125" cy="435" r="3" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="1"></circle>
+    <circle cx="155" cy="435" r="3" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="1"></circle>
+
+  </g>
+
+  <g transform="translate(180, 260)">
+    
+    <rect x="0" y="0" width="80" height="180" fill="url(#stainless)" stroke="#7f8c8d" stroke-width="2" rx="2"></rect>
+    <line x1="15" y1="0" x2="15" y2="180" stroke="#bdc3c7" stroke-width="1"></line> <rect x="0" y="200" width="70" height="40" fill="url(#darkMetal)" stroke="#111" stroke-width="3" rx="10"></rect>
+    <rect x="70" y="210" width="20" height="20" fill="url(#darkMetal)" stroke="#111" stroke-width="2" rx="4"></rect> <line x1="15" y1="210" x2="55" y2="210" stroke="#7f8c8d" stroke-width="2"></line> <circle cx="20" cy="230" r="3" fill="#fdfdfd"></circle> <circle cx="40" cy="275" r="20" fill="#c0392b" stroke="#7b241c" stroke-width="3"></circle>
+    <circle cx="40" cy="275" r="4" fill="#111"></circle> <path d="M 25 275 Q 40 260 55 275" fill="none" stroke="#7f8c8d" stroke-width="2"></path> </g>
+
+
+  <line x1="500" y1="640" x2="820" y2="640" stroke="#555" stroke-width="2"></line>
+  <line x1="500" y1="630" x2="500" y2="650" stroke="#555" stroke-width="2"></line>
+  <line x1="820" y1="630" x2="820" y2="650" stroke="#555" stroke-width="2"></line>
+  <rect x="630" y="630" width="60" height="20" fill="#fcfbf8"></rect>
+  <text x="660" y="645" font-family="Arial" font-size="12" font-weight="bold" fill="#555" text-anchor="middle">16 FEET</text>
+
+  <line x1="860" y1="200" x2="860" y2="600" stroke="#555" stroke-width="2"></line>
+  <line x1="850" y1="200" x2="870" y2="200" stroke="#555" stroke-width="2"></line>
+  <line x1="850" y1="600" x2="870" y2="600" stroke="#555" stroke-width="2"></line>
+  <rect x="850" y="370" width="20" height="60" fill="#fcfbf8"></rect>
+  <text x="865" y="400" font-family="Arial" font-size="12" font-weight="bold" fill="#555" text-anchor="middle" transform="rotate(90 865,400)">20 FEET</text>
+
+
+  <g font-family="sans-serif" font-size="12" fill="#2c3e50">
+    
+    <line x1="750" y1="170" x2="850" y2="120" stroke="#2c3e50" stroke-width="1.5"></line>
+    <line x1="850" y1="120" x2="980" y2="120" stroke="#2c3e50" stroke-width="1.5"></line>
+    <text x="855" y="115" font-weight="bold">HIGH-QUALITY STONE VENEER</text>
+    <text x="855" y="132" font-size="10" fill="#7f8c8d">North Wall Integration (Phase 2B)</text>
+
+    <circle cx="510" cy="270" r="4" fill="#2980b9"></circle>
+    <line x1="510" y1="270" x2="450" y2="200" stroke="#2980b9" stroke-width="1.5"></line>
+    <line x1="450" y1="200" x2="330" y2="200" stroke="#2980b9" stroke-width="1.5"></line>
+    <text x="445" y="195" font-weight="bold" fill="#2980b9" text-anchor="end">SURFACE-MOUNT WET WALL</text>
+    <text x="445" y="212" font-size="10" fill="#7f8c8d" text-anchor="end">Shared MEP Core (Plumbing/Waste)</text>
+
+    <text x="600" y="210" font-weight="bold" fill="#1a1610">MODULAR &#34;JEWEL BOX&#34; KITCHEN</text>
+    
+    <line x1="580" y1="250" x2="680" y2="250" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="685" y="254" font-size="11">Commercial Refrigeration Unit</text>
+
+    <line x1="580" y1="330" x2="680" y2="330" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="685" y="334" font-size="11">Double Basin Modular Prep Sink</text>
+
+    <line x1="580" y1="510" x2="680" y2="510" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="685" y="514" font-size="11">Temporary Induction Range</text>
+
+    <line x1="680" y1="400" x2="730" y2="400" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="735" y="404" font-size="11">Freestanding Stainless Prep Table</text>
+
+    <text x="210" y="225" font-weight="bold" fill="#8b5e3c">TEMPORARY COOKING STATIONS</text>
+    
+    <line x1="180" y1="480" x2="120" y2="480" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="115" y="484" font-size="11" text-anchor="end">Heavy Offset Smoker</text>
+
+    <line x1="220" y1="535" x2="120" y2="535" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="115" y="539" font-size="11" text-anchor="end">Ceramic Kamado Grill</text>
+
+    <line x1="180" y1="350" x2="120" y2="350" stroke="#2c3e50" stroke-width="1"></line>
+    <text x="115" y="354" font-size="11" text-anchor="end">Stainless Prep &amp; Staging</text>
+    
+  </g>
+
+</svg>

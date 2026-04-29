@@ -1,0 +1,112 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        
+        <pattern id="pex-slab" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#fffaf0"></rect>
+            <path d="M 0 10 Q 5 0 10 10 T 20 10" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0.3"></path>
+            <path d="M 0 20 Q 5 10 10 20 T 20 20" fill="none" stroke="#e67e22" stroke-width="1.5" opacity="0.3"></path>
+        </pattern>
+        <pattern id="storage-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#e6b0aa" stroke-width="2"></line>
+        </pattern>
+    </defs>
+
+    <rect width="1200" height="800" fill="#fdfaf0"></rect>
+
+    <g transform="translate(100, 100)">
+        <circle cx="0" cy="0" r="25" fill="none" stroke="#2c3e50" stroke-width="2"></circle>
+        <path d="M 0 -20 L 7 7 L 0 3 L -7 7 Z" fill="#2c3e50"></path>
+        <text x="0" y="-30" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">N</text>
+    </g>
+
+    <rect x="250" y="200" width="700" height="400" fill="url(#pex-slab)"></rect>
+    <path d="M 250 200 Q 375 100 500 200 Z" fill="url(#pex-slab)"></path> <polygon points="700,200 730,120 920,120 950,200" fill="url(#pex-slab)"></polygon> <text x="600" y="400" class="radiant-text" text-anchor="middle" opacity="0.7">ENTIRE GROUND FLOOR: GEOTHERMAL PEX EMBEDDED IN LIMESTONE SLAB</text>
+
+    <rect x="250" y="200" width="700" height="400" class="wall-exterior"></rect>
+    <path d="M 250 200 C 250 100, 500 100, 500 200" fill="none" stroke="#2c3e50" stroke-width="14"></path>
+    <path d="M 700 200 L 730 120 L 920 120 L 950 200" fill="none" stroke="#2c3e50" stroke-width="14"></path>
+    
+    <line x1="500" y1="200" x2="500" y2="600" class="wall-interior"></line>
+    <line x1="700" y1="200" x2="700" y2="600" class="wall-interior"></line>
+    <line x1="250" y1="400" x2="500" y2="400" class="wall-interior"></line>
+    <line x1="700" y1="400" x2="950" y2="400" class="wall-interior"></line>
+    <line x1="500" y1="360" x2="700" y2="360" class="wall-interior"></line> <line x1="560" y1="600" x2="640" y2="600" stroke="#fdfaf0" stroke-width="16"></line>
+    <path d="M 560 600 A 80 80 0 0 0 640 520" class="door-arc"></path>
+    <line x1="560" y1="600" x2="640" y2="520" class="door-panel"></line>
+    <line x1="560" y1="360" x2="640" y2="360" stroke="#fdfaf0" stroke-width="8" stroke-dasharray="10,5"></line>
+    <line x1="550" y1="200" x2="650" y2="200" stroke="#fdfaf0" stroke-width="16"></line>
+    <path d="M 550 200 A 50 50 0 0 0 600 150" class="door-arc"></path>
+    <line x1="550" y1="200" x2="600" y2="150" class="door-panel"></line>
+    <path d="M 650 200 A 50 50 0 0 1 600 150" class="door-arc"></path>
+    <line x1="650" y1="200" x2="600" y2="150" class="door-panel"></line>
+    <rect x="496" y="440" width="8" height="40" fill="#fdfaf0"></rect> <path d="M 500 480 A 40 40 0 0 0 540 440" class="door-arc"></path>
+    <line x1="500" y1="480" x2="540" y2="440" class="door-panel"></line>
+
+    <rect x="696" y="440" width="8" height="40" fill="#fdfaf0"></rect> <path d="M 700 480 A 40 40 0 0 1 660 440" class="door-arc"></path>
+    <line x1="700" y1="480" x2="660" y2="440" class="door-panel"></line>
+
+    <rect x="696" y="280" width="8" height="40" fill="#fdfaf0"></rect> <path d="M 700 320 A 40 40 0 0 1 660 280" class="door-arc"></path>
+    <line x1="700" y1="320" x2="660" y2="280" class="door-panel"></line>
+
+    <rect x="496" y="280" width="8" height="40" fill="#fdfaf0"></rect> <path d="M 500 320 A 40 40 0 0 0 540 280" class="door-arc"></path>
+    <line x1="500" y1="320" x2="540" y2="280" class="door-panel"></line>
+
+    <line x1="280" y1="600" x2="350" y2="600" class="window"></line>
+    <line x1="400" y1="600" x2="470" y2="600" class="window"></line>
+    <line x1="730" y1="600" x2="800" y2="600" class="window"></line>
+    <line x1="850" y1="600" x2="920" y2="600" class="window"></line>
+    <line x1="710" y1="180" x2="735" y2="130" class="window"></line>
+    <line x1="740" y1="120" x2="910" y2="120" class="window"></line>
+    <line x1="915" y1="130" x2="940" y2="180" class="window"></line>
+    <path d="M 270 160 Q 300 125 340 110" fill="none" class="window"></path>
+    <path d="M 360 105 Q 375 100 410 105" fill="none" class="window"></path>
+    <path d="M 430 110 Q 460 125 480 160" fill="none" class="window"></path>
+
+    <rect x="460" y="410" width="40" height="60" class="plumbing"></rect>
+    <line x1="460" y1="410" x2="460" y2="470" class="wall-interior" stroke-width="10"></line>
+    <line x1="460" y1="410" x2="500" y2="410" class="wall-interior" stroke-width="10"></line>
+    <line x1="460" y1="470" x2="500" y2="470" class="wall-interior" stroke-width="10"></line>
+    <text x="480" y="445" class="room-desc" font-weight="bold" fill="#2980b9" text-anchor="middle" transform="rotate(-90 480,445)">PR/SHELTER</text>
+
+    <rect x="710" y="210" width="20" height="180" class="storage" fill="url(#storage-hatch)"></rect>
+    <rect x="920" y="210" width="20" height="180" class="storage" fill="url(#storage-hatch)"></rect>
+    <rect x="730" y="380" width="200" height="15" class="storage" fill="url(#storage-hatch)"></rect>
+
+    <rect x="930" y="450" width="30" height="80" fill="#aab7b8" stroke="#2c3e50" stroke-width="4"></rect>
+    <rect x="920" y="470" width="10" height="40" fill="#c0392b"></rect>
+
+    <rect x="505" y="210" width="20" height="120" class="plumbing"></rect>
+    <text x="515" y="270" class="room-desc" text-anchor="middle" transform="rotate(-90 515,270)">TEMP WET WALL</text>
+
+    <path d="M 265 170 C 265 110, 485 110, 485 170" fill="none" stroke="#bdc3c7" stroke-width="12" opacity="0.5"></path>
+
+    <rect x="180" y="350" width="70" height="60" fill="none" stroke="#7f8c8d" stroke-width="3" stroke-dasharray="6,6"></rect>
+    <rect x="240" y="360" width="20" height="40" fill="#fdfaf0"></rect> <text x="215" y="380" class="annotation" text-anchor="middle">TO SERVICE WING</text>
+    <rect x="950" y="450" width="70" height="80" fill="#ebf5fb" stroke="#2980b9" stroke-width="3"></rect>
+    <rect x="940" y="460" width="20" height="60" fill="#fdfaf0"></rect> <text x="985" y="495" class="annotation" text-anchor="middle" fill="#2980b9">GLASS BRIDGE</text>
+
+    <text x="600" y="280" class="room-title" text-anchor="middle">EVERYDAY DINING</text>
+    <text x="600" y="295" class="room-desc" text-anchor="middle">Phase 2A Kitchen</text>
+    
+    <text x="600" y="480" class="room-title" text-anchor="middle">CENTRAL HALL</text>
+    <text x="600" y="495" class="room-desc" text-anchor="middle">Radiant Slab / Jib Doors</text>
+
+    <text x="830" y="280" class="room-title" text-anchor="middle">THE LIBRARY</text>
+    <text x="830" y="295" class="room-desc" text-anchor="middle">Mesquite Built-ins</text>
+
+    <text x="375" y="280" class="room-title" text-anchor="middle">OVAL DINING ROOM</text>
+    <text x="375" y="295" class="room-desc" text-anchor="middle">Limestone Window Seat</text>
+
+    <text x="360" y="490" class="room-title" text-anchor="middle">DRAWING ROOM</text>
+    <text x="360" y="505" class="room-desc" text-anchor="middle">Level 5 Plaster / Art Alcove</text>
+
+    <text x="820" y="490" class="room-title" text-anchor="middle">GREAT ROOM</text>
+    <text x="820" y="505" class="room-desc" text-anchor="middle">Right Passage Vista Origin</text>
+
+    <line x1="280" y1="200" x2="200" y2="200" stroke="#c0392b" stroke-width="2"></line>
+    <text x="190" y="204" class="annotation" text-anchor="end">HIGH-QUALITY STONE VENEER</text>
+    
+    <line x1="480" y1="410" x2="480" y2="340" stroke="#c0392b" stroke-width="2"></line>
+    <text x="480" y="325" class="annotation" text-anchor="middle">POWDER ROOM TUCKED UNDER STAIRS</text>
+    <text x="480" y="337" class="annotation" text-anchor="middle">(REINFORCED STORM SHELTER)</text>
+</svg>

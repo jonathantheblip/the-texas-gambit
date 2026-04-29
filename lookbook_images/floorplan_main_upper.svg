@@ -1,0 +1,144 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        
+        <pattern id="warmboard" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#fadbd8"></rect>
+            <line x1="0" y1="0" x2="0" y2="12" stroke="#e74c3c" stroke-width="3" opacity="0.6"></line>
+        </pattern>
+        <pattern id="storage-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#e6b0aa" stroke-width="2"></line>
+        </pattern>
+    </defs>
+
+    <rect width="1200" height="800" fill="#fdfaf0"></rect>
+
+    <g transform="translate(100, 100)">
+        <circle cx="0" cy="0" r="25" fill="none" stroke="#2c3e50" stroke-width="2"></circle>
+        <path d="M 0 -20 L 7 7 L 0 3 L -7 7 Z" fill="#2c3e50"></path>
+        <text x="0" y="-30" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">N</text>
+    </g>
+
+    <rect x="250" y="250" width="100" height="150" fill="url(#warmboard)"></rect>
+    <rect x="500" y="200" width="200" height="160" fill="url(#warmboard)"></rect>
+    <rect x="850" y="380" width="100" height="100" fill="url(#warmboard)"></rect>
+    <rect x="500" y="500" width="60" height="100" fill="url(#warmboard)"></rect>
+    
+    <text x="600" y="300" class="radiant-text" text-anchor="middle" fill="#c0392b">WARMBOARD STRUCTURAL RADIANT FLOORING (WET ZONES)</text>
+
+    <rect x="250" y="200" width="700" height="400" class="wall-exterior"></rect>
+    
+    <path d="M 250 200 C 250 100, 500 100, 500 200" fill="#fcfcfc" stroke="#16a085" stroke-width="8"></path>
+    <path d="M 265 170 C 265 110, 485 110, 485 170" fill="none" class="window" stroke-width="6"></path>
+    <polygon points="700,200 730,120 920,120 950,200" fill="#fcfcfc" stroke="#16a085" stroke-width="8"></polygon>
+    <line x1="710" y1="180" x2="735" y2="130" class="window" stroke-width="6"></line>
+    <line x1="740" y1="120" x2="910" y2="120" class="window" stroke-width="6"></line>
+    <line x1="915" y1="130" x2="940" y2="180" class="window" stroke-width="6"></line>
+
+    <line x1="500" y1="200" x2="500" y2="600" class="wall-interior"></line>
+    <line x1="700" y1="200" x2="700" y2="600" class="wall-interior"></line>
+    <line x1="250" y1="400" x2="500" y2="400" class="wall-interior"></line>
+    <line x1="700" y1="400" x2="950" y2="400" class="wall-interior"></line>
+    <line x1="500" y1="360" x2="700" y2="360" class="wall-interior"></line> <line x1="600" y1="200" x2="600" y2="360" class="wall-interior"></line>
+    
+    <line x1="350" y1="250" x2="500" y2="250" class="wall-interior"></line>
+    <line x1="350" y1="250" x2="350" y2="400" class="wall-interior"></line>
+
+    <line x1="850" y1="400" x2="850" y2="480" class="wall-interior"></line>
+    <line x1="850" y1="480" x2="950" y2="480" class="wall-interior"></line>
+
+    <line x1="500" y1="500" x2="700" y2="500" class="wall-interior"></line>
+    <line x1="560" y1="500" x2="560" y2="600" class="wall-interior"></line>
+
+    <rect x="696" y="370" width="8" height="30" fill="#fdfaf0"></rect>
+    <path d="M 700 400 A 30 30 0 0 1 670 370" class="door-arc"></path>
+    <line x1="700" y1="400" x2="670" y2="370" class="door-panel"></line>
+    
+    <rect x="696" y="280" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 700 320 A 40 40 0 0 1 660 280" class="door-arc"></path>
+    <line x1="700" y1="320" x2="660" y2="280" class="door-panel"></line>
+
+    <rect x="596" y="280" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 600 320 A 40 40 0 0 0 640 280" class="door-arc"></path>
+    <line x1="600" y1="320" x2="640" y2="280" class="door-panel"></line>
+
+    <rect x="496" y="370" width="8" height="30" fill="#fdfaf0"></rect>
+    <path d="M 500 400 A 30 30 0 0 0 530 370" class="door-arc"></path>
+    <line x1="500" y1="400" x2="530" y2="370" class="door-panel"></line>
+
+    <rect x="346" y="320" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 350 360 A 40 40 0 0 0 390 320" class="door-arc"></path>
+    <line x1="350" y1="360" x2="390" y2="320" class="door-panel"></line>
+
+    <rect x="496" y="440" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 500 480 A 40 40 0 0 0 540 440" class="door-arc"></path>
+    <line x1="500" y1="480" x2="540" y2="440" class="door-panel"></line>
+
+    <rect x="696" y="440" width="8" height="40" fill="#fdfaf0"></rect>
+    <path d="M 700 480 A 40 40 0 0 1 660 440" class="door-arc"></path>
+    <line x1="700" y1="480" x2="660" y2="440" class="door-panel"></line>
+
+    <rect x="846" y="420" width="8" height="30" fill="#fdfaf0"></rect>
+    <path d="M 850 450 A 30 30 0 0 1 820 420" class="door-arc"></path>
+    <line x1="850" y1="450" x2="820" y2="420" class="door-panel"></line>
+
+    <rect x="560" y="496" width="80" height="8" fill="#fcfcfc" stroke="#2980b9" stroke-width="2"></rect> <text x="600" y="490" class="annotation" fill="#2980b9" text-anchor="middle">TRIPLE-GLAZED SPLAYED TRANSOM</text>
+
+    <rect x="556" y="540" width="8" height="30" fill="#fdfaf0"></rect>
+    <path d="M 560 570 A 30 30 0 0 1 530 540" class="door-arc"></path>
+    <line x1="560" y1="570" x2="530" y2="540" class="door-panel"></line>
+
+    <line x1="280" y1="600" x2="350" y2="600" class="window"></line>
+    <line x1="400" y1="600" x2="470" y2="600" class="window"></line>
+    <line x1="730" y1="600" x2="800" y2="600" class="window"></line>
+    <line x1="850" y1="600" x2="920" y2="600" class="window"></line>
+    <line x1="595" y1="600" x2="665" y2="600" class="window"></line> <line x1="515" y1="600" x2="545" y2="600" class="window"></line> <line x1="520" y1="200" x2="580" y2="200" class="window"></line> <line x1="250" y1="280" x2="250" y2="340" class="window"></line> <rect x="630" y="240" width="40" height="80" class="storage"></rect>
+    <text x="650" y="285" class="room-desc" text-anchor="middle" transform="rotate(-90 650,285)">ISLAND</text>
+    <rect x="680" y="210" width="20" height="60" class="storage" fill="url(#storage-hatch)"></rect>
+    
+    <rect x="520" y="220" width="60" height="40" class="plumbing"></rect>
+    <rect x="520" y="300" width="40" height="40" class="plumbing"></rect>
+
+    <rect x="360" y="260" width="80" height="40" class="plumbing"></rect> <rect x="260" y="350" width="40" height="40" class="plumbing"></rect>
+    
+    <rect x="506" y="510" width="40" height="30" class="plumbing"></rect>
+    <rect x="515" y="560" width="20" height="30" class="plumbing"></rect>
+
+    <rect x="260" y="410" width="20" height="180" class="storage" fill="url(#storage-hatch)"></rect>
+    <rect x="470" y="490" width="20" height="100" class="storage" fill="url(#storage-hatch)"></rect>
+
+    <text x="825" y="270" class="room-title" text-anchor="middle">PRIMARY BEDROOM</text>
+    <text x="825" y="285" class="room-desc" text-anchor="middle">Canted Cedar Oriel Bay</text>
+
+    <text x="650" y="340" class="room-title" text-anchor="middle" font-size="12">DRESSING RM</text>
+
+    <text x="550" y="280" class="room-title" text-anchor="middle" font-size="12">TEAL EN SUITE</text>
+    <text x="550" y="295" class="room-desc" text-anchor="middle" font-size="9">Cast-Iron Stacks</text>
+
+    <text x="375" y="220" class="room-title" text-anchor="middle">PROVINCETOWN SUITE</text>
+    <text x="375" y="235" class="room-desc" text-anchor="middle">Stacked Curved Cedar Bay</text>
+
+    <text x="420" y="310" class="room-title" text-anchor="middle" font-size="12">PINK EN SUITE</text>
+
+    <text x="375" y="500" class="room-title" text-anchor="middle">THE STUDY</text>
+    <text x="375" y="515" class="room-desc" text-anchor="middle">Built-in Library Shelving</text>
+
+    <text x="825" y="500" class="room-title" text-anchor="middle">TEXAS ROOM</text>
+    <text x="825" y="515" class="room-desc" text-anchor="middle">Generous Guest Suite</text>
+
+    <text x="635" y="540" class="room-title" text-anchor="middle">THE QUIET ROOM</text>
+    <text x="635" y="555" class="room-desc" text-anchor="middle">Meditative Vault</text>
+
+    <text x="530" y="550" class="room-title" text-anchor="middle" font-size="9">EN SUITE</text>
+
+    <text x="600" y="420" class="room-title" text-anchor="middle">CENTRAL LANDING</text>
+    <text x="600" y="435" class="room-desc" text-anchor="middle">Radiant Manifold</text>
+
+    <path d="M 680 180 Q 750 80 825 150" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="4,4"></path>
+    <text x="750" y="100" class="annotation" fill="#2980b9" text-anchor="middle">CONTIGUOUS PRIMARY SUITE (BED + DRESSING + BATH)</text>
+
+    <line x1="250" y1="150" x2="180" y2="150" stroke="#16a085" stroke-width="2"></line>
+    <text x="170" y="154" class="annotation" fill="#16a085" text-anchor="end">CANTILEVERED CEDAR BAY (SEAFOAM TRIM)</text>
+
+    <line x1="550" y1="260" x2="550" y2="120" stroke="#c0392b" stroke-width="2"></line>
+    <text x="550" y="110" class="annotation" text-anchor="middle">ALL 2ND FLOOR WET ZONES UTILIZE CAST-IRON WASTE STACKS</text>
+</svg>

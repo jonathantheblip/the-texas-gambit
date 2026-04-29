@@ -1,0 +1,86 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        
+        <pattern id="field-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+            <rect width="60" height="60" fill="#fcfbf8"></rect>
+            <path d="M 10 20 Q 15 10 20 20" fill="none" stroke="#d5dbdb" stroke-width="1"></path>
+            <path d="M 40 50 Q 45 40 50 50" fill="none" stroke="#d5dbdb" stroke-width="1"></path>
+        </pattern>
+        <pattern id="storage-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#e6b0aa" stroke-width="2"></line>
+        </pattern>
+    </defs>
+
+    <rect width="1200" height="800" fill="url(#field-pattern)"></rect>
+
+    <g transform="translate(100, 100)">
+        <circle cx="0" cy="0" r="25" fill="none" stroke="#2c3e50" stroke-width="2"></circle>
+        <path d="M 0 -20 L 7 7 L 0 3 L -7 7 Z" fill="#2c3e50"></path>
+        <text x="0" y="-30" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">N</text>
+    </g>
+
+    <polygon points="517,140 683,140 860,317 860,483 683,660 517,660 340,483 340,317" fill="none" stroke="#dcd7cb" stroke-width="20" opacity="0.4"></polygon>
+    <text x="600" y="110" class="annotation" fill="#7f8c8d" opacity="0.8" text-anchor="middle">60&#34; CRUSHED GRAVEL DRY ZONE</text>
+
+    <circle cx="600" cy="400" r="240" class="dome-track"></circle>
+    <line x1="340" y1="400" x2="860" y2="400" stroke="#34495e" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"></line>
+    <text x="860" y="395" class="dimension" fill="#34495e" text-anchor="end">DOME SPLIT AXIS</text>
+    <text x="600" y="655" class="annotation" fill="#34495e" text-anchor="middle">MOTORIZED FIBERGLASS CLAMSHELL DOME (DARK BRONZE)</text>
+
+    <polygon points="517,200 683,200 800,317 800,483 683,600 517,600 400,483 400,317" class="wall-exterior-outline"></polygon>
+    <polygon points="517,200 683,200 800,317 800,483 683,600 517,600 400,483 400,317" class="wall-exterior-core"></polygon>
+    
+    <text x="600" y="225" class="dimension" fill="#7f8c8d" text-anchor="middle">18&#34; Coursed Limestone</text>
+
+    <line x1="560" y1="200" x2="640" y2="200" class="window"></line>
+    <line x1="710" y1="227" x2="770" y2="287" class="window"></line>
+    <line x1="800" y1="360" x2="800" y2="440" class="window"></line>
+    <line x1="770" y1="513" x2="710" y2="573" class="window"></line>
+    <line x1="640" y1="600" x2="560" y2="600" class="window"></line>
+    <line x1="490" y1="573" x2="430" y2="513" class="window"></line>
+    <line x1="400" y1="440" x2="400" y2="360" class="window"></line>
+
+    <line x1="430" y1="287" x2="490" y2="227" stroke="#fcfbf8" stroke-width="22"></line>
+    <line x1="430" y1="287" x2="490" y2="227" stroke="#e0ddd5" stroke-width="4" stroke-dasharray="2,2"></line> 
+    
+    <path d="M 430 287 A 85 85 0 0 0 345 287" class="door-arc"></path>
+    <line x1="430" y1="287" x2="345" y2="287" class="door-panel"></line>
+    
+    <text x="350" y="275" class="annotation" fill="#21618c" text-anchor="end">WEATHERED COBALT BLUE ARCHED DOOR</text>
+
+    <polygon points="460,257 400,180 320,240" class="dark-sky-light"></polygon>
+    <circle cx="460" cy="257" r="4" fill="#d35400"></circle>
+    <text x="320" y="220" class="dimension" fill="#d35400" text-anchor="end">590nm Amber Sconce</text>
+
+    <path d="M 415 330 Q 450 400 415 470" fill="url(#storage-hatch)" stroke="#922b21" stroke-width="2"></path>
+    <text x="445" y="405" class="dimension" fill="#922b21" text-anchor="middle" transform="rotate(-90 445,405)">Telemetry Casework</text>
+
+    <circle cx="600" cy="400" r="45" class="concrete-pier"></circle>
+    <circle cx="600" cy="400" r="35" fill="none" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4,2"></circle>
+    <rect x="585" y="380" width="30" height="40" fill="#34495e" rx="4"></rect>
+    <circle cx="600" cy="400" r="10" fill="#2c3e50"></circle>
+    <line x1="570" y1="400" x2="630" y2="400" stroke="#7f8c8d" stroke-width="6"></line>
+    <line x1="600" y1="370" x2="600" y2="430" stroke="#7f8c8d" stroke-width="6"></line>
+    
+    <circle cx="600" cy="400" r="50" fill="none" stroke="#c0392b" stroke-width="1" stroke-dasharray="2,2"></circle>
+    <text x="730" y="405" class="annotation" text-anchor="start">ISOLATED CONCRETE PIER</text>
+    <text x="730" y="420" class="dimension" text-anchor="start">(Physically decoupled from floor to stop vibration)</text>
+
+    <line x1="150" y1="150" x2="580" y2="380" stroke="#d35400" stroke-width="8" opacity="0.2"></line>
+    <line x1="148" y1="148" x2="578" y2="378" stroke="#2980b9" stroke-width="1.5"></line> 
+    <line x1="152" y1="152" x2="582" y2="382" stroke="#c0392b" stroke-width="1.5"></line> 
+    
+    <text x="250" y="190" class="annotation" fill="#333" transform="rotate(28 250,190)" text-anchor="middle">24&#34; DIVIDED TRENCH (POWER/FIBER + CAT6a)</text>
+    
+    <path d="M 150 120 L 120 150" stroke="#1a1610" stroke-width="2"></path>
+    <line x1="135" y1="135" x2="400" y2="280" stroke="#1a1610" stroke-width="2" stroke-dasharray="8,4"></line>
+    <text x="220" y="150" class="room-title" fill="#1a1610" transform="rotate(28 220,150)">200&#39; MIN FROM POOL / 150&#39; MIN FROM MOTOR BARN</text>
+
+    <rect x="800" y="650" width="280" height="40" fill="#fdfaf0" stroke="#c0392b" stroke-width="2" rx="4"></rect>
+    <text x="940" y="675" class="annotation" fill="#c0392b" text-anchor="middle">NOTE: ZERO PLUMBING / HVAC IN TOWER TO PREVENT THERMAL PLUMES</text>
+
+    <text x="600" y="300" class="room-title" text-anchor="middle">THE FOLLY TOWER</text>
+    <text x="600" y="315" class="room-desc" text-anchor="middle">Octagonal Astrophotography Hub</text>
+    
+    <text x="600" y="490" class="dimension" font-weight="bold" text-anchor="middle">7x 12-over-12 Sash Windows</text>
+</svg>
