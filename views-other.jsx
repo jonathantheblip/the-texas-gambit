@@ -549,7 +549,7 @@ window.HCEOtherViews = (function(){
       glebe: 'Marston St. Lawrence, Northants. Georgian columns, sash windows, Palladian symmetry. The architecture of permanence — what we ask for when we want a house to feel earned.',
       ptown: "Provincetown, Cape Cod. White-painted everything, rattan and indigo, art on every wall. The casual coastal soul Helen brings — and where the boundary between inside and outside has always been generous.",
       texas: 'Bandera County, forty acres on a canyon edge. Limestone, live oaks, the way light moves at sundown. The site itself, treated as material.',
-      miss: "Mississippi. Helen's grandmother Cornelia kept things alive in greenhouses for sixty years. Appears in this compound exactly once — through a tall arched window, terra cotta and basil and tomatoes — at the edge of the Motor Barn.",
+      miss: "Mississippi. Jon's grandmother Cornelia kept things alive in greenhouses for sixty years. Appears in this compound exactly once — through a tall arched window, terra cotta and basil and tomatoes — at the edge of the Motor Barn.",
     };
 
     const onCardClick = (ancestorId) => {
