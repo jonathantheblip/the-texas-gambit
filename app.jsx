@@ -67,6 +67,33 @@
       }
     }, [store]);
 
+    // ── Subscribe to remote diffs (sync.js → applyRemote → subscribers)
+    // When Supabase delivers a change from the other user, swap the
+    // in-memory store for the freshly-reconstructed snapshot so the UI
+    // re-renders with their pin/note/decision.
+    useEffect(() => {
+      if (!Store.subscribe) return;
+      return Store.subscribe((next) => {
+        lastStoreRef.current = next;
+        setStore(next);
+      });
+    }, []);
+
+    // ── Sync status indicator (Saved/Syncing/Offline/—)
+    // sync.js dispatches 'hce.sync.status' on every transition.
+    useEffect(() => {
+      const onStatus = (e) => {
+        const s = e.detail;
+        if (s === 'syncing') setSyncMsg('Syncing…');
+        else if (s === 'offline') setSyncMsg('Offline');
+        else if (s === 'error') setSyncMsg('Sync error');
+        else if (s === 'idle') setSyncMsg(null);
+        // 'unconfigured' → leave the existing 'Saved' flash behavior alone.
+      };
+      window.addEventListener('hce.sync.status', onStatus);
+      return () => window.removeEventListener('hce.sync.status', onStatus);
+    }, []);
+
     // ── Persist mode
     useEffect(() => {
       localStorage.setItem('hce.mode', mode);

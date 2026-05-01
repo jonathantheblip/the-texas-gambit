@@ -292,7 +292,7 @@ window.HCEOtherViews = (function(){
     };
     const pick = (id, opt) => {
       update(s => {
-        s.decisions[id] = { pick: opt, t: Date.now() };
+        s.decisions[id] = { pick: opt, t: Date.now(), decidedBy: Store.identity };
         Store.pushJournal(s, { kind:'decision', text:`${id}: ${opt}` });
       });
     };
@@ -514,7 +514,10 @@ window.HCEOtherViews = (function(){
                   </div>
                   <div>
                     <div className="what">{e.text}</div>
-                    <div className="what-meta">{kindLabel(e.kind)}</div>
+                    <div className="what-meta">
+                      {kindLabel(e.kind)}
+                      {e.author && <span className={`author-badge author-${e.author}`}>— {e.author === 'jon' ? 'J' : 'H'}</span>}
+                    </div>
                   </div>
                 </div>
               ))}

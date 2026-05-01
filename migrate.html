@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HCE · Migrate localStorage → Supabase</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; color: #2C2A26; line-height: 1.55; }
+  h1 { font-size: 22px; }
+  textarea { width: 100%; height: 240px; font-family: ui-monospace, monospace; font-size: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+  label { display: block; margin: 14px 0 6px; font-weight: 600; font-size: 13px; }
+  input[type="text"], select { padding: 6px 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; }
+  button { padding: 8px 14px; background: #1E3A8A; color: white; border: 0; border-radius: 6px; font-size: 14px; cursor: pointer; margin-top: 14px; }
+  button:disabled { background: #aaa; cursor: not-allowed; }
+  .muted { color: #777; font-size: 13px; }
+  .log { margin-top: 16px; background: #f4f1ea; padding: 12px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 12px; max-height: 280px; overflow: auto; white-space: pre-wrap; }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<h1>HCE · Migrate localStorage → Supabase</h1>
+
+<p class="muted">
+  One-time tool. Paste a <code>hce.v3</code> localStorage blob, pick an author,
+  and push it up. Useful for seeding the server with notes that were typed
+  before sync was wired up. Existing rows on the server are upserted —
+  re-running this is safe.
+</p>
+
+<label>1. Supabase URL</label>
+<input id="url" type="text" style="width:100%" placeholder="https://xxxx.supabase.co" />
+
+<label>2. Anon key</label>
+<input id="anonKey" type="text" style="width:100%" placeholder="eyJhbGc..." />
+
+<label>3. Author for any entries that don't have one stamped</label>
+<select id="author">
+  <option value="helen">helen</option>
+  <option value="jon">jon</option>
+</select>
+
+<label>4. localStorage blob (JSON)</label>
+<p class="muted">Open the live app's DevTools console and run <code>copy(localStorage.getItem('hce.v3'))</code>, then paste below.</p>
+<textarea id="blob" placeholder='{"rooms":{...},"decisions":{...},"journal":[...],"wall":[...]}'></textarea>
+
+<div class="row">
+  <button id="push">Push to Supabase</button>
+  <span id="status" class="muted"></span>
+</div>
+
+<div id="log" class="log"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const log = (msg) => { $('log').textContent += msg + '\n'; $('log').scrollTop = $('log').scrollHeight; };
+
+  $('push').addEventListener('click', async () => {
+    const url = $('url').value.trim();
+    const anonKey = $('anonKey').value.trim();
+    const author = $('author').value;
+    const raw = $('blob').value.trim();
+
+    if (!url || !anonKey || !raw) { alert('Fill in URL, anon key, and the blob.'); return; }
+
+    let store;
+    try { store = JSON.parse(raw); }
+    catch (e) { alert('Blob is not valid JSON: ' + e.message); return; }
+
+    $('push').disabled = true;
+    $('status').textContent = 'pushing...';
+    $('log').textContent = '';
+
+    const sb = window.supabase.createClient(url, anonKey);
+
+    try {
+      const rooms = store.rooms || {};
+      const roomIds = Object.keys(rooms);
+
+      // room_state
+      if (roomIds.length) {
+        const rows = roomIds.map(id => ({
+          room_id: id,
+          status: rooms[id].status ?? null,
+          react: rooms[id].react ?? null,
+          mood: rooms[id].mood || [],
+          updated_at: new Date(rooms[id].updatedAt || Date.now()).toISOString(),
+          updated_by: rooms[id].updatedBy || author,
+        }));
+        const { error } = await sb.from('room_state').upsert(rows);
+        if (error) throw error;
+        log(`✓ room_state · ${rows.length} rows`);
+      }
+
+      // notes
+      const noteRows = [];
+      roomIds.forEach(id => (rooms[id].notes || []).forEach(n => noteRows.push({
+        id: n.id, room_id: id, t: n.t, text: n.text, kind: n.kind || 'text',
+        pin_id: n.pinId || null, author: n.author || author,
+      })));
+      if (noteRows.length) {
+        const { error } = await sb.from('notes').upsert(noteRows);
+        if (error) throw error;
+        log(`✓ notes · ${noteRows.length} rows`);
+      }
+
+      // pins
+      const pinRows = [];
+      roomIds.forEach(id => (rooms[id].pins || []).forEach(p => pinRows.push({
+        id: p.id, room_id: id, img_slug: p.imgSlug || null,
+        x: p.x, y: p.y, text: p.text, t: p.t,
+        author: p.author || author,
+      })));
+      if (pinRows.length) {
+        const { error } = await sb.from('pins').upsert(pinRows);
+        if (error) throw error;
+        log(`✓ pins · ${pinRows.length} rows`);
+      }
+
+      // room_specs
+      const specRows = [];
+      roomIds.forEach(id => Object.entries(rooms[id].specs || {}).forEach(([k, v]) => specRows.push({
+        room_id: id, spec_key: k, value: v,
+        updated_at: new Date().toISOString(), updated_by: author,
+      })));
+      if (specRows.length) {
+        const { error } = await sb.from('room_specs').upsert(specRows);
+        if (error) throw error;
+        log(`✓ room_specs · ${specRows.length} rows`);
+      }
+
+      // decisions
+      const decRows = Object.entries(store.decisions || {}).map(([id, d]) => ({
+        id, pick: d.pick ?? null, t: d.t || Date.now(),
+        decided_by: d.decidedBy || author,
+      }));
+      if (decRows.length) {
+        const { error } = await sb.from('decisions').upsert(decRows);
+        if (error) throw error;
+        log(`✓ decisions · ${decRows.length} rows`);
+      }
+
+      // journal
+      const journalRows = (store.journal || []).map(j => ({
+        id: j.id, t: j.t, room_id: j.roomId || null, kind: j.kind, text: j.text,
+        extra: j.extra || null, author: j.author || author,
+      }));
+      if (journalRows.length) {
+        const { error } = await sb.from('journal').upsert(journalRows);
+        if (error) throw error;
+        log(`✓ journal · ${journalRows.length} rows`);
+      }
+
+      // wall
+      const wallRows = (store.wall || []).map(w => ({
+        room_id: w.roomId, img_slug: w.imgSlug, t: w.t || Date.now(),
+        author: w.author || author,
+      }));
+      if (wallRows.length) {
+        const { error } = await sb.from('wall').upsert(wallRows);
+        if (error) throw error;
+        log(`✓ wall · ${wallRows.length} rows`);
+      }
+
+      log('\n— done. Reload the main app to see the merged state.');
+      $('status').textContent = 'done';
+    } catch (e) {
+      log('✗ ' + (e.message || String(e)));
+      $('status').textContent = 'error';
+    } finally {
+      $('push').disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>

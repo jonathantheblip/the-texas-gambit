@@ -239,7 +239,7 @@ window.HCEPass3 = (function(){
     const ds = store.decisions[decision.id] || {};
     const pick = (opt) => {
       const next = JSON.parse(JSON.stringify(store));
-      next.decisions[decision.id] = { ...ds, pick: opt, t: Date.now() };
+      next.decisions[decision.id] = { ...ds, pick: opt, t: Date.now(), decidedBy: Store.identity };
       Store.pushJournal(next, { roomId: (decision.rooms||[])[0], kind:'decision', text:`Picked "${opt}" for ${decision.title}` });
       setStore(next);
     };

@@ -4946,3 +4946,23 @@ body[data-tone="dusk"] .floor-tabs button.active  {
   border-bottom-color: #9BB6F0;
 }
 
+
+/* ─────────────────────────────────────────────────────────────
+   PASS 8 — AUTHORSHIP BADGES (sync-era)
+   ─────────────────────────────────────────────────────────────
+   When the shared store records who made each entry (Helen vs Jon),
+   we surface a small "— H" or "— J" pill alongside its timestamp.
+   Stays subtle: same line as the meta, slightly tinted by author.
+   ───────────────────────────────────────────────────────────── */
+.author-badge {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10px;
+  letter-spacing: .04em;
+  font-weight: 600;
+  opacity: .72;
+}
+.author-badge.author-helen { color: var(--cobalt, #1E3A8A); }
+.author-badge.author-jon   { color: var(--brick, #9C3D2E); }
+body[data-mode="jon"]   .author-badge.author-helen { color: #6B8AD9; }
+body[data-mode="helen"] .author-badge.author-jon   { color: #C26654; }

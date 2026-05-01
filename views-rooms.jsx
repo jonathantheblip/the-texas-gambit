@@ -148,7 +148,7 @@ window.HCERoomViews = (function(){
     // ─ Status / quick-react
     const setStatus = (kind, label) => {
       update(s => {
-        const rr = Store.room(s, r.id);
+        const rr = Store.touch(s, r.id);
         if (kind === 'love') rr.status = rr.status === 'love' ? null : 'love';
         else if (kind === 'changes') rr.status = rr.status === 'changes' ? null : 'changes';
         else {
@@ -177,8 +177,9 @@ window.HCERoomViews = (function(){
       update(s => {
         const rr = Store.room(s, r.id);
         const id = 'p_' + Date.now().toString(36);
-        rr.pins.push({ id, imgSlug: img.slug, x, y, text, t: Date.now() });
-        rr.notes.push({ id: 'n_'+id, t: Date.now(), kind:'pin', pinId:id, text });
+        const author = Store.identity;
+        rr.pins.push({ id, imgSlug: img.slug, x, y, text, t: Date.now(), author });
+        rr.notes.push({ id: 'n_'+id, t: Date.now(), kind:'pin', pinId:id, text, author });
         Store.pushJournal(s, { roomId: r.id, kind:'pin', text, extra:{ pinId:id, imgSlug: img.slug } });
       });
       setPinMode(false);
@@ -208,7 +209,7 @@ window.HCERoomViews = (function(){
       if (!text) return;
       update(s => {
         const rr = Store.room(s, r.id);
-        rr.notes.push({ id:'n_'+Date.now().toString(36), t: Date.now(), kind:'text', text });
+        rr.notes.push({ id:'n_'+Date.now().toString(36), t: Date.now(), kind:'text', text, author: Store.identity });
         Store.pushJournal(s, { roomId: r.id, kind:'note', text });
       });
       setNoteDraft('');
@@ -217,7 +218,7 @@ window.HCERoomViews = (function(){
     // ─ Decision pick
     const pickDecision = (decId, opt) => {
       update(s => {
-        s.decisions[decId] = { pick: opt, t: Date.now() };
+        s.decisions[decId] = { pick: opt, t: Date.now(), decidedBy: Store.identity };
         Store.pushJournal(s, { roomId: r.id, kind:'decision', text:`${decId}: ${opt}` });
       });
     };
@@ -391,6 +392,7 @@ window.HCERoomViews = (function(){
                     <div className="meta">
                       {n.kind === 'pin' && <span className="pin-ref">Pin {(rs.pins.findIndex(p => p.id === n.pinId)+1) || '·'}</span>}
                       {new Date(n.t).toLocaleString([], { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' })}
+                      {n.author && <span className={`author-badge author-${n.author}`}>— {n.author === 'jon' ? 'J' : 'H'}</span>}
                     </div>
                     {n.text}
                   </div>

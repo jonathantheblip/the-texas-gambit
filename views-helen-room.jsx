@@ -72,7 +72,7 @@ window.HCEHelenRoom = (function(){
     // ─ Heart / love
     const toggleLove = () => {
       update(s => {
-        const rr = Store.room(s, r.id);
+        const rr = Store.touch(s, r.id);
         rr.status = rr.status === 'love' ? null : 'love';
         Store.pushJournal(s, { roomId: r.id, kind:'react', text: rr.status === 'love' ? 'Loved' : 'Unloved' });
       });
@@ -85,7 +85,7 @@ window.HCEHelenRoom = (function(){
         const idx = s.wall.findIndex(w => w.roomId === r.id && w.imgSlug === img.slug);
         if (idx >= 0) s.wall.splice(idx, 1);
         else {
-          s.wall.unshift({ roomId: r.id, imgSlug: img.slug, t: Date.now() });
+          s.wall.unshift({ roomId: r.id, imgSlug: img.slug, t: Date.now(), author: Store.identity });
           Store.pushJournal(s, { roomId: r.id, kind:'wall', text: `Saved "${img.caption || img.alt || r.name}" to the wall` });
         }
       });
@@ -94,7 +94,7 @@ window.HCEHelenRoom = (function(){
     // ─ Mood completion (replaces tag picker)
     const toggleMood = (phrase) => {
       update(s => {
-        const rr = Store.room(s, r.id);
+        const rr = Store.touch(s, r.id);
         const i = rr.mood.indexOf(phrase);
         if (i >= 0) rr.mood.splice(i, 1);
         else rr.mood.push(phrase);
@@ -118,8 +118,9 @@ window.HCEHelenRoom = (function(){
       update(s => {
         const rr = Store.room(s, r.id);
         const id = 'p_' + Date.now().toString(36);
-        rr.pins.push({ id, imgSlug: img.slug, x, y, text, t: Date.now() });
-        rr.notes.push({ id: 'n_'+id, t: Date.now(), kind:'pin', pinId:id, text });
+        const author = Store.identity;
+        rr.pins.push({ id, imgSlug: img.slug, x, y, text, t: Date.now(), author });
+        rr.notes.push({ id: 'n_'+id, t: Date.now(), kind:'pin', pinId:id, text, author });
         Store.pushJournal(s, { roomId: r.id, kind:'pin', text, extra:{ pinId:id, imgSlug: img.slug } });
       });
       setPinMode(false);
@@ -139,7 +140,7 @@ window.HCEHelenRoom = (function(){
       if (!text) return;
       update(s => {
         const rr = Store.room(s, r.id);
-        rr.notes.push({ id:'n_'+Date.now().toString(36), t: Date.now(), kind:'text', text });
+        rr.notes.push({ id:'n_'+Date.now().toString(36), t: Date.now(), kind:'text', text, author: Store.identity });
         Store.pushJournal(s, { roomId: r.id, kind:'note', text });
       });
       setNoteDraft('');
@@ -296,6 +297,7 @@ window.HCEHelenRoom = (function(){
                         <div className="hr-note-meta">
                           {n.kind === 'pin' && <span className="hr-pin-ref">Pin {(rs.pins.findIndex(p => p.id === n.pinId)+1) || '·'}</span>}
                           <span>{new Date(n.t).toLocaleString([], { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' })}</span>
+                          {n.author && <span className={`author-badge author-${n.author}`}>— {n.author === 'jon' ? 'J' : 'H'}</span>}
                         </div>
                         <div className="hr-note-text">{n.text}</div>
                       </div>
