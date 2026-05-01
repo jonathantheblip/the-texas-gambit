@@ -75,7 +75,8 @@
       if (mode === 'jon') {
         document.body.setAttribute('data-tone', 'day');
       }
-      // Swap the browser-tab favicon to match the current mode
+      // Swap the browser-tab favicon to match the current mode (index.html only;
+      // helen.html and jon.html have static favicons baked into the PWA install).
       const fav = document.getElementById('favicon');
       if (fav) fav.setAttribute('href', mode === 'jon' ? 'favicon-jon.svg' : 'favicon-helen.svg');
     }, [mode]);
@@ -94,6 +95,43 @@
       window.addEventListener('hashchange', onHash);
       return () => window.removeEventListener('hashchange', onHash);
     }, []);
+
+    // ── Mode/route guard ────────────────────────────────────────
+    // Each route belongs to one user (Helen, Jon, or both). When
+    // the user lands on or navigates to a route owned by the OTHER
+    // mode, we auto-switch the mode to match — so a deep-link to
+    // "/digest" puts you in Jon's lens; a deep-link to "/wall" puts
+    // you in Helen's. Routes neither own are home-redirected.
+    useEffect(() => {
+      // 'helen' = Helen-only · 'jon' = Jon-only · 'shared' = both
+      const ownership = {
+        home:      'shared',  // (renders different views per mode)
+        building:  'shared',
+        room:      'shared',
+        decisions: 'shared',
+        plan:      'shared',
+        specs:     'shared',
+        phasing:   'shared',
+        // Helen's pages
+        rooms:     'helen',
+        wall:      'helen',
+        ancestors: 'helen',
+        notes:     'helen',
+        // Jon's pages
+        digest:    'jon',
+      };
+      const owner = ownership[route.kind];
+      if (!owner) {
+        // Unknown route — bounce home.
+        go({ kind: 'home' });
+        return;
+      }
+      if (owner !== 'shared' && owner !== mode) {
+        // Wrong-mode access — switch mode to match the page,
+        // rather than refuse the destination.
+        setMode(owner);
+      }
+    }, [route.kind, mode]);
 
     const go = (r) => {
       const h = routeToHash(r);
@@ -263,8 +301,8 @@
             </button>
           )}
           <div className="mode-switch">
-            <button className={mode==='helen'?'active':''} onClick={() => setMode('helen')}>Helen</button>
-            <button className={mode==='jon'?'active':''}   onClick={() => setMode('jon')}>Jon</button>
+            <button className={mode==='helen'?'active':''} onClick={() => { if (mode !== 'helen') { setMode('helen'); go({ kind:'home' }); } }}>Helen</button>
+            <button className={mode==='jon'?'active':''}   onClick={() => { if (mode !== 'jon')   { setMode('jon');   go({ kind:'home' }); } }}>Jon</button>
           </div>
         </div>
       </div>

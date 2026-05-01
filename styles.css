@@ -65,6 +65,8 @@
 html, body {
   margin: 0; padding: 0;
   background: var(--honey-1);
+  overflow-x: hidden;
+  max-width: 100vw;
   -webkit-tap-highlight-color: transparent;
 }
 body {
@@ -4519,3 +4521,428 @@ body[data-mode="jon"] .jp-opt-kill    { background: linear-gradient(to right, rg
 @media (max-width: 879px) {
   body { padding-bottom: 64px; }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   PASS 7 — MOBILE TOPBAR OVERFLOW
+   ─────────────────────────────────────────────────────────────
+   At <440px the topbar's right cluster (search + dusk + Helen/Jon
+   switch) was getting pushed off-screen by the brand title, which
+   in turn made <body> wider than 100vw and caused page content to
+   appear horizontally cut. Fix: tighten the topbar on narrow
+   screens without losing any controls.
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .topbar { padding: 0 10px; gap: 8px; }
+  .topbar > div[style*="display:flex"],
+  .topbar > div[style*="display: flex"] { gap: 6px !important; }
+
+  /* Brand: shrink so the right cluster always fits */
+  .brand { gap: 8px; min-width: 0; flex-shrink: 1; }
+  .brand .sigil { width: 26px; height: 26px; font-size: 13px; }
+  .brand-title { font-size: 14px; min-width: 0; }
+
+  /* Right cluster: tighter pill, smaller search/dusk buttons */
+  .mode-switch { padding: 2px; font-size: 10px; letter-spacing: .08em; flex-shrink: 0; }
+  .mode-switch button { padding: 4px 9px; }
+  .search-trigger { padding: 5px 7px; flex-shrink: 0; }
+  .dusk-toggle { padding: 4px 8px; font-size: 10px; flex-shrink: 0; }
+  .dusk-toggle .dusk-toggle-label { display: none; }
+}
+
+@media (max-width: 380px) {
+  /* Truly narrow: drop the dusk-toggle text label entirely (icon stays) */
+  .dusk-toggle { padding: 4px 6px; }
+  .brand-title { font-size: 13px; }
+}
+
+/* Defense in depth: any direct child of .topbar that's a flex
+   container with the right-cluster controls must not push past
+   the viewport. */
+.topbar { gap: 10px; min-width: 0; }
+.topbar > * { min-width: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   PASS 5 — READABILITY AUDIT REPAIRS  (May 2026)
+   Fix mode-bleed contrast issues identified in audit:
+   • Jon-themed components (Working Set, HelenDigest, ThePlan,
+     LockedSpecs) used unconditional --j-text / --j-text-soft.
+     These bleed into Helen mode where the page bg is honey cream,
+     producing 1.05 contrast (illegible). Add Helen-mode color
+     equivalents that target the same components.
+   • Room-card h3 had no color rule → black-on-Jon-dark = 1.22.
+     Same for bldg-card titles, event-kind labels, etc.
+   • --walnut-faint (#8A7762) used for body copy fails 4.5
+     against honey-1. Lift to --walnut-soft for paragraph text.
+   • Decoration-toned numerals (mustard-deep, j-cobalt) used as
+     small body text → fail. Switch to walnut-soft / j-text-soft.
+   • Text over images relied on a 55% scrim — add explicit
+     text-shadow as belt-and-braces.
+   ───────────────────────────────────────────────────────────── */
+
+/* === A) Helen-mode fallback colors for Jon-themed components === */
+/* Working Set titleblock */
+body[data-mode="helen"] .ws-titleblock           { border-bottom-color: var(--rule); }
+body[data-mode="helen"] .ws-titleblock h1        { color: var(--walnut); }
+body[data-mode="helen"] .ws-mini                 { color: var(--walnut-soft); }
+/* The .ws-stamp + .ws-pressure banners remain dark-navy in both modes
+   (intentional architect-drawing-stamp aesthetic). Keep their text light
+   in Helen too so they stay legible on the dark fill. */
+.ws-stamp,
+.ws-stamp .stamp-row              { color: var(--j-text); }
+.ws-stamp .stamp-row .lbl         { color: var(--j-text-soft); }
+.ws-pressure .pressure-line       { color: var(--j-text); }
+.ws-pressure .pressure-sub        { color: var(--j-text-soft); }
+/* Prevent stamp-row label/value overlap when Companion · Jon wraps */
+.ws-stamp                         { min-width: 220px; }
+.ws-stamp .stamp-row              { gap: 12px; flex-wrap: wrap; }
+.ws-stamp .stamp-row > span:last-child { text-align: right; min-width: 0; word-break: keep-all; }
+
+/* Bldg/sheet cards in Working Set */
+body[data-mode="helen"] .bldg-card               { color: var(--walnut); background: var(--honey-0); border-color: var(--rule-soft); }
+body[data-mode="helen"] .bldg-card h2,
+body[data-mode="helen"] .bldg-card h3,
+body[data-mode="helen"] .bldg-card .ws-card-title { color: var(--walnut); }
+
+/* Digest masthead */
+body[data-mode="helen"] .digest-masthead h1      { color: var(--walnut); }
+body[data-mode="helen"] .digest-masthead .dek    { color: var(--walnut-soft); }
+body[data-mode="helen"] .digest-empty            { color: var(--walnut-soft); border-color: var(--rule); }
+body[data-mode="helen"] .col-head                { border-bottom-color: var(--rule-soft); }
+body[data-mode="helen"] .col-head h2             { color: var(--walnut); }
+body[data-mode="helen"] .col-head .col-sub       { color: var(--walnut-soft); }
+body[data-mode="helen"] .col-head .col-mark      { color: var(--cobalt); }
+
+/* Generic Jon button-style cards used in digest columns */
+body[data-mode="helen"] .pull-quote,
+body[data-mode="helen"] .digest-card,
+body[data-mode="helen"] .digest-tile             { color: var(--walnut); }
+body[data-mode="helen"] .pull-quote cite         { color: var(--walnut-soft); }
+
+/* Spec-table (LockedSpecs view) */
+body[data-mode="helen"] .spec-table td.item,
+body[data-mode="helen"] .spec-table td.value     { color: var(--walnut); }
+body[data-mode="helen"] .spec-table td           { border-bottom-color: var(--rule-soft); }
+
+/* The Plan / phasing — Jon-style numbered cells in Helen mode */
+body[data-mode="helen"] .jp-specs-table td       { color: var(--walnut); border-bottom-color: var(--rule-soft); }
+body[data-mode="helen"] .jp-specs-table td.item,
+body[data-mode="helen"] .jp-specs-table td.value { color: var(--walnut); }
+
+/* === B) Room-card / Building-card title colors in Jon mode === */
+body[data-mode="jon"] .room-card .body h3        { color: var(--j-text); }
+body[data-mode="jon"] .bldg-card-text h3,
+body[data-mode="jon"] .bldg-card-text h2         { color: var(--j-text); }
+
+/* Phasing event titles + labels in Jon */
+body[data-mode="jon"] .phase-event               { color: var(--j-text); }
+body[data-mode="jon"] .phase-event .event-kind   { color: var(--j-text-soft); }
+
+/* === C) Lift body-text usage of --walnut-faint to --walnut-soft === */
+/* walnut-faint #8A7762 fails AA on honey-1 (3.74). Reserve it for
+   purely decorative micro-type. Promote anything that's actually
+   readable copy to walnut-soft #5C4A3A (passes AA). */
+.page-head .lede                                 { color: var(--walnut-soft); }
+.compound-hero .lede                             { color: var(--walnut-soft); }
+.invitation .ask                                 { color: var(--walnut-soft); }
+.invitation .meta                                { color: var(--walnut-soft); }
+.spec-list .k                                    { color: var(--walnut-soft); }
+.spec-list .spec-react button                    { color: var(--walnut-soft); }
+.note .meta                                      { color: var(--walnut-soft); }
+.brand-meta                                      { color: var(--walnut-soft); }
+.fp-stage .sheet-no                              { color: var(--walnut-soft); }
+.building-head .sub                              { color: var(--walnut-soft); }
+.floor-tabs button                               { color: var(--walnut-soft); }
+.panel-section h4                                { color: var(--walnut-soft); }
+.detail-panel .panel-tag                         { color: var(--walnut-soft); }
+.pin-tooltip .head                               { color: var(--walnut-soft); }
+.invitation .heading                             { color: var(--walnut-soft); }
+.section-head .h                                 { color: var(--walnut-soft); }
+.hp-era-span                                     { color: var(--walnut-soft); }
+.be-who                                          { color: var(--walnut-soft); }
+/* Top-nav inactive items — bumped from faint to soft */
+.top-nav button                                  { color: var(--walnut-soft); }
+body[data-mode="jon"] .top-nav button            { color: var(--j-text-soft); }
+
+/* === D) Tinted numerals on tinted bg — replace with neutrals === */
+/* Phase column years label — was mustard-deep (2.41) on honey */
+body[data-mode="helen"] .phase-col-head .yrs,
+body[data-mode="helen"] .yrs                     { color: var(--walnut-soft); }
+/* Place tag in compound hero — was mustard-deep on honey */
+body[data-mode="helen"] .place                   { color: var(--walnut-soft); }
+/* Sheet numbers in Jon dark cards — j-cobalt at 3.57 */
+body[data-mode="jon"] .sheet-no                  { color: #8FA8E8; }      /* lifted cobalt */
+body[data-mode="jon"] .jp-pc-years               { color: #8FA8E8; }
+
+/* Cobalt buttons — text was bg-0 #0E1422 on cobalt → 4.25, just under.
+   Bump button text to white for AA. */
+.btn-primary,
+.cobalt-btn,
+.invitation .opt-row button.helen-pick,
+.decision-callout .dc-options button.helen-pick,
+.compare-pick.on,
+.quick-react.active,
+.spec-list .spec-react button.locked.active,
+.mood-tag.active,
+.hr-mood-chip.on                                  { color: #FFFFFF; }
+body[data-mode="jon"] .btn-primary,
+body[data-mode="jon"] .cobalt-btn                 { color: #FFFFFF; }
+.pending-pill                                     { color: #FFFFFF; }
+.mode-switch button.active                        { color: #FFFFFF; }
+.view-toggle button.active                        { color: #FFFFFF; }
+
+/* === E) Text-over-image legibility — add belt-and-braces shadow === */
+.bldg-card-img + .overlay-tag,
+.overlay-tag,
+.thumb .room-tag,
+.thumb .badge,
+.room-card .badges .badge,
+.image-stage .pin-tooltip,
+.hr-meta,
+.hr-name-block .place,
+.hr-name-block .sub                               { text-shadow: 0 1px 3px rgba(0,0,0,.55); }
+/* Strengthen the dark scrim under image-overlay tags from .55 to .68 */
+.overlay-tag                                      { background: rgba(20,15,8,.68); }
+.image-stage .arrow                               { background: rgba(20,15,8,.55); color: #FFF; }
+.image-stage .arrow:hover                         { background: var(--cobalt); color: #FFF; }
+/* Ensure hr-name-block H1 stays legible over hero photos */
+.hr-name-block h1                                 { text-shadow: 0 2px 22px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.5); }
+.hr-name-block h1 em                              { color: inherit; }
+
+/* === F) Top-bar mode bleed — make sure brand-title always reads === */
+body[data-mode="helen"] .brand-title              { color: var(--walnut); }
+body[data-mode="jon"] .brand-title                { color: var(--j-text); }
+
+/* === G) Helen-mode helen-summary card (was Jon-themed) === */
+body[data-mode="helen"] .helen-summary            { color: var(--walnut); background: var(--honey-0); border-color: var(--rule); }
+
+/* === H) Helen note styled-as-Jon panel === */
+body[data-mode="helen"] .helen-note               { color: var(--walnut); background: rgba(31,73,166,.08); border-left-color: var(--cobalt); }
+
+/* === I) Pin / journal entry "what" text in helen mode === */
+body[data-mode="helen"] .journal-entry .what      { color: var(--walnut); }
+
+/* === J) Spec-react cobalt button text fix when viewing in either mode === */
+.spec-list .spec-react button.locked.active,
+.spec-list .spec-react button.ask.active          { color: #FFFFFF; }
+
+/* === K) Helen-room hero scrim — strengthen so room name reads over bright,
+       high-key imagery (e.g. sunlit limestone porch). Was .55 → .78 and
+       extends further down so the eyebrow tag + caption sit in shade. === */
+.hr-image::after {
+  background:
+    linear-gradient(to bottom,
+      rgba(20,15,8,.78) 0%,
+      rgba(20,15,8,.45) 18%,
+      rgba(20,15,8,0) 38%,
+      rgba(20,15,8,0) 60%,
+      rgba(20,15,8,.72) 100%),
+    linear-gradient(to right, rgba(20,15,8,.18), rgba(20,15,8,0) 30%) !important;
+}
+
+/* === L) Helen-room overlay text shadows — eyebrow tag + caption + drawer
+       label now match the H1's belt-and-braces treatment so they survive
+       any photo background. === */
+.hr-tag,
+.hr-caption                                       { text-shadow: 0 2px 14px rgba(0,0,0,.65), 0 1px 3px rgba(0,0,0,.55); }
+.hr-name-block h1                                 { text-shadow: 0 2px 22px rgba(0,0,0,.75), 0 1px 3px rgba(0,0,0,.65); }
+
+
+/* ─────────────────────────────────────────────────────────────
+   PASS 6 — COMPREHENSIVE READABILITY SWEEP (May 2026)
+
+   The audit found two systemic issues PASS 5 only partially fixed:
+
+   (1) CROSS-MODE BLEED — many pages are mode-agnostic (digest, wall,
+       phasing, decisions, ancestors, plan, rooms, all room/building
+       detail pages, journal, search). Their styles still hard-coded
+       walnut/cobalt tokens in the BASE rule. When mode flips to Jon,
+       a Jon override exists for some classes but not all. The misses
+       produced 1.05–2.4 contrast failures on dark cobalt.
+
+   (2) IMAGE-OVERLAY TEXT — labels stacked on top of photos
+       (room-state pills, bldg-stat hearts, badge dots, top-image
+       phase pills, lookbook captions) had a colored stroke but
+       no fill / no scrim. Against busy or sun-blown imagery
+       these became invisible.
+
+   PASS 6 closes both gaps. Organised by component family.
+   ───────────────────────────────────────────────────────────── */
+
+/* === M) Universal image-overlay scrim treatment ============== */
+/* Anything pinned over a thumbnail or hero gets a translucent
+   dark capsule + text shadow. Works on any photo, any mode. */
+.room-state-pill                                  {
+  background: rgba(20,15,8,.72) !important;
+  color: #FBF7EB !important;
+  border-color: rgba(255,255,255,.22) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+  backdrop-filter: blur(4px);
+}
+.room-state-pill.loved                            { color: #FFC9B5 !important; }
+.room-state-pill.changes                          { color: #FFD88A !important; }
+
+/* Building-card phase pill — was OK but tighten on dusk-darkened
+   imagery (.55 scrim drops to ~.4 against dimmed photos). */
+.bldg-card-phase                                  {
+  background: rgba(20,15,8,.68) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+body[data-tone="dusk"] .bldg-card-phase           { background: rgba(8,12,24,.78) !important; }
+
+/* Ancestor dot badges on room-card thumbs — tiny dots can disappear
+   on certain photos. Add a subtle outer ring for separation. */
+.room-card .badges                                {
+  background: rgba(20,15,8,.32);
+  padding: 4px 6px;
+  border-radius: 999px;
+  backdrop-filter: blur(3px);
+}
+body[data-mode="jon"] .room-card .badges          { background: rgba(8,12,24,.45); }
+
+/* === N) Wall view in Jon mode ================================ */
+/* Helen's Wall is an analog scrapbook (light tape + cream cards).
+   In Jon mode the page bg flips to dark cobalt, but cards stay
+   cream — that's intentional (wall-as-physical-surface metaphor).
+   The captions BELOW each card sit on dark page bg though, and
+   their walnut-3 text becomes 2.1:1 on Jon's #0E1422. Lift them. */
+body[data-mode="jon"] .wall-cap                   { color: #C8BFA8; }
+body[data-mode="jon"] .wall-room                  { color: #F1E9D8; }
+body[data-mode="jon"] .wall-empty                 {
+  color: var(--j-text-soft);
+  border-color: var(--j-line);
+  background: var(--j-bg-1);
+}
+body[data-mode="jon"] .wall-empty p + p           { color: var(--j-text-soft); }
+
+/* === O) Phase strip — phase-3 "Living" column =============== */
+/* `.phase-col.phase-3` was --walnut-faint (3.74 on honey, fail).
+   In Jon mode it had no override (1.85, severe fail). */
+.phase-col.phase-3                                { color: var(--walnut-soft); }
+body[data-mode="jon"] .phase-col.phase-3          { color: var(--j-text-soft); }
+/* Phase-col description body copy — small italic on tinted bg */
+.phase-col-head .desc                             { color: var(--walnut-soft); }
+body[data-mode="jon"] .phase-col-head             { color: var(--j-text); }
+body[data-mode="jon"] .phase-col-head .desc       { color: var(--j-text-soft); }
+body[data-mode="jon"] .phase-col-head h3          { color: var(--j-text); }
+body[data-mode="jon"] .phase-col-head .yrs        { color: var(--j-text-soft); }
+
+/* === P) Decisions / Invitations in Jon mode ================== */
+/* `.invitation` and its labels render the same in both modes.
+   Body text was --walnut-soft default; in Jon it bleeds dark
+   on dark. Promote to j-text-soft. */
+body[data-mode="jon"] .invitation                 {
+  background: var(--j-bg-1);
+  border-color: var(--j-line);
+  color: var(--j-text);
+}
+body[data-mode="jon"] .invitation .ask            { color: var(--j-text); }
+body[data-mode="jon"] .invitation .meta           { color: var(--j-text-soft); }
+body[data-mode="jon"] .invitation .ref-link       { color: var(--j-text-soft); }
+
+/* === Q) Journal / notes in Jon mode ========================== */
+body[data-mode="jon"] .journal-entry              { color: var(--j-text); }
+body[data-mode="jon"] .journal-entry .when        { color: var(--j-text-soft); }
+body[data-mode="jon"] .journal-entry .what        { color: var(--j-text); }
+body[data-mode="jon"] .journal-section h3         {
+  color: var(--j-text-soft);
+  border-bottom-color: var(--j-line-soft);
+}
+body[data-mode="jon"] .empty-state                { color: var(--j-text-soft); }
+
+/* === R) Ancestors view in Jon mode =========================== */
+/* ancestor-card uses currentColor for borders and background tint.
+   In Jon mode the cream background becomes hostile. Switch to a
+   dark tinted card. */
+body[data-mode="jon"] .ancestor-card              {
+  background: var(--j-bg-1);
+  color: var(--j-text);
+}
+body[data-mode="jon"] .ancestor-card .name        { color: var(--j-text); }
+body[data-mode="jon"] .ancestor-card .desc        { color: var(--j-text-soft); }
+body[data-mode="jon"] .ancestor-card.is-lens-active {
+  background: color-mix(in oklab, currentColor, var(--j-bg-0) 75%);
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+/* === S) Pin-tooltip in Jon mode ============================== */
+body[data-mode="jon"] .pin-tooltip                {
+  background: var(--j-bg-1);
+  color: var(--j-text);
+  border-color: var(--j-cobalt);
+}
+body[data-mode="jon"] .pin-tooltip .head          { color: var(--j-text-soft); }
+body[data-mode="jon"] .pin-tooltip .close-pin     { color: var(--j-text-soft); }
+
+/* === T) Search trigger + results in Jon mode ================= */
+body[data-mode="jon"] .search-trigger             {
+  background: var(--j-bg-1);
+  border-color: var(--j-line);
+  color: var(--j-text-soft);
+}
+body[data-mode="jon"] .search-trigger:hover       {
+  border-color: var(--j-cobalt);
+  color: var(--j-cobalt);
+}
+body[data-mode="jon"] .search-trigger kbd         {
+  background: var(--j-bg-2);
+  border-color: var(--j-line);
+  color: var(--j-text-soft);
+}
+
+/* === U) Lookbook image caption (room-detail in Jon) ========== */
+/* The image-stage caption sits on a black letterbox in Jon mode
+   already (rule body[data-mode="jon"] .image-stage), but the
+   caption text itself was --walnut-soft on j-bg #14110A. Lift. */
+body[data-mode="jon"] .image-stage .caption       { color: #C8BFA8; }
+body[data-mode="jon"] .image-stage .caption .meta { color: #8A8478; }
+
+/* === V) Floor-plan / Building view in Jon mode =============== */
+body[data-mode="jon"] .fp-stage .sheet-no         { color: var(--j-text-soft); }
+body[data-mode="jon"] .building-head h1           { color: var(--j-text); }
+body[data-mode="jon"] .building-head .sub         { color: var(--j-text-soft); }
+
+/* === W) Helen-mode bleeds for OTHER ws-* / digest sub-pieces == */
+/* PASS 5 §A covered the headers but missed inline tile labels. */
+body[data-mode="helen"] .ws-card-meta             { color: var(--walnut-soft); }
+body[data-mode="helen"] .ws-card-tag              { color: var(--walnut-soft); border-color: var(--rule); }
+body[data-mode="helen"] .ws-action                { color: var(--walnut); }
+body[data-mode="helen"] .digest-card .label       { color: var(--walnut-soft); }
+body[data-mode="helen"] .digest-card .value       { color: var(--walnut); }
+body[data-mode="helen"] .digest-tile h3           { color: var(--walnut); }
+body[data-mode="helen"] .digest-tile p            { color: var(--walnut-soft); }
+body[data-mode="helen"] .silence-card             {
+  background: var(--honey-0);
+  border-color: var(--rule);
+  color: var(--walnut);
+}
+body[data-mode="helen"] .silence-card .head       { color: var(--walnut-soft); }
+
+/* === X) Phasing event Helen mode body copy =================== */
+/* Already has tag/title in Jon; ensure base also reads cleanly. */
+.phase-event .event-title                         { color: var(--walnut); }
+.phase-event .event-desc                          { color: var(--walnut-soft); }
+.phase-event .event-kind                          { color: var(--walnut-soft); }
+
+/* === Y) Top-image phase pill on bldg-card — small fixed-ratio = */
+/* phase pastel colors had ~5–7:1 on the dark scrim, but for the
+   blue/teal options drop on bright-sky photos they could clip.
+   Lift everyone to a guaranteed cream-leaning pastel. */
+.bldg-card.phase-2A .bldg-card-phase              { color: #DCE6FF; }
+.bldg-card.phase-2B .bldg-card-phase              { color: #C9E5EE; }
+.bldg-card.phase-2C .bldg-card-phase              { color: #F5E4B8; }
+
+/* === Z) Bldg-stat numbers in Jon mode ======================== */
+/* loved/changes use madder/terracotta on a now-dark card body. */
+body[data-mode="jon"] .bldg-stat                  { color: var(--j-text-soft); }
+body[data-mode="jon"] .bldg-stat.loved            { color: #FF9D88; }
+body[data-mode="jon"] .bldg-stat.changes          { color: #FFB873; }
+
+/* === AA) Crumb / breadcrumb in dusk ========================== */
+/* Dusk re-tokenizes walnut to cream; crumb hover used --cobalt
+   which is the deep blue — fine on light, low-contrast on dusk. */
+body[data-tone="dusk"] .crumb a:hover             { color: #9BB6F0; }
+body[data-tone="dusk"] .floor-tabs button.active  {
+  color: #9BB6F0;
+  border-bottom-color: #9BB6F0;
+}
+
