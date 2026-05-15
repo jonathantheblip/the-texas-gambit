@@ -11,12 +11,6 @@
   "description": "A living lookbook for the Hill Country Compound — Helen's view.",
   "icons": [
     {
-      "src": "favicon-helen.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
       "src": "favicon-helen-180.png",
       "sizes": "180x180",
       "type": "image/png",

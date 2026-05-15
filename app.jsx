@@ -105,7 +105,7 @@
       // Swap the browser-tab favicon to match the current mode (index.html only;
       // helen.html and jon.html have static favicons baked into the PWA install).
       const fav = document.getElementById('favicon');
-      if (fav) fav.setAttribute('href', mode === 'jon' ? 'favicon-jon.svg' : 'favicon-helen.svg');
+      if (fav) fav.setAttribute('href', mode === 'jon' ? 'favicon-jon-180.png' : 'favicon-helen-180.png');
     }, [mode]);
 
     // ── Hash routing
