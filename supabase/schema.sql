@@ -111,3 +111,25 @@ begin
     execute format('create policy "anon all" on public.%I for all to anon using (true) with check (true);', t);
   end loop;
 end $$;
+
+-- ── room_overrides ──────────────────────────────────────────────
+-- The render-forward 3D model's shared dimension edits. One row per
+-- room someone has nudged: a sparse override of the base geometry in
+-- compound_rooms.json. The base table stays the source of truth.
+-- (Added for the render-forward restructuring, 2026-06.)
+create table if not exists public.room_overrides (
+  room_id     text primary key,
+  x           double precision,
+  y           double precision,
+  w           double precision,
+  d           double precision,
+  height      double precision,
+  updated_at  timestamptz default now(),
+  updated_by  text  -- 'helen' | 'jon'
+);
+
+alter publication supabase_realtime add table public.room_overrides;
+
+alter table public.room_overrides enable row level security;
+drop policy if exists "anon all" on public.room_overrides;
+create policy "anon all" on public.room_overrides for all to anon using (true) with check (true);

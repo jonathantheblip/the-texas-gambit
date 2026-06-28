@@ -82,6 +82,32 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .spec-row .k { color: var(--ink-soft); flex: 0 0 38%; }
 .spec-row .v { font-family: var(--mono); }
 
+/* Panel head: identity + sync */
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--panel-edge); }
+.identity { display: flex; align-items: center; gap: 4px; font-size: 12px; }
+.identity .lbl { color: var(--ink-soft); margin-right: 2px; }
+.identity button { font-family: var(--sans); font-size: 12px; border: 1px solid var(--panel-edge); background: #fff; color: var(--ink-soft); padding: 3px 10px; border-radius: 999px; cursor: pointer; }
+.identity button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sync { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); }
+.sync .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-soft); }
+.sync.idle .dot { background: var(--ok); }
+.sync.syncing .dot { background: #c9a23a; }
+.sync.offline .dot, .sync.error .dot { background: var(--bad); }
+
+/* Edit dimensions */
+.edit { margin: 12px 0; padding: 10px 12px; background: rgba(0,0,0,.03); border-radius: 8px; }
+.edit .subhead { margin-top: 0; display: flex; justify-content: space-between; }
+.edit .as { font-weight: 400; color: var(--ink-soft); }
+.edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+.edit-row { display: flex; flex-direction: column; gap: 2px; font-size: 11px; color: var(--ink-soft); }
+.edit-row input { font-family: var(--mono); font-size: 13px; padding: 4px 6px; border: 1px solid var(--panel-edge); border-radius: 5px; background: #fff; color: var(--ink); width: 100%; }
+.edit-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+.edit-foot .edited { color: var(--accent); display: inline-flex; gap: 6px; align-items: center; }
+.link { background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: 11px; padding: 0; }
+.row-btns { display: flex; gap: 8px; }
+.row-btns button { font-family: var(--sans); font-size: 12px; border: 1px solid var(--panel-edge); background: #fff; color: var(--ink); padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+.row-btns button:hover { background: var(--bg); }
+
 @media (max-width: 760px) {
   .layout { flex-direction: column; }
   .panel { width: 100%; flex: 0 0 auto; height: 42vh; border-left: none; border-top: 1px solid var(--panel-edge); }

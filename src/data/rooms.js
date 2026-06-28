@@ -38,6 +38,43 @@ export const FLOORS = FLOOR_ORDER.filter((f) => ALL_ROOMS.some((r) => r.floor ==
 export const buildingRender = (b) => asset(BUILDING_RENDERS[b]);
 export const compoundRender = asset(COMPOUND_RENDER);
 
+/**
+ * Apply sparse {x,y,w,d,height} edits on top of the base rooms.
+ * Geometry stays the source; an override is just "someone nudged this wall."
+ * Recomputes the derived fields (area, zCeil) so validation + render stay honest.
+ */
+export function applyOverrides(rooms, overrides) {
+  if (!overrides || !Object.keys(overrides).length) return rooms;
+  return rooms.map((r) => {
+    const o = overrides[r.id];
+    if (!o) return r;
+    const w = o.w ?? r.w, d = o.d ?? r.d, height = o.height ?? r.height;
+    const x = o.x ?? r.x, y = o.y ?? r.y;
+    return { ...r, x, y, w, d, height, zCeil: r.zFloor + height, area: w * d, edited: true, editedBy: o.updatedBy || null, editedAt: o.updatedAt || null };
+  });
+}
+
+// Geometry-only projection (for export / round-trip back to compound_rooms.json).
+const GEOM_KEYS = ['id', 'name', 'building', 'section', 'floor', 'x', 'y', 'w', 'd', 'zFloor', 'zCeil', 'height', 'area', 'tag', 'render', 'notes'];
+export function toGeometryTable(rooms) {
+  return { meta: META, rooms: rooms.map((r) => GEOM_KEYS.reduce((a, k) => (r[k] !== undefined ? ((a[k] = r[k]), a) : a), {})) };
+}
+
+// Diff an imported geometry table back into sparse overrides vs the base rooms.
+const EDIT_KEYS = ['x', 'y', 'w', 'd', 'height'];
+export function tableToOverrides(importedRooms) {
+  const base = new Map(roomsData.rooms.map((r) => [r.id, r]));
+  const out = {};
+  for (const r of importedRooms || []) {
+    const b = base.get(r.id);
+    if (!b) continue;
+    const diff = {};
+    for (const k of EDIT_KEYS) if (r[k] != null && r[k] !== b[k]) diff[k] = r[k];
+    if (Object.keys(diff).length) out[r.id] = diff;
+  }
+  return out;
+}
+
 // ── Dev guard: the join must stay aligned with the geometry table ──
 if (import.meta.env.DEV) {
   const ids = new Set(roomsData.rooms.map((r) => r.id));
