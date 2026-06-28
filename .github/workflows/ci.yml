@@ -21,5 +21,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - name: Test (locks + core contracts)
+        run: npm test
       - name: Build
         run: npm run build

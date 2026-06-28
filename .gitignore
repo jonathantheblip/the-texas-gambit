@@ -7,3 +7,4 @@ dist/
 # Claude Code local settings — keep launch.json (shared preview config), ignore the rest
 .claude/*
 !.claude/launch.json
+*.zip
