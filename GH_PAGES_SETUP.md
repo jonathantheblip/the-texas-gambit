@@ -1,70 +1,57 @@
 # Putting this on GitHub Pages
 
-The site is plain static HTML+JSX (no build step). GitHub Pages can serve it directly.
+The app now has a **build step** (Vite), so the old "deploy from a branch / root" setup no longer applies — Pages serves the built `dist/`, produced by GitHub Actions.
 
 ## One-time setup
+1. On github.com → repo **Settings → Pages**.
+2. **Source: GitHub Actions** (not "Deploy from a branch").
 
-1. **Push these files to your repo.** From a local clone of `the-texas-gambit`, drop everything in this bundle into the repo root, then:
-   ```bash
-   git add .
-   git commit -m "Initial site"
-   git push origin main
-   ```
+That's the whole switch. The workflow at `.github/workflows/deploy.yml` does the rest.
 
-2. **Enable Pages.** Go to the repo on github.com → **Settings** → **Pages** (left sidebar).
+## Going live
+The deploy workflow triggers on a push to **`main`** (or manually from the Actions tab). The render-forward work currently lives on the `render-forward-3d` branch, so "go live" means merging it to `main`:
+```bash
+git checkout main
+git merge render-forward-3d
+git push origin main          # → Actions builds and deploys
+```
+It builds the app and publishes to:
+> https://jonathantheblip.github.io/the-texas-gambit/
 
-3. **Configure source:**
-   - **Source:** Deploy from a branch
-   - **Branch:** `main`
-   - **Folder:** `/ (root)`
-   - Click **Save**
-
-4. **Wait ~30 seconds**, then refresh the Pages settings page. You'll see:
-   > Your site is live at `https://jonathantheblip.github.io/the-texas-gambit/`
-
-5. **Open it.** Bookmark for Helen.
+Because it's a **project** site (served under `/the-texas-gambit/`), `vite.config.js` sets `base: '/the-texas-gambit/'` for builds so asset URLs resolve. Once live it's an installable PWA — Helen can "Add to Home Screen," and it works offline.
 
 ## Updating the site
+Any push to `main` re-deploys automatically (build → publish, ~1–2 min). Nothing to run by hand.
 
-Any push to `main` re-deploys automatically (takes 30–90 seconds). Easiest workflow:
+## Safety gate (CI)
+`.github/workflows/ci.yml` runs on every push/PR and fails if:
+- a **lock breaks** (`scripts/validate.py` on `compound_rooms.json`),
+- a **test fails** (`npm test`), or
+- the **build breaks** (`npm run build`).
 
+So a bad edit can't reach `main` (and the live site) silently.
+
+## Local preview of the production build
 ```bash
-# pull whatever Helen / I have committed
-git pull
-
-# make changes (or paste in a fresh export bundle)
-# ...
-
-git add .
-git commit -m "Pass 5: room descriptions polish"
-git push
+npm run build && npm run preview
 ```
-
-That's it.
+Serves `dist/` with the service worker active — the closest thing to the deployed PWA.
 
 ## Custom domain (optional)
-
-If you want `texasgambit.com` or similar instead of the github.io URL:
-
 1. Buy the domain (Cloudflare Registrar is cheap and clean).
-2. In **Settings → Pages**, set **Custom domain** to your domain. GitHub will create a `CNAME` file in the repo.
+2. **Settings → Pages → Custom domain** → your domain (GitHub adds a `CNAME`).
 3. At your DNS provider, add a `CNAME` record pointing to `jonathantheblip.github.io`.
-4. Wait for DNS to propagate (a few minutes to an hour). GitHub will issue a free Let's Encrypt cert automatically.
+4. Wait for DNS; GitHub issues a free Let's Encrypt cert automatically.
+
+(With a custom domain you can drop the `base` in `vite.config.js` back to `/`, since the site is then served from the domain root.)
 
 ## Privacy
-
-The repo is public by default if Pages is on the free tier. If you want it private + still served:
-
-- **Easiest:** keep the repo private, accept that Pages on private repos requires GitHub Pro (small monthly fee), turn it on the same way.
-- **Alternative:** keep the repo public but add an obscure URL slug — Pages doesn't index well, and Helen can bookmark the link. If Helen's the only viewer, this is fine.
-- **Belt and suspenders:** put Cloudflare Access in front of the custom domain (free tier covers up to 50 users). Helen logs in with email; everyone else gets blocked.
+Pages on the free tier serves public repos. Options if you want it less open:
+- Keep the repo **private** + Pages on GitHub Pro (small monthly fee).
+- Keep it public but rely on the obscure URL (Pages isn't indexed well; fine if Helen's the only viewer).
+- **Belt and suspenders:** put Cloudflare Access in front of a custom domain (free up to 50 users) — Helen logs in by email, everyone else is blocked.
 
 ## Troubleshooting
-
-**Page loads blank.** Check the browser console (F12). Most likely: a `<script src="...">` is 404ing because a file didn't get pushed. Confirm all `.jsx`, `.js`, `.css` files made it to the repo, plus the `lookbook_images/` folder.
-
-**Images don't load.** Same as above — confirm `lookbook_images/` is in the repo. GitHub Pages is case-sensitive; an `Image.png` referenced as `image.png` will 404.
-
-**Changes aren't appearing.** Pages caches aggressively. Hard reload (Ctrl/Cmd + Shift + R). If still stale, check the **Actions** tab on github.com — there should be a "pages build and deployment" run; if it failed, click in to see why.
-
-**Babel warning in console:** `You are using the in-browser Babel transformer.` Harmless. The site uses Babel in the browser to transform JSX at runtime so there's no build step. Performance is fine for this scale.
+- **Blank page / 404 assets:** usually a `base` mismatch — confirm `vite.config.js` `base` matches the Pages path (`/the-texas-gambit/` for the project site).
+- **Changes not appearing:** the service worker caches aggressively (`autoUpdate` applies on next load). Hard-reload (Ctrl/Cmd+Shift+R), or check the **Actions** tab for a failed deploy.
+- **Deploy didn't run:** confirm **Settings → Pages → Source = GitHub Actions**, and that you pushed to `main`.

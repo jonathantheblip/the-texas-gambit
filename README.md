@@ -1,53 +1,59 @@
-# The Texas Gambit
+# The Texas Gambit — Hill Country Estate
 
-A private design-feedback site for **the Hill Country compound**. Two voices share one project: Helen designs from feeling and reference; Jon plans from spec and budget. The site holds both — same data, two lenses.
+A **render-forward 3D instrument** for the Hill Country compound: a private tool for Jon and Helen to *feel* the house and iterate on it, years before it's built (horizon 2033–2040). The colored-pencil renders are the front door — you step into them to a navigable 3D massing, and walk from room to room.
 
-> Live: https://jonathantheblip.github.io/the-texas-gambit/
+> Live (when deployed): https://jonathantheblip.github.io/the-texas-gambit/
 
----
+## The one principle
+**`src/data/compound_rooms.json` is the source of truth.** The 3D geometry is *generated from it* at runtime; validation gates every edit; the `.gltf` is a regenerated export, never the source. Don't edit meshes — edit the table. The three locks (Guest Suite = 350 ft², Observatory setbacks, no accidental overlaps) are enforced in `src/model/compoundModel.js` (`validate()`), in `scripts/validate.py`, and by the test suite + CI.
 
-## What this is
-
-Fourteen years of building, eight buildings, thirty-one rooms, three ancestor houses (the Glebe in Marston St. Lawrence, Captain Jack's Wharf in Provincetown, Texas Hill Country itself), and a Mississippi cabin that doesn't know it's the fourth.
-
-The site is a **place to react** before drawings get locked. Helen tours rooms, hearts images, leaves notes; Jon checks specs, sees what's locked vs. open, watches money. Every reaction shows up in the other person's view — so a "love this" on a render becomes a row in Jon's working set, and a Jon-side spec change shows up in Helen's letters.
-
-## Two modes
-
-Toggle between **HELEN** and **JON** in the topbar (top right).
-
-**Helen mode** is image-first, serif typography, honey/cream palette. The Compound, Rooms, The Wall (pinboard of loved + saved), The Plan (year-by-year savings cadence — "$1–4K per month, 5 off-ramps, 2035 move-in"), Phasing, Ancestors, Decisions (framed as invitations, not tasks), My Notes (chronological aggregation of voice notes + comments + reactions).
-
-**Jon mode** is dark cobalt, sans-serif, document-grade. The same compound but with Helen Digest (her week as a real document), Working Set (rooms with open conflicts), Locked Specs Register, Conflict Surface (locked specs vs. requested changes), The Plan (full $5.86M financial breakdown across 14 years with five gates), Decisions (full board), Briefs.
-
-## How to navigate
-
-- **Topbar**: brand · breadcrumb · search (⌘K) · day/dusk · open-decisions chip · mode toggle
-- **Topnav** (above the fold): Compound · Rooms · The Wall · The Plan · Phasing · Ancestors · Decisions · My Notes
-- **Compound page** has two views: **Buildings** (cards) and **Floor Plan** (SVG site plan, click to drill in)
-- **Building → Room → Detail**: tap a building card, then a room card, then anchor details inside the room
-- **Lens**: click an ancestor card to "follow" that ancestor's thread through the compound — buildings + rooms drawing from it lift, the rest dim back
-
-## What's in the data
-
-Everything the site renders is in `data.js` — buildings, rooms, anchors (specific design moments inside each room), decisions, the Wall items, the timeline, ancestors, briefs metadata. To change what's shown, edit `data.js`. Reactions and notes save to `localStorage` per browser.
+## What it does
+- **Gallery** — the compound's renders as the primary surface, grouped by building.
+- **Room view** — a render as "you are standing here," with the writing, a **you-are-here minimap**, and a **walk to an adjoining space** strip (geometry-derived neighbors).
+- **3D massing** — every space generated from the room table; toggle massing / renders (diorama) / both; click to select; edit dimensions with the locks re-checking live.
+- **Shared + offline** — dimension edits sync between Helen and Jon (Supabase) and survive offline; installable PWA.
+- One unified view (the old Helen/Jon mode split is retired; identity is authorship only).
 
 ## Stack
+Vite + React 18 + **react-three-fiber** / drei / three. Supabase for the shared store. Installable PWA (service worker + manifest). Deploys as a static build to GitHub Pages.
 
-Plain client-side React via Babel-in-the-browser. No build step. No backend. Drop these files on any static host and it works.
+## Run it
+```bash
+npm install
+npm run dev        # local dev server
+npm run build      # production build → dist/
+npm run preview    # serve the built app (with the service worker)
+npm test           # locks + core-contract tests (Vitest)
+npm run validate   # run the Python lock gate on the room table
+```
+Helper scripts: `npm run optimize-images` (render PNG→WebP) · `npm run export:design` (portable data pack for Design).
 
-- `index.html` — entry point, loads everything in order
-- `app.jsx` — root component, routing, mode/dusk/lens state
-- `views-*.jsx` — the actual screens
-- `pass3.jsx`, `pass4.jsx` — feature additions (search, compare, the Plan, etc.)
-- `data.js` — all content
-- `store.js` — localStorage persistence
-- `styles.css` + `styles-floorplan.css` — all styling, both modes
-- `lookbook_images/` — every image referenced by `data.js`
+## Layout
+```
+src/
+  data/    compound_rooms.json (truth) · rooms.js (merge) · room_join.js (render+writing join)
+           legacy_content.json · adjacency.js (walk graph) · plan.js (map geometry)
+  model/   compoundModel.js — roomBox() + validate() + PALETTE/LOCKS (framework-agnostic)
+  scene/   CompoundScene, RoomBox, Diorama, cameraBus (3D)
+  ui/      Gallery, RoomView, ModelView, Minimap, styles.css
+  store/   geometryStore (shared room-edit sync) + useGeometry
+  nav/     navStore + useNav (single current-room source)
+public/    lookbook_images/ (renders, WebP) · favicons · manifests
+scripts/   validate.py · optimize_images.mjs · export_design_pack.mjs · extract_legacy_content.mjs
+docs/      handoff, design brief, code↔design contract, immersive prompts, dimensional schedule
+design-handoff/  portable pack for Design (regenerate with npm run export:design)
+legacy/    the previous no-build app, kept for reference (not built)
+supabase/  schema.sql (room_state/notes/pins/... + room_overrides)
+```
 
-## See also
+## Deploy
+GitHub Pages via Actions (`.github/workflows/deploy.yml`) — **dormant** until enabled. See [GH_PAGES_SETUP.md](GH_PAGES_SETUP.md). CI (`ci.yml`) runs the locks, tests, and build on every push.
 
-- [GH_PAGES_SETUP.md](GH_PAGES_SETUP.md) — step-by-step to put this on GitHub Pages
-- [SYNC.md](SYNC.md) — workflow between the design environment and Claude Code
+## Docs
+- [docs/HANDOFF_FOR_CLAUDE_CODE.md](docs/HANDOFF_FOR_CLAUDE_CODE.md) — the render-forward restructuring brief.
+- [docs/DESIGN_BRIEF.md](docs/DESIGN_BRIEF.md) — what Claude Design owns (the experience).
+- [docs/CODE_DESIGN_CONTRACT.md](docs/CODE_DESIGN_CONTRACT.md) — the seam between Code and Design.
+- [docs/IMMERSIVE_PROMPTS.md](docs/IMMERSIVE_PROMPTS.md) — Marble/Skybox prompts for the "dream."
+- [SYNC.md](SYNC.md) — how work flows between Code, Design, and the Claude-loop.
 
 — Jon, with Claude
