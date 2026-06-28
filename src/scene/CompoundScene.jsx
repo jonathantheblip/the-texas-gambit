@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
+import { roomBox } from '../model/compoundModel.js';
 import RoomBox from './RoomBox.jsx';
 import Diorama from './Diorama.jsx';
+import { cameraBus } from './cameraBus.js';
 
 /**
  * Compute a sensible framing of the whole compound in three.js world space.
@@ -33,14 +35,43 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, selectedId, onSelect, xray, mode }) {
+function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode }) {
   const controls = useRef();
+  const { camera } = useThree();
+  const tween = useRef(null);
   const { center, radius, gridSize, gridCenter, northTip } = framing;
 
   useEffect(() => {
     const c = controls.current;
     if (c) { c.target.set(center[0], center[1], center[2]); c.update(); }
   }, [center]);
+
+  // Camera drift API — Design calls cameraBus.driftTo(roomId); Code owns the move.
+  useEffect(() => cameraBus._register((roomId) => {
+    const room = allRooms?.find((r) => r.id === roomId);
+    if (!room || !controls.current) return;
+    const b = roomBox(room);
+    const target = new THREE.Vector3(b.position[0], b.position[1], b.position[2]);
+    const dist = Math.max(room.w, room.d, room.height) * 2.4 + 16;
+    tween.current = {
+      t: 0, dur: 1.1, roomId,
+      fromPos: camera.position.clone(),
+      toPos: target.clone().add(new THREE.Vector3(dist * 0.6, dist * 0.55, dist * 0.7)),
+      fromTarget: controls.current.target.clone(),
+      toTarget: target,
+    };
+  }), [allRooms, camera]);
+
+  useFrame((_, dt) => {
+    const tw = tween.current;
+    if (!tw || !controls.current) return;
+    tw.t = Math.min(1, tw.t + dt / tw.dur);
+    const e = tw.t < 0.5 ? 2 * tw.t * tw.t : 1 - Math.pow(-2 * tw.t + 2, 2) / 2; // ease in-out
+    camera.position.lerpVectors(tw.fromPos, tw.toPos, e);
+    controls.current.target.lerpVectors(tw.fromTarget, tw.toTarget, e);
+    controls.current.update();
+    if (tw.t >= 1) { tween.current = null; cameraBus._arrived(tw.roomId); }
+  });
 
   const northDir = useMemo(() => new THREE.Vector3(0, 0, -1), []);
   const northOrigin = useMemo(() => new THREE.Vector3(...framing.southBase), [framing.southBase]);
@@ -84,7 +115,7 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} />
+      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} />
     </Canvas>
   );
 }

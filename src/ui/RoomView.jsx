@@ -1,11 +1,12 @@
 import { ANCESTORS } from '../data/rooms.js';
 import Minimap from './Minimap.jsx';
 
-const DIR = {
-  north: { label: 'North', arrow: '↑' }, south: { label: 'South', arrow: '↓' },
-  east: { label: 'East', arrow: '→' }, west: { label: 'West', arrow: '←' },
-  up: { label: 'Upstairs', arrow: '↑' }, down: { label: 'Downstairs', arrow: '↓' },
+const HEADING = {
+  N: { label: 'North', arrow: '↑' }, S: { label: 'South', arrow: '↓' },
+  E: { label: 'East', arrow: '→' }, W: { label: 'West', arrow: '←' },
 };
+const VERT = { up: { label: 'Upstairs', arrow: '↑' }, down: { label: 'Downstairs', arrow: '↓' } };
+const dirInfo = (n) => (n.vert ? VERT[n.vert] : HEADING[n.heading]) || { label: '', arrow: '' };
 
 /**
  * A single space, render-forward: the colored-pencil illustration is the primary
@@ -52,15 +53,18 @@ export default function RoomView({ room, neighbors = [], onBack, onStepInto, onG
           <div className="walk">
             <div className="walk-label">Walk to an adjoining space</div>
             <div className="walk-row">
-              {neighbors.map((n) => (
-                <button className="walk-card" key={n.id} onClick={() => onGoRoom(n.id)}>
-                  <span className="walk-thumb">
-                    {n.renderImage ? <img src={n.renderImage} alt="" loading="lazy" /> : <span className="walk-noimg" />}
-                  </span>
-                  <span className="walk-dir">{DIR[n.dir]?.arrow} {DIR[n.dir]?.label || n.dir}</span>
-                  <span className="walk-name">{n.name}</span>
-                </button>
-              ))}
+              {neighbors.map((n) => {
+                const d = dirInfo(n);
+                return (
+                  <button className="walk-card" key={n.id} onClick={() => onGoRoom(n.id, n.vert || n.heading)}>
+                    <span className="walk-thumb">
+                      {n.renderImage ? <img src={n.renderImage} alt="" loading="lazy" /> : <span className="walk-noimg" />}
+                    </span>
+                    <span className="walk-dir">{d.arrow} {d.label}</span>
+                    <span className="walk-name">{n.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

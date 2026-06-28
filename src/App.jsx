@@ -1,7 +1,9 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
-import { neighborsOf, ENTRY_ROOM } from './data/adjacency.js';
+import { neighborsOf } from './data/adjacency.js';
 import { useGeometry } from './store/useGeometry.js';
+import { nav } from './nav/navStore.js';
+import { useNav } from './nav/useNav.js';
 import Gallery from './ui/Gallery.jsx';
 import RoomView from './ui/RoomView.jsx';
 
@@ -10,13 +12,12 @@ import RoomView from './ui/RoomView.jsx';
 const ModelView = lazy(() => import('./ui/ModelView.jsx'));
 
 /**
- * Render-forward shell. The colored-pencil renders are the front door:
- *   gallery → room (render as hero) → step into the 3D massing.
- * Geometry edits flow through the shared store, so dimensions stay in sync
- * across every view.
+ * Render-forward shell. Routing is driven by the single nav source (navStore),
+ * so crumbs / minimap / walk all agree on the current room.
+ *   gallery → room (render as "you are here") → walk to a neighbor, or step into 3D.
  */
 export default function App() {
-  const [view, setView] = useState({ mode: 'gallery' });
+  const view = useNav();
   const { overrides } = useGeometry();
   const rooms = useMemo(() => applyOverrides(ALL_ROOMS, overrides), [overrides]);
 
@@ -24,28 +25,28 @@ export default function App() {
     return (
       <Suspense fallback={<div className="loading-3d">Loading the 3D model…</div>}>
         <ModelView
-          initialSelectedId={view.focusId || null}
-          onExit={() => setView({ mode: 'gallery' })}
-          onOpenRender={(id) => setView({ mode: 'room', id })}
+          initialSelectedId={view.focusId || view.roomId || null}
+          onExit={() => nav.goGallery()}
+          onOpenRender={(id) => nav.goRoom(id)}
         />
       </Suspense>
     );
   }
 
   if (view.mode === 'room') {
-    const room = rooms.find((r) => r.id === view.id);
+    const room = rooms.find((r) => r.id === view.roomId);
     const byId = (id) => rooms.find((r) => r.id === id);
-    const neighbors = neighborsOf(view.id)
-      .map((n) => { const r = byId(n.id); return r ? { ...r, dir: n.dir } : null; })
+    const neighbors = neighborsOf(view.roomId)
+      .map((n) => { const r = byId(n.id); return r ? { ...r, heading: n.heading, vert: n.vert, via: n.via } : null; })
       .filter(Boolean)
       .slice(0, 6);
     return (
       <RoomView
         room={room}
         neighbors={neighbors}
-        onBack={() => setView({ mode: 'gallery' })}
-        onStepInto={(id) => setView({ mode: 'model', focusId: id })}
-        onGoRoom={(id) => setView({ mode: 'room', id })}
+        onBack={() => nav.goGallery()}
+        onStepInto={(id) => nav.openModel(id)}
+        onGoRoom={(id, heading) => nav.stepTo(id, heading)}
       />
     );
   }
@@ -53,9 +54,9 @@ export default function App() {
   return (
     <Gallery
       rooms={rooms}
-      onOpenRoom={(id) => setView({ mode: 'room', id })}
-      onOpenModel={() => setView({ mode: 'model' })}
-      onEnterWalk={() => setView({ mode: 'room', id: ENTRY_ROOM })}
+      onOpenRoom={(id) => nav.goRoom(id)}
+      onOpenModel={() => nav.openModel()}
+      onEnterWalk={() => nav.enterWalk()}
     />
   );
 }
