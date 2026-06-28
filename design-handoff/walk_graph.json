@@ -1,0 +1,1495 @@
+[
+  {
+    "id": "drawing_room_sw",
+    "name": "Drawing Room (SW)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_drawingroom_hero.webp",
+    "w": 16,
+    "d": 20,
+    "height": 12,
+    "area": 320,
+    "intent": "Formal, but only formally so. White walls hung with art at every height. Two tall sash windows flanking the fireplace. Leather Chesterfield, mismatched rattan armchairs. Sea glass on the mantel.",
+    "neighbors": [
+      {
+        "id": "oval_dining_nw",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "covered_walkway",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "entry_hall_front_s_ctr",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "octagonal_stair_hall",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "front_porch",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "great_room_se",
+    "name": "Great Room (SE)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_greatroom_hero.webp",
+    "w": 16,
+    "d": 20,
+    "height": 12,
+    "area": 320,
+    "intent": "The room where the family actually lives. Double-height on the garden side, tall sash windows flooding the space with Hill Country light. Turntable on a low credenza. Linen sofas, rattan armchair, coffee table buried in books and children's drawings. Limestone fireplace wall left bare.",
+    "neighbors": [
+      {
+        "id": "right_passage_freddy_s_gallery",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "library_ne",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "entry_hall_front_s_ctr",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "octagonal_stair_hall",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "front_porch",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "oval_dining_nw",
+    "name": "Oval Dining (NW)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_ovaldining_hero.webp",
+    "w": 16,
+    "d": 18,
+    "height": 12,
+    "area": 288,
+    "intent": "The most direct homage to the Glebe. Projecting oval bay with tall sash windows in cedar frames (Helen-locked). Dusty pink walls — the only color in the public rooms. Round pedestal table for eight. Brass chandelier with candle bulbs. Thanksgiving happens here.",
+    "neighbors": [
+      {
+        "id": "everyday_dining_n_ctr",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "drawing_room_sw",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "powder_room",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "orangery",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "library_ne",
+    "name": "Library (NE)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_library_hero.webp",
+    "w": 16,
+    "d": 18,
+    "height": 12,
+    "area": 288,
+    "intent": "Canted bay window on the north face frames the canyon the way the Glebe's bay frames the Northamptonshire countryside. White-painted shelves to the ceiling on three walls, brass library ladder on a rail. Mesquite writing desk facing the bay. The leather chair by the window is the quietest seat in the house.",
+    "neighbors": [
+      {
+        "id": "everyday_dining_n_ctr",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "great_room_se",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_terrace",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "orangery",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "entry_hall_front_s_ctr",
+    "name": "Entry Hall (front, S-ctr)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_entryhall_hero.webp",
+    "w": 12,
+    "d": 12,
+    "height": 12,
+    "area": 144,
+    "intent": "Double-height. Heated limestone floor (geothermal). Grand straight-run Georgian stair with white balusters and a dark handrail. Helen's father's photographs line the stair wall. Fanlight throws a half-moon of light across the floor every morning.",
+    "neighbors": [
+      {
+        "id": "drawing_room_sw",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "great_room_se",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "octagonal_stair_hall",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "front_porch",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "octagonal_stair_hall",
+    "name": "Octagonal Stair Hall",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": null,
+    "w": 12,
+    "d": 8,
+    "height": 24,
+    "area": 96,
+    "intent": "Double-height. Heated limestone floor (geothermal). Grand straight-run Georgian stair with white balusters and a dark handrail. Helen's father's photographs line the stair wall. Fanlight throws a half-moon of light across the floor every morning.",
+    "neighbors": [
+      {
+        "id": "upper_gallery_landing",
+        "heading": null,
+        "vert": "up",
+        "via": "stair"
+      },
+      {
+        "id": "entry_hall_front_s_ctr",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "everyday_dining_n_ctr",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "drawing_room_sw",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "great_room_se",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "powder_room",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "everyday_dining_n_ctr",
+    "name": "Everyday Dining (N-ctr)",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_everydaydining_hero.webp",
+    "w": 12,
+    "d": 18,
+    "height": 12,
+    "area": 216,
+    "intent": "Casual family dining from day one. Farmhouse table, mismatched chairs, morning light from the east. Golden ochre walls, worn white Victorian chest, French doors opening north to the Orangery. Walnut prep island lives here in Phase 2A, then relocates to the Motor Barn in Phase 2B.",
+    "neighbors": [
+      {
+        "id": "oval_dining_nw",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "library_ne",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "octagonal_stair_hall",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "orangery",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "powder_room",
+        "heading": "S",
+        "vert": null,
+        "via": "opening"
+      }
+    ]
+  },
+  {
+    "id": "powder_room",
+    "name": "Powder Room",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_powderroom_hero.webp",
+    "w": 5,
+    "d": 6,
+    "height": 12,
+    "area": 30,
+    "intent": "The one room where color goes bold. Deep indigo walls — almost navy — white porcelain pedestal sink, brass-framed mirror, single sconce. Tiny and intentionally dramatic. Behind the door: ICF walls and poured concrete ceiling. This is Storm Shelter 2.",
+    "neighbors": [
+      {
+        "id": "oval_dining_nw",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "everyday_dining_n_ctr",
+        "heading": "N",
+        "vert": null,
+        "via": "opening"
+      },
+      {
+        "id": "octagonal_stair_hall",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "front_porch",
+    "name": "Front Porch",
+    "building": "Main Block",
+    "floor": "ground",
+    "render": "mbg_frontporch_hero.webp",
+    "w": 28,
+    "d": 12,
+    "height": 12,
+    "area": 336,
+    "intent": "Twelve feet deep because Texas demands it. Georgian column proportions because the Glebe demands it. A painted wood floor because Provincetown demands it. The room where coffee happens at dawn and bourbon at dusk.",
+    "neighbors": [
+      {
+        "id": "entry_hall_front_s_ctr",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "drawing_room_sw",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "great_room_se",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "study_sw_over_drawing",
+    "name": "Study (SW, over Drawing)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_study_hero.webp",
+    "w": 16,
+    "d": 20,
+    "height": 10,
+    "area": 320,
+    "intent": "Above the Drawing Room. Bay window rotated to the south face, catching afternoon light. Smaller and more private than the Library. Desk, reading chair, bookshelves. The door closes and the house goes quiet. View south is all sky and live oaks.",
+    "neighbors": [
+      {
+        "id": "aurelia_s_provincetown_suite_nw_over_oval",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "quiet_room_s_ctr",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pink_en_suite_aurelia",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "rafa_s_texas_room_se_over_great",
+    "name": "Rafa's Texas Room (SE, over Great)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_rafatexasroom_hero.webp",
+    "w": 16,
+    "d": 20,
+    "height": 10,
+    "area": 320,
+    "intent": "The most Texan room in the house. One wall of exposed limestone left bare because the stone was too beautiful to cover. Pendleton blanket on the bed. Butterfly chair. Boots by the door. The child who will grow up knowing this land by the bottoms of his feet.",
+    "neighbors": [
+      {
+        "id": "primary_bedroom_ne_over_library",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "quiet_room_s_ctr",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "rafa_en_suite",
+        "heading": "S",
+        "vert": null,
+        "via": "opening"
+      }
+    ]
+  },
+  {
+    "id": "aurelia_s_provincetown_suite_nw_over_oval",
+    "name": "Aurelia's Provincetown Suite (NW, over Oval)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_aureliaroom_hero.webp",
+    "w": 16,
+    "d": 18,
+    "height": 10,
+    "area": 288,
+    "intent": "Designed to work for a five-year-old now and a teenager later. White walls with one accent wall in soft indigo wash. Window seat with storage below. Picture books that will become novels. Her own art on the walls — framed properly.",
+    "neighbors": [
+      {
+        "id": "study_sw_over_drawing",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_dressing",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "upper_gallery_landing",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pink_en_suite_aurelia",
+        "heading": "S",
+        "vert": null,
+        "via": "opening"
+      }
+    ]
+  },
+  {
+    "id": "primary_bedroom_ne_over_library",
+    "name": "Primary Bedroom (NE, over Library)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_primarysuite_hero.webp",
+    "w": 16,
+    "d": 18,
+    "height": 10,
+    "area": 288,
+    "intent": "White vertical beadboard feature wall behind the bed — direct Cape Cod. En suite: sea glass teal subway tile, freestanding tub by the arched window, heated limestone floors. The \"widow's walk\" terrace sits on the roof of the sunroom wing — accessible only from this room. Coffee at sunrise.",
+    "neighbors": [
+      {
+        "id": "rafa_s_texas_room_se_over_great",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_en_suite_teal",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "upper_gallery_landing",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "quiet_room_s_ctr",
+    "name": "Quiet Room (S-ctr)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_quietroom_hero.webp",
+    "w": 12,
+    "d": 12,
+    "height": 10,
+    "area": 144,
+    "intent": "The room where all three ancestors stop being separate threads and become one thing. White walls, good height, a beautiful window, almost nothing else. The single-pane picture window is an intentional deviation from the 12-over-12 rule — it frames the canyon as a painting. A guest sleeps better here than they have in years and can't quite explain why.",
+    "neighbors": [
+      {
+        "id": "study_sw_over_drawing",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "rafa_s_texas_room_se_over_great",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "rafa_en_suite",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "upper_gallery_landing",
+    "name": "Upper Gallery / Landing",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_uppergallery_hero.webp",
+    "w": 12,
+    "d": 8,
+    "height": 10,
+    "area": 96,
+    "intent": "The landing at the top of the grand stair opens into a wide gallery connecting all four upper-floor rooms. Walls hung salon-style — paintings, photographs, children's art mixed at different heights. Small writing desk by the Palladian window at the north end.",
+    "neighbors": [
+      {
+        "id": "octagonal_stair_hall",
+        "heading": null,
+        "vert": "down",
+        "via": "stair"
+      },
+      {
+        "id": "aurelia_s_provincetown_suite_nw_over_oval",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_bedroom_ne_over_library",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_dressing",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_en_suite_teal",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "primary_dressing",
+    "name": "Primary Dressing",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_dressingroom_hero.webp",
+    "w": 6,
+    "d": 10,
+    "height": 10,
+    "area": 60,
+    "intent": "White vertical beadboard feature wall behind the bed — direct Cape Cod. En suite: sea glass teal subway tile, freestanding tub by the arched window, heated limestone floors. The \"widow's walk\" terrace sits on the roof of the sunroom wing — accessible only from this room. Coffee at sunrise.",
+    "neighbors": [
+      {
+        "id": "aurelia_s_provincetown_suite_nw_over_oval",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_en_suite_teal",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "upper_gallery_landing",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "primary_en_suite_teal",
+    "name": "Primary En-Suite (Teal)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_primaryensuite_hero.webp",
+    "w": 6,
+    "d": 10,
+    "height": 10,
+    "area": 60,
+    "intent": "White vertical beadboard feature wall behind the bed — direct Cape Cod. En suite: sea glass teal subway tile, freestanding tub by the arched window, heated limestone floors. The \"widow's walk\" terrace sits on the roof of the sunroom wing — accessible only from this room. Coffee at sunrise.",
+    "neighbors": [
+      {
+        "id": "primary_bedroom_ne_over_library",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_dressing",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "upper_gallery_landing",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "pink_en_suite_aurelia",
+    "name": "Pink En-Suite (Aurelia)",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_aureliaensuite_hero.webp",
+    "w": 7,
+    "d": 8,
+    "height": 10,
+    "area": 56,
+    "intent": "Designed to work for a five-year-old now and a teenager later. White walls with one accent wall in soft indigo wash. Window seat with storage below. Picture books that will become novels. Her own art on the walls — framed properly.",
+    "neighbors": [
+      {
+        "id": "aurelia_s_provincetown_suite_nw_over_oval",
+        "heading": "N",
+        "vert": null,
+        "via": "opening"
+      },
+      {
+        "id": "study_sw_over_drawing",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "rafa_en_suite",
+    "name": "Rafa En-Suite",
+    "building": "Main Block",
+    "floor": "upper",
+    "render": "mbu_rafaensuite_hero.webp",
+    "w": 8,
+    "d": 7,
+    "height": 10,
+    "area": 56,
+    "intent": "The most Texan room in the house. One wall of exposed limestone left bare because the stone was too beautiful to cover. Pendleton blanket on the bed. Butterfly chair. Boots by the door. The child who will grow up knowing this land by the bottoms of his feet.",
+    "neighbors": [
+      {
+        "id": "rafa_s_texas_room_se_over_great",
+        "heading": "N",
+        "vert": null,
+        "via": "opening"
+      },
+      {
+        "id": "quiet_room_s_ctr",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "primary_terrace",
+    "name": "Primary Terrace",
+    "building": "Main Block",
+    "floor": "site",
+    "render": "mbu_primaryterrace_hero.webp",
+    "w": 10,
+    "d": 12,
+    "height": 0.4,
+    "area": 120,
+    "intent": "White vertical beadboard feature wall behind the bed — direct Cape Cod. En suite: sea glass teal subway tile, freestanding tub by the arched window, heated limestone floors. The \"widow's walk\" terrace sits on the roof of the sunroom wing — accessible only from this room. Coffee at sunrise.",
+    "neighbors": [
+      {
+        "id": "library_ne",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "right_passage_freddy_s_gallery",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "dome_oculus",
+    "name": "Dome / Oculus",
+    "building": "Main Block",
+    "floor": "crown",
+    "render": null,
+    "w": 8,
+    "d": 8,
+    "height": 6,
+    "area": 64,
+    "intent": null,
+    "neighbors": []
+  },
+  {
+    "id": "orangery",
+    "name": "Orangery",
+    "building": "Orangery",
+    "floor": "ground",
+    "render": "mbg_orangery_hero.webp",
+    "w": 24,
+    "d": 18,
+    "height": 14,
+    "area": 432,
+    "intent": "Between the oval dining bay and the library bay on the north face. Inside and outside blur. Ceiling fans, daybed swing, deep rattan chairs with faded indigo cushions. Screens against insects, breeze through. Looking south, you can see all the way to the front porch.",
+    "neighbors": [
+      {
+        "id": "everyday_dining_n_ctr",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "oval_dining_nw",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "library_ne",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "covered_walkway",
+    "name": "Covered Walkway",
+    "building": "Covered Walkway",
+    "floor": "ground",
+    "render": "ob_coveredwalkway_hero.webp",
+    "w": 12,
+    "d": 14,
+    "height": 11,
+    "area": 168,
+    "intent": "Limestone piers, simple metal roof, native plantings. Walk from your car to the kitchen without getting wet in a thunderstorm. Practical architecture that looks like it has been there forever.",
+    "neighbors": [
+      {
+        "id": "drawing_room_sw",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "kitchen",
+    "name": "Kitchen",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": "sw_kitchen_hero.webp",
+    "w": 23,
+    "d": 20,
+    "height": 14,
+    "area": 460,
+    "intent": "White board walls, Provincetown shelving. Cobalt concrete island. La Cornue range — the centerpiece. Belfast sink. Darkened copper hood. French doors opening south to the elevated herb terrace.",
+    "neighbors": [
+      {
+        "id": "pantry_wine_room",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "mudroom",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "pantry_wine_room",
+    "name": "Pantry + Wine Room",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": "sw_pantry_hero.webp",
+    "w": 15,
+    "d": 15,
+    "height": 12,
+    "area": 225,
+    "intent": "Deep blue shelving. Limestone arch leading to the Wine Room / Storm Shelter 1. Thermally stable zone — north half of the wing.",
+    "neighbors": [
+      {
+        "id": "kitchen",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "scullery",
+    "name": "Scullery",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": "sw_scullery_hero.webp",
+    "w": 9,
+    "d": 12,
+    "height": 12,
+    "area": 108,
+    "intent": "Behind the kitchen. Where the dishes come back. Independent make-up air. The threshold between dirty and clean.",
+    "neighbors": [
+      {
+        "id": "mechanical_laundry",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "mudroom",
+    "name": "Mudroom",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": "sw_mudroom_hero.webp",
+    "w": 14,
+    "d": 10,
+    "height": 12,
+    "area": 140,
+    "intent": "Copper dog wash. Grey-blue-green beadboard walls. The threshold between the motor court and the kitchen — boots off, dog rinsed, groceries staged.",
+    "neighbors": [
+      {
+        "id": "kitchen",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "tea_station",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "mechanical_laundry",
+    "name": "Mechanical / Laundry",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": null,
+    "w": 14,
+    "d": 14,
+    "height": 12,
+    "area": 196,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "scullery",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "tea_station",
+    "name": "Tea Station",
+    "building": "Service Wing",
+    "floor": "ground",
+    "render": null,
+    "w": 6,
+    "d": 8,
+    "height": 12,
+    "area": 48,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "mudroom",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "glass_bridge",
+    "name": "Glass Bridge",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": null,
+    "w": 12,
+    "d": 8,
+    "height": 11,
+    "area": 96,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "right_passage_freddy_s_gallery",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "sunroom",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "right_passage_freddy_s_gallery",
+    "name": "Right Passage / Freddy's Gallery",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": "mbg_rightpassage_hero.webp",
+    "w": 12,
+    "d": 20,
+    "height": 12,
+    "area": 240,
+    "intent": "Standing at the west end, you look east through the passage, through the sunroom's open glass walls, across the pool terrace, past the perimeter-overflow pool, into the canyon. An unbroken line of sight from the Georgian heart of the house to the edge of the world.",
+    "neighbors": [
+      {
+        "id": "great_room_se",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "primary_terrace",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "glass_bridge",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "sunroom",
+    "name": "Sunroom",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": "ww_sunroom_hero.webp",
+    "w": 28,
+    "d": 24,
+    "height": 16,
+    "area": 672,
+    "intent": "Captain Jack's Wharf — the boundary dissolves. Glass walls pivot fully open; heated limestone floor. Rattan furniture, indigo striped cushions, ship's pulley on the rafter. Step through onto warm limestone, you're at the pool's edge.",
+    "neighbors": [
+      {
+        "id": "pool_terrace",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pool",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "glass_bridge",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pool_bath",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "guest_bedroom",
+    "name": "Guest Bedroom",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": "ww_guestbedroom_hero.webp",
+    "w": 16,
+    "d": 11,
+    "height": 11,
+    "area": 176,
+    "intent": "The Wharf Wing Independent Dwelling — self-contained casita. Heritage kitchenette (furniture, not cabinetry), laundry closet, direct exterior door, full aging-in-place provisions. Connected to the family via Sunroom and Glass Bridge — only thirty steps from the main block. White vertical beadboard, dark timber rafters, grey painted floors.",
+    "neighbors": [
+      {
+        "id": "guest_sitting",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "guest_en_suite",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "guest_sitting",
+    "name": "Guest Sitting",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": "ww_guestsitting_hero.webp",
+    "w": 10,
+    "d": 11,
+    "height": 11,
+    "area": 110,
+    "intent": "The Wharf Wing Independent Dwelling — self-contained casita. Heritage kitchenette (furniture, not cabinetry), laundry closet, direct exterior door, full aging-in-place provisions. Connected to the family via Sunroom and Glass Bridge — only thirty steps from the main block. White vertical beadboard, dark timber rafters, grey painted floors.",
+    "neighbors": [
+      {
+        "id": "guest_bedroom",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "guest_en_suite",
+    "name": "Guest En-Suite",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": "ww_guestensuite_hero.webp",
+    "w": 8,
+    "d": 8,
+    "height": 11,
+    "area": 64,
+    "intent": "The Wharf Wing Independent Dwelling — self-contained casita. Heritage kitchenette (furniture, not cabinetry), laundry closet, direct exterior door, full aging-in-place provisions. Connected to the family via Sunroom and Glass Bridge — only thirty steps from the main block. White vertical beadboard, dark timber rafters, grey painted floors.",
+    "neighbors": [
+      {
+        "id": "guest_bedroom",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "pool_bath",
+    "name": "Pool Bath",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": null,
+    "w": 8,
+    "d": 8,
+    "height": 11,
+    "area": 64,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "sunroom",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "sauna",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pool_terrace",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "sauna",
+    "name": "Sauna",
+    "building": "Wharf Wing",
+    "floor": "ground",
+    "render": null,
+    "w": 8,
+    "d": 10,
+    "height": 9,
+    "area": 80,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "pool_bath",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pool_terrace",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "cornelia_s_greenhouse",
+    "name": "Cornelia's Greenhouse",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": "ob_motorbarngreenhouse_hero.webp",
+    "w": 15,
+    "d": 12,
+    "height": 12,
+    "area": 180,
+    "intent": "A tall arched window backed with green — the greenhouse pressing against the glass from inside. The fourth ancestor appears here, exactly once: the Mississippi tradition of growing things in utilitarian spaces.",
+    "neighbors": [
+      {
+        "id": "vehicle_bay_1",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "vehicle_bay_1",
+    "name": "Vehicle Bay 1",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": "ob_motorbarngarage_hero.webp",
+    "w": 14,
+    "d": 24,
+    "height": 14,
+    "area": 336,
+    "intent": "Polished concrete, three bays, EV charging. The working heart of the Motor Barn.",
+    "neighbors": [
+      {
+        "id": "vehicle_bay_2",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "cornelia_s_greenhouse",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "vehicle_bay_2",
+    "name": "Vehicle Bay 2",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": "ob_motorbarngarage_hero.webp",
+    "w": 14,
+    "d": 24,
+    "height": 14,
+    "area": 336,
+    "intent": "Polished concrete, three bays, EV charging. The working heart of the Motor Barn.",
+    "neighbors": [
+      {
+        "id": "vehicle_bay_1",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "vehicle_bay_3",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "vehicle_bay_3",
+    "name": "Vehicle Bay 3",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": "ob_motorbarngarage_hero.webp",
+    "w": 14,
+    "d": 24,
+    "height": 14,
+    "area": 336,
+    "intent": "Polished concrete, three bays, EV charging. The working heart of the Motor Barn.",
+    "neighbors": [
+      {
+        "id": "vehicle_bay_2",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "energy_forge",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "energy_forge",
+    "name": "Energy Forge",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": "ob_motorbarnutility_hero.webp",
+    "w": 22,
+    "d": 24,
+    "height": 14,
+    "area": 528,
+    "intent": "Working wall: battery bank, radiant manifolds, pegboard with every tool labeled in its place. Limestone walls, exposed timber ceiling, polished concrete floor. Honest infrastructure, treated like the rest of the house — beautiful by being correct.",
+    "neighbors": [
+      {
+        "id": "loft",
+        "heading": null,
+        "vert": "up",
+        "via": "stair"
+      },
+      {
+        "id": "vehicle_bay_3",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "airlock",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "airlock",
+    "name": "Airlock",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": null,
+    "w": 5,
+    "d": 10,
+    "height": 12,
+    "area": 50,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "energy_forge",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "compute_room",
+        "heading": "E",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "compute_room",
+    "name": "Compute Room",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": null,
+    "w": 15,
+    "d": 14,
+    "height": 12,
+    "area": 210,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "research_room",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "airlock",
+        "heading": "W",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "research_room",
+    "name": "Research Room",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": null,
+    "w": 18,
+    "d": 14,
+    "height": 12,
+    "area": 252,
+    "intent": null,
+    "neighbors": [
+      {
+        "id": "compute_room",
+        "heading": "S",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "instrument_bay_upgrade",
+    "name": "Instrument Bay (upgrade)",
+    "building": "Motor Barn",
+    "floor": "ground",
+    "render": null,
+    "w": 16,
+    "d": 14,
+    "height": 12,
+    "area": 224,
+    "intent": null,
+    "neighbors": []
+  },
+  {
+    "id": "loft",
+    "name": "Loft",
+    "building": "Motor Barn",
+    "floor": "loft",
+    "render": "ob_motorbarnloft_hero.webp",
+    "w": 18,
+    "d": 24,
+    "height": 10,
+    "area": 432,
+    "intent": "A pitched-ceiling refuge above the garage. Exposed dark beams, white plaster, wide-plank floors. Sectional sofa, vintage rug, a pool table, room for the family to spread out. The kind of upper-level retreat a stable block earns when it grows past its working role.",
+    "neighbors": [
+      {
+        "id": "energy_forge",
+        "heading": null,
+        "vert": "down",
+        "via": "stair"
+      },
+      {
+        "id": "podcast_studio",
+        "heading": "N",
+        "vert": null,
+        "via": "opening"
+      }
+    ]
+  },
+  {
+    "id": "podcast_studio",
+    "name": "Podcast Studio",
+    "building": "Motor Barn",
+    "floor": "loft",
+    "render": null,
+    "w": 8,
+    "d": 12,
+    "height": 10,
+    "area": 96,
+    "intent": "A pitched-ceiling refuge above the garage. Exposed dark beams, white plaster, wide-plank floors. Sectional sofa, vintage rug, a pool table, room for the family to spread out. The kind of upper-level retreat a stable block earns when it grows past its working role.",
+    "neighbors": [
+      {
+        "id": "loft",
+        "heading": "S",
+        "vert": null,
+        "via": "opening"
+      }
+    ]
+  },
+  {
+    "id": "observatory_tower",
+    "name": "Observatory tower",
+    "building": "Observatory",
+    "floor": "ground",
+    "render": "ob_observatoryint_hero.webp",
+    "w": 13,
+    "d": 13,
+    "height": 22,
+    "area": 169,
+    "intent": "A limestone folly inspired by the Radcliffe Observatory in Oxford. Octagonal tower at the far corner of the property, 150 feet from the Motor Barn, split clamshell dome housing a telescope. By day a reading room with 360° views; by night the dome opens and the telescope points at Jupiter. The folly that any proper English estate would build at the edge of its grounds.",
+    "neighbors": []
+  },
+  {
+    "id": "cedar_pavilion",
+    "name": "Cedar Pavilion",
+    "building": "Cedar Pavilion",
+    "floor": "ground",
+    "render": "ob_pavilion_hero.webp",
+    "w": 20,
+    "d": 24,
+    "height": 14,
+    "area": 480,
+    "intent": "Cedar post-and-beam shelter. 20×24 ft, open on three sides, dark bronze metal roof. Heavy cedar timbers with mortise-and-tenon joints over crushed limestone. The kind of shelter a Georgian estate would have built for carriages, scaled down and translated into Texas cedar.",
+    "neighbors": []
+  },
+  {
+    "id": "pool",
+    "name": "Pool",
+    "building": "Pool & Terrace",
+    "floor": "site",
+    "render": "od_poolzeroentry_hero.webp",
+    "w": 16,
+    "d": 40,
+    "height": 1,
+    "area": 640,
+    "intent": "Not a slab with furniture on it — a six-zone ground plane. Perimeter-overflow pool: zero-entry slope facing the sunroom, vanishing infinity edge facing the canyon, PLC-controlled 28-day lunar tidal algorithm creating gentle lapping sounds. Geothermal heated, swimmable March–November.",
+    "neighbors": [
+      {
+        "id": "pool_terrace",
+        "heading": "E",
+        "vert": null,
+        "via": "opening"
+      },
+      {
+        "id": "sunroom",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "pool_terrace",
+    "name": "Pool Terrace",
+    "building": "Pool & Terrace",
+    "floor": "site",
+    "render": "od_poolinfinity_hero.webp",
+    "w": 48,
+    "d": 48,
+    "height": 0.4,
+    "area": 2304,
+    "intent": "Not a slab with furniture on it — a six-zone ground plane. Perimeter-overflow pool: zero-entry slope facing the sunroom, vanishing infinity edge facing the canyon, PLC-controlled 28-day lunar tidal algorithm creating gentle lapping sounds. Geothermal heated, swimmable March–November.",
+    "neighbors": [
+      {
+        "id": "pool",
+        "heading": "W",
+        "vert": null,
+        "via": "opening"
+      },
+      {
+        "id": "sunroom",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "pool_bath",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      },
+      {
+        "id": "sauna",
+        "heading": "N",
+        "vert": null,
+        "via": "door"
+      }
+    ]
+  },
+  {
+    "id": "north_alley_pergola",
+    "name": "North Alley Pergola",
+    "building": "North Alley Pergola",
+    "floor": "ground",
+    "render": "ext_northalley_hero.webp",
+    "w": 60,
+    "d": 12,
+    "height": 9,
+    "area": 720,
+    "intent": "Sal Del Deo brought grapevines from Italy in the 1950s for his restaurant on Commercial Street, and they grew into the iconic pergola at Sal's Place. We're letting those ancestors plant a flag in Texas. Corten steel crossbars on limestone columns — non-combustible per Firewise. Champanel grapevines — wild and overgrown. At the foot of every column, rosemary, thyme, oregano, basil — because the scent at Sal's was herbs, not grapes.",
+    "neighbors": []
+  }
+]

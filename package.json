@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "validate": "python3 scripts/validate.py src/data/compound_rooms.json",
-    "optimize-images": "node scripts/optimize_images.mjs"
+    "optimize-images": "node scripts/optimize_images.mjs",
+    "export:design": "node scripts/export_design_pack.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.0",
