@@ -5,7 +5,7 @@ import { BUILDINGS, ANCESTORS, compoundRender } from '../data/rooms.js';
  * Render-forward home: the compound's colored-pencil illustrations ARE the
  * surface. Each room is its render; clicking one steps you toward its 3D massing.
  */
-export default function Gallery({ rooms, onOpenRoom, onOpenModel }) {
+export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk }) {
   // Only rooms that have a render belong on the lookbook wall; the back-of-house
   // spaces (compute room, sauna, airlock…) live in the 3D model.
   const rendered = useMemo(() => rooms.filter((r) => r.renderImage), [rooms]);
@@ -21,7 +21,10 @@ export default function Gallery({ rooms, onOpenRoom, onOpenModel }) {
           <div className="g-eyebrow">A living model of the compound</div>
           <h1>Hill Country Estate</h1>
           <p>DiBello · Imber · Sundt · 2026 → 2038</p>
-          <button className="g-cta" onClick={onOpenModel}>Explore the 3D massing →</button>
+          <div className="g-cta-row">
+            <button className="g-cta" onClick={onEnterWalk}>Walk from the front door →</button>
+            <button className="g-cta ghost" onClick={onOpenModel}>Explore the 3D massing</button>
+          </div>
         </div>
       </header>
 

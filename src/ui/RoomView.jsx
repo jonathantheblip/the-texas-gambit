@@ -1,4 +1,5 @@
 import { ANCESTORS } from '../data/rooms.js';
+import Minimap from './Minimap.jsx';
 
 const DIR = {
   north: { label: 'North', arrow: '↑' }, south: { label: 'South', arrow: '↓' },
@@ -38,6 +39,11 @@ export default function RoomView({ room, neighbors = [], onBack, onStepInto, onG
             ))}
           </div>
         )}
+
+        <div className="rv-map">
+          <Minimap currentId={room.id} />
+          <div className="rv-map-cap">You are here</div>
+        </div>
 
         {room.intent && <p className="rv-intent">{room.intent}</p>}
 

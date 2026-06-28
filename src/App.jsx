@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
-import { neighborsOf } from './data/adjacency.js';
+import { neighborsOf, ENTRY_ROOM } from './data/adjacency.js';
 import { useGeometry } from './store/useGeometry.js';
 import Gallery from './ui/Gallery.jsx';
 import RoomView from './ui/RoomView.jsx';
@@ -55,6 +55,7 @@ export default function App() {
       rooms={rooms}
       onOpenRoom={(id) => setView({ mode: 'room', id })}
       onOpenModel={() => setView({ mode: 'model' })}
+      onEnterWalk={() => setView({ mode: 'room', id: ENTRY_ROOM })}
     />
   );
 }

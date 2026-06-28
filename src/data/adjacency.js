@@ -1,23 +1,32 @@
 /**
- * Adjacency engine — derives "which rooms can you walk to from here" straight
- * from the geometry (the source of truth). This is the primitive that turns the
- * lookbook into a walk: from any space, the rooms that share a wall (same level)
- * or stack directly above/below (stairs) become the steps Helen can take.
+ * Adjacency engine — derives "which rooms can you walk to from here" from the
+ * geometry (the source of truth). Turns the lookbook into a walk.
  *
- * Pure geometry; the UI joins these ids back to the enriched rooms for renders.
+ * Same level: rooms that share a wall (nearly touch + overlap on one axis).
+ * Between levels: only through real circulation (the stairs) — you don't walk
+ * up through a ceiling. Vertical links are named explicitly below.
  */
 import roomsData from './compound_rooms.json';
-import { rectDist, overlapArea } from '../model/compoundModel.js';
+import { rectDist } from '../model/compoundModel.js';
 
 const rooms = roomsData.rooms;
 
-// Vertical level (not the floor *name*): ground & site are the same walking level.
+// Walking level (not the floor *name*): ground & site are the same level.
 const LEVEL = { site: 0, ground: 0, upper: 1, loft: 1, crown: 2 };
 const level = (r) => LEVEL[r.floor] ?? 0;
 
-const GAP = 2;            // feet: rooms within 2' edge-to-edge count as adjoining
-const SHARE = 1;          // feet: minimum shared-wall length (so corners don't count)
-const STACK = 0.4;        // fraction of footprint that must overlap to count as stacked
+const GAP = 2;     // feet edge-to-edge to count as adjoining
+const SHARE = 1;   // min shared-wall length (so corners don't count)
+
+// Real floor-to-floor connections (stairs). You change levels through these.
+const VERTICAL_LINKS = [
+  ['octagonal_stair_hall', 'upper_gallery_landing'], // Main Block grand stair
+  ['energy_forge', 'loft'],                           // Motor Barn loft stair
+];
+const STAIR_STRENGTH = 30; // rank stair options near the top of the list
+
+// The natural way in — where a walk through the house begins.
+export const ENTRY_ROOM = 'front_porch';
 
 function axisOverlap(a, b) {
   const x = Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x));
@@ -37,21 +46,23 @@ export function neighborsOf(id) {
   const r = rooms.find((x) => x.id === id);
   if (!r) return [];
   const out = [];
+
+  // Same level → adjoining if they nearly touch and share a wall segment.
   for (const o of rooms) {
-    if (o.id === id) continue;
-    if (level(o) === level(r)) {
-      // same level → adjoining if they nearly touch and share a wall segment
-      const ov = axisOverlap(r, o);
-      if (rectDist(r, o) <= GAP && (ov.x > SHARE || ov.y > SHARE)) {
-        out.push({ id: o.id, dir: direction(r, o), strength: Math.max(ov.x, ov.y) });
-      }
-    } else if (Math.abs(level(o) - level(r)) === 1) {
-      // one level apart → connected if stacked over each other (a stair link)
-      const ov = overlapArea(r, o);
-      if (ov > STACK * Math.min(r.w * r.d, o.w * o.d)) {
-        out.push({ id: o.id, dir: level(o) > level(r) ? 'up' : 'down', strength: ov });
-      }
+    if (o.id === id || level(o) !== level(r)) continue;
+    const ov = axisOverlap(r, o);
+    if (rectDist(r, o) <= GAP && (ov.x > SHARE || ov.y > SHARE)) {
+      out.push({ id: o.id, dir: direction(r, o), strength: Math.max(ov.x, ov.y) });
     }
   }
+
+  // Between levels → only through a named stair link.
+  for (const [a, b] of VERTICAL_LINKS) {
+    const other = a === id ? b : b === id ? a : null;
+    if (!other) continue;
+    const o = rooms.find((x) => x.id === other);
+    if (o) out.push({ id: other, dir: level(o) > level(r) ? 'up' : 'down', strength: STAIR_STRENGTH });
+  }
+
   return out.sort((a, b) => b.strength - a.strength);
 }

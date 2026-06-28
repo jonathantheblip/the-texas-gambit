@@ -130,8 +130,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .g-eyebrow { font-family: var(--sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .92; margin-bottom: 10px; }
 .g-hero h1 { font-family: var(--serif-display); font-weight: 600; font-size: clamp(34px, 6vw, 64px); line-height: 1.02; margin: 0; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
 .g-hero p { font-family: var(--serif-text); font-size: 15px; opacity: .95; margin: 10px 0 22px; }
+.g-cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .g-cta { font-family: var(--sans); font-size: 14px; background: rgba(255,255,255,.94); color: var(--ink); border: none; padding: 11px 20px; border-radius: 999px; cursor: pointer; }
 .g-cta:hover { background: #fff; }
+.g-cta.ghost { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.65); }
+.g-cta.ghost:hover { background: rgba(255,255,255,.3); }
 
 .g-building { padding: 30px 32px 6px; }
 .g-building h2 { font-family: var(--serif-display); font-weight: 600; font-size: 22px; margin: 0 0 16px; display: flex; align-items: center; gap: 14px; color: var(--ink); }
@@ -174,6 +177,24 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .walk-noimg { display: block; width: 100%; height: 100%; background: repeating-linear-gradient(45deg, #e6e1d6, #e6e1d6 6px, #ddd6c7 6px, #ddd6c7 12px); }
 .walk-dir { font-family: var(--mono); font-size: 10.5px; color: var(--accent); margin-top: 7px; }
 .walk-name { font-family: var(--serif-display); font-size: 14px; color: var(--ink); line-height: 1.2; margin-top: 1px; }
+
+/* You-are-here minimap */
+.rv-map { width: 150px; margin: 8px 0 16px; }
+.minimap { width: 100%; height: auto; max-height: 210px; display: block; background: #f1ede3; border: 1px solid var(--panel-edge); border-radius: 8px; padding: 4px; box-sizing: border-box; }
+.rv-map-cap { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin-top: 5px; text-align: center; }
+
+/* Phone PORTRAIT is the default above: render-led reading + small map, scroll to walk. */
+/* Phone LANDSCAPE → survey mode: render and a bigger map side by side. */
+@media (orientation: landscape) and (max-height: 600px) {
+  .roomview { display: flex; height: 100vh; overflow: hidden; }
+  .rv-stage { flex: 0 0 52%; height: 100vh; position: sticky; top: 0; padding: 10px; align-items: center; }
+  .rv-hero { max-height: 94vh; }
+  .rv-body { flex: 1; height: 100vh; overflow-y: auto; margin: 0; padding: 16px 22px 44px; max-width: none; }
+  .rv-back { position: fixed; top: 10px; left: 10px; }
+  .rv-body h1 { font-size: 26px; }
+  .rv-map { width: 100%; max-width: 230px; }   /* map gets prominence when surveying */
+  .minimap { max-height: 300px; }
+}
 
 @media (max-width: 760px) {
   .layout { flex-direction: column; }
