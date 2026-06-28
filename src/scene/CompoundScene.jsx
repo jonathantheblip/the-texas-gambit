@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import RoomBox from './RoomBox.jsx';
+import Diorama from './Diorama.jsx';
 
 /**
  * Compute a sensible framing of the whole compound in three.js world space.
@@ -32,7 +33,7 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, selectedId, onSelect, xray }) {
+function SceneContents({ rooms, framing, selectedId, onSelect, xray, mode }) {
   const controls = useRef();
   const { center, radius, gridSize, gridCenter, northTip } = framing;
 
@@ -57,16 +58,19 @@ function SceneContents({ rooms, framing, selectedId, onSelect, xray }) {
       <arrowHelper args={[northDir, northOrigin, Math.min(40, radius * 0.12), 0x9a3b2a, 10, 7]} />
       <Html position={northTip} center style={{ font: '600 13px Inter, sans-serif', color: '#9a3b2a', pointerEvents: 'none' }}>N</Html>
 
-      {rooms.map((r) => (
-        <RoomBox key={r.id} room={r} selected={r.id === selectedId} xray={xray} onSelect={onSelect} />
+      {mode !== 'diorama' && rooms.map((r) => (
+        <RoomBox key={r.id} room={r} selected={r.id === selectedId} xray={xray || mode === 'both'} onSelect={onSelect} />
       ))}
+      {mode !== 'massing' && (
+        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={onSelect} />
+      )}
 
       <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
     </>
   );
 }
 
-export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray }) {
+export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both' }) {
   const framing = useFraming(framingRooms);
   const camPos = useMemo(() => {
     const [cx, cy, cz] = framing.center;
@@ -80,7 +84,7 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} selectedId={selectedId} onSelect={onSelect} xray={xray} />
+      <SceneContents rooms={rooms} framing={framing} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} />
     </Canvas>
   );
 }

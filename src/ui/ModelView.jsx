@@ -30,6 +30,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
   const [hiddenFloors, setHiddenFloors] = useState(() => new Set());
   const [showProvisional, setShowProvisional] = useState(true);
   const [xray, setXray] = useState(false);
+  const [viewMode, setViewMode] = useState('both');
   const [identity, setIdent] = useState(getIdentity);
   const fileRef = useRef();
 
@@ -92,12 +93,18 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           <div className="meta">{visibleRooms.length} of {ALL_ROOMS.length} spaces · generated from the room table</div>
         </div>
         <div className="stage-tip">drag to orbit · scroll to zoom · right-drag to pan · click a space</div>
+        <div className="viewmode">
+          {[['both', 'Both'], ['diorama', 'Renders'], ['massing', 'Massing']].map(([m, label]) => (
+            <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => setViewMode(m)}>{label}</button>
+          ))}
+        </div>
         <CompoundScene
           rooms={visibleRooms}
           framingRooms={ALL_ROOMS}
           selectedId={selectedId}
           onSelect={setSelectedId}
           xray={xray}
+          mode={viewMode}
         />
       </div>
 
