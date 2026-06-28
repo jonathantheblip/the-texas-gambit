@@ -163,6 +163,18 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .roomview .chips { margin: 0 0 4px; }
 .roomview .specs { max-width: 420px; }
 
+/* Walk-to-adjoining-space strip */
+.walk { margin: 20px 0 6px; }
+.walk-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
+.walk-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+.walk-card { flex: 0 0 134px; border: none; background: none; padding: 0; cursor: pointer; text-align: left; font: inherit; display: flex; flex-direction: column; }
+.walk-thumb { width: 134px; height: 90px; border-radius: 8px; overflow: hidden; background: #e6e1d6; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.walk-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.walk-card:hover .walk-thumb img { transform: scale(1.05); }
+.walk-noimg { display: block; width: 100%; height: 100%; background: repeating-linear-gradient(45deg, #e6e1d6, #e6e1d6 6px, #ddd6c7 6px, #ddd6c7 12px); }
+.walk-dir { font-family: var(--mono); font-size: 10.5px; color: var(--accent); margin-top: 7px; }
+.walk-name { font-family: var(--serif-display); font-size: 14px; color: var(--ink); line-height: 1.2; margin-top: 1px; }
+
 @media (max-width: 760px) {
   .layout { flex-direction: column; }
   .panel { width: 100%; flex: 0 0 auto; height: 42vh; border-left: none; border-top: 1px solid var(--panel-edge); }

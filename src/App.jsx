@@ -1,5 +1,6 @@
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
+import { neighborsOf } from './data/adjacency.js';
 import { useGeometry } from './store/useGeometry.js';
 import Gallery from './ui/Gallery.jsx';
 import RoomView from './ui/RoomView.jsx';
@@ -33,11 +34,18 @@ export default function App() {
 
   if (view.mode === 'room') {
     const room = rooms.find((r) => r.id === view.id);
+    const byId = (id) => rooms.find((r) => r.id === id);
+    const neighbors = neighborsOf(view.id)
+      .map((n) => { const r = byId(n.id); return r ? { ...r, dir: n.dir } : null; })
+      .filter(Boolean)
+      .slice(0, 6);
     return (
       <RoomView
         room={room}
+        neighbors={neighbors}
         onBack={() => setView({ mode: 'gallery' })}
         onStepInto={(id) => setView({ mode: 'model', focusId: id })}
+        onGoRoom={(id) => setView({ mode: 'room', id })}
       />
     );
   }

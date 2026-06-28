@@ -1,11 +1,17 @@
 import { ANCESTORS } from '../data/rooms.js';
 
+const DIR = {
+  north: { label: 'North', arrow: '↑' }, south: { label: 'South', arrow: '↓' },
+  east: { label: 'East', arrow: '→' }, west: { label: 'West', arrow: '←' },
+  up: { label: 'Upstairs', arrow: '↑' }, down: { label: 'Downstairs', arrow: '↓' },
+};
+
 /**
  * A single space, render-forward: the colored-pencil illustration is the primary
- * surface (the "arrival"); the writing sits beside it; "step into" reveals the
- * 3D massing for the same space.
+ * surface. From here you can WALK to an adjoining space (geometry-derived
+ * neighbors) or step into the 3D massing.
  */
-export default function RoomView({ room, onBack, onStepInto }) {
+export default function RoomView({ room, neighbors = [], onBack, onStepInto, onGoRoom }) {
   if (!room) return null;
   return (
     <div className="roomview">
@@ -34,6 +40,24 @@ export default function RoomView({ room, onBack, onStepInto }) {
         )}
 
         {room.intent && <p className="rv-intent">{room.intent}</p>}
+
+        {/* Walk from here to an adjoining space */}
+        {neighbors.length > 0 && (
+          <div className="walk">
+            <div className="walk-label">Walk to an adjoining space</div>
+            <div className="walk-row">
+              {neighbors.map((n) => (
+                <button className="walk-card" key={n.id} onClick={() => onGoRoom(n.id)}>
+                  <span className="walk-thumb">
+                    {n.renderImage ? <img src={n.renderImage} alt="" loading="lazy" /> : <span className="walk-noimg" />}
+                  </span>
+                  <span className="walk-dir">{DIR[n.dir]?.arrow} {DIR[n.dir]?.label || n.dir}</span>
+                  <span className="walk-name">{n.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {room.specs?.length > 0 && (
           <div className="specs">
