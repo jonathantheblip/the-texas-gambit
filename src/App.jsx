@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
 import { useGeometry } from './store/useGeometry.js';
 import Gallery from './ui/Gallery.jsx';
 import RoomView from './ui/RoomView.jsx';
-import ModelView from './ui/ModelView.jsx';
+
+// The 3D view pulls in three.js / r3f / drei (~1 MB). Load it only when the
+// user steps into the massing, so the render-forward gallery stays light on mobile.
+const ModelView = lazy(() => import('./ui/ModelView.jsx'));
 
 /**
  * Render-forward shell. The colored-pencil renders are the front door:
@@ -18,11 +21,13 @@ export default function App() {
 
   if (view.mode === 'model') {
     return (
-      <ModelView
-        initialSelectedId={view.focusId || null}
-        onExit={() => setView({ mode: 'gallery' })}
-        onOpenRender={(id) => setView({ mode: 'room', id })}
-      />
+      <Suspense fallback={<div className="loading-3d">Loading the 3D model…</div>}>
+        <ModelView
+          initialSelectedId={view.focusId || null}
+          onExit={() => setView({ mode: 'gallery' })}
+          onOpenRender={(id) => setView({ mode: 'room', id })}
+        />
+      </Suspense>
     );
   }
 

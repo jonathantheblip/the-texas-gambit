@@ -11,7 +11,6 @@
  * If the backend (or the room_overrides table) isn't there yet, it degrades to
  * local-only and the app keeps working.
  */
-import { createClient } from '@supabase/supabase-js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_ENABLED } from '../config.js';
 
 const CACHE_KEY = 'hce.geom.v1';
@@ -138,9 +137,11 @@ async function pullAll() {
   if (readOutbox().length) flushOutbox(); else setStatus('idle');
 }
 
-function init() {
+async function init() {
   if (!SUPABASE_ENABLED) { setStatus('local'); return; }
   try {
+    // Dynamic import keeps the Supabase SDK out of the initial bundle.
+    const { createClient } = await import('@supabase/supabase-js');
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { realtime: { params: { eventsPerSecond: 5 } } });
   } catch (e) {
     console.warn('[geom] supabase init failed; local-only', e?.message || e);

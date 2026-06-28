@@ -17,6 +17,8 @@
 html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); }
 #app { height: 100%; }
 
+.loading-3d { display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
 .layout { display: flex; height: 100vh; width: 100vw; }
 .stage { flex: 1; position: relative; min-width: 0; }
 .stage canvas { display: block; touch-action: none; }
