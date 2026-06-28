@@ -10,7 +10,9 @@ import { PALETTE } from '../model/compoundModel.js';
 import { ROOM_JOIN, BUILDING_RENDERS, COMPOUND_RENDER } from './room_join.js';
 
 // public/ assets resolve under Vite's base ('/' in dev, '/the-texas-gambit/' in build).
-const asset = (file) => (file ? `${import.meta.env.BASE_URL}lookbook_images/${file}` : null);
+// Renders are served as WebP (90% smaller than the source PNGs); the join still
+// names .png, so rewrite the extension here in one place.
+const asset = (file) => (file ? `${import.meta.env.BASE_URL}lookbook_images/${file.replace(/\.png$/i, '.webp')}` : null);
 
 export const ANCESTORS = legacy.ancestors;
 export const META = roomsData.meta;
