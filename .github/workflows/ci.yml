@@ -1,0 +1,25 @@
+name: CI
+
+# Safety gate: every push/PR re-checks the locks and confirms the app builds.
+# A broken lock (Guest Suite 350, Observatory setbacks, no overlaps) fails CI.
+on:
+  push:
+    branches: [main, render-forward-3d]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Validate the room table (the locks)
+        run: python3 scripts/validate.py src/data/compound_rooms.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Build
+        run: npm run build
