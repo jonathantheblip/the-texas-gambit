@@ -1,0 +1,1114 @@
+{
+  "ancestors": {
+    "glebe": {
+      "id": "glebe",
+      "name": "The Glebe",
+      "place": "Marston St. Lawrence, Northants",
+      "desc": "Georgian bones, Palladian proportions, the architecture of permanence.",
+      "color": "#3a6040"
+    },
+    "ptown": {
+      "id": "ptown",
+      "name": "Captain Jack's Wharf",
+      "place": "Provincetown, Cape Cod",
+      "desc": "White walls, art everywhere, rattan & indigo, casual coastal soul.",
+      "color": "#3a6080"
+    },
+    "texas": {
+      "id": "texas",
+      "name": "Texas Hill Country",
+      "place": "Bandera County · 40 Acres",
+      "desc": "Limestone, live oaks, canyon views — the material & site palette.",
+      "color": "#b8860b"
+    },
+    "miss": {
+      "id": "miss",
+      "name": "Mississippi",
+      "place": "Cornelia's Greenhouse",
+      "desc": "Appears once: utilitarian growing-spaces become architecture.",
+      "color": "#8b4789"
+    }
+  },
+  "rooms": {
+    "front-porch": {
+      "name": "The Front Porch",
+      "tag": "The First Room",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Twelve feet deep because Texas demands it. Georgian column proportions because the Glebe demands it. A painted wood floor because Provincetown demands it. The room where coffee happens at dawn and bourbon at dusk.",
+      "specs": [
+        {
+          "k": "Depth",
+          "v": "12 ft"
+        },
+        {
+          "k": "Floor",
+          "v": "Painted wood plank"
+        },
+        {
+          "k": "Door",
+          "v": "Mesquite/cedar w/ fanlight + sidelights"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_frontporch_hero.png",
+          "caption": "Twelve Feet of Texas Shade"
+        }
+      ]
+    },
+    "entry-hall": {
+      "name": "The Entry Hall",
+      "tag": "The Grand Stair",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Double-height. Heated limestone floor (geothermal). Grand straight-run Georgian stair with white balusters and a dark handrail. Helen's father's photographs line the stair wall. Fanlight throws a half-moon of light across the floor every morning.",
+      "specs": [
+        {
+          "k": "Floor",
+          "v": "Limestone, geothermal radiant"
+        },
+        {
+          "k": "Stair",
+          "v": "Straight-run, white balusters, dark handrail"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_entryhall_hero.png",
+          "caption": "Fanlight, Grand Stair, Heated Limestone"
+        }
+      ]
+    },
+    "drawing-room": {
+      "name": "The Drawing Room",
+      "tag": "Art Is the Wallpaper",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Formal, but only formally so. White walls hung with art at every height. Two tall sash windows flanking the fireplace. Leather Chesterfield, mismatched rattan armchairs. Sea glass on the mantel.",
+      "specs": [
+        {
+          "k": "Walls",
+          "v": "Level-5 plaster, white"
+        },
+        {
+          "k": "Fireplace",
+          "v": "Limestone surround"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_drawingroom_hero.png",
+          "caption": "The Fireplace Wall, Art Everywhere"
+        }
+      ]
+    },
+    "great-room": {
+      "name": "The Great Room",
+      "tag": "The Everyday Heart",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown",
+        "texas"
+      ],
+      "intent": "The room where the family actually lives. Double-height on the garden side, tall sash windows flooding the space with Hill Country light. Turntable on a low credenza. Linen sofas, rattan armchair, coffee table buried in books and children's drawings. Limestone fireplace wall left bare.",
+      "specs": [
+        {
+          "k": "Volume",
+          "v": "Double-height (garden side)"
+        },
+        {
+          "k": "Fireplace",
+          "v": "Bare limestone — one of few exposed faces"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_greatroom_hero.png",
+          "caption": "The Everyday Heart"
+        },
+        {
+          "file": "mbg_greatroom_alt.png",
+          "caption": "Turntable Wall & Canyon Light"
+        }
+      ]
+    },
+    "oval-dining": {
+      "name": "The Oval Dining Room",
+      "tag": "The Glebe's Signature",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe"
+      ],
+      "intent": "The most direct homage to the Glebe. Projecting oval bay with tall sash windows in cedar frames (Helen-locked). Dusty pink walls — the only color in the public rooms. Round pedestal table for eight. Brass chandelier with candle bulbs. Thanksgiving happens here.",
+      "specs": [
+        {
+          "k": "Bay frames",
+          "v": "Cedar (Helen-locked)"
+        },
+        {
+          "k": "Walls",
+          "v": "Dusty pink"
+        },
+        {
+          "k": "Table",
+          "v": "Round pedestal, seats 8"
+        }
+      ],
+      "helenNote": "Cedar over steel for the bay frames — warm, traditional, weathering to silver-grey outside. The room is warmer for it.",
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_ovaldining_hero.png",
+          "caption": "Cedar Bay Windows, Dusty Pink Walls"
+        }
+      ]
+    },
+    "everyday-dining": {
+      "name": "Everyday Dining",
+      "tag": "The Breakfast Table",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Casual family dining from day one. Farmhouse table, mismatched chairs, morning light from the east. Golden ochre walls, worn white Victorian chest, French doors opening north to the Orangery. Walnut prep island lives here in Phase 2A, then relocates to the Motor Barn in Phase 2B.",
+      "specs": [
+        {
+          "k": "Walls",
+          "v": "Golden ochre"
+        },
+        {
+          "k": "Phase 2A",
+          "v": "Walnut prep island (relocates 2B)"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_everydaydining_hero.png",
+          "caption": "Permanent Configuration"
+        },
+        {
+          "file": "mbg_everdaydiningtemp_hero.png",
+          "caption": "Phase 2A — w/ Walnut Prep Island"
+        }
+      ]
+    },
+    "library": {
+      "name": "The Library",
+      "tag": "A Writer's Studio with Georgian Proportions",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Canted bay window on the north face frames the canyon the way the Glebe's bay frames the Northamptonshire countryside. White-painted shelves to the ceiling on three walls, brass library ladder on a rail. Mesquite writing desk facing the bay. The leather chair by the window is the quietest seat in the house.",
+      "specs": [
+        {
+          "k": "Bay",
+          "v": "Canted, north-facing"
+        },
+        {
+          "k": "Shelves",
+          "v": "White-painted, to ceiling"
+        },
+        {
+          "k": "Desk",
+          "v": "Mesquite"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_library_hero.png",
+          "caption": "Canted Bay, Brass Ladder, Mesquite Desk"
+        }
+      ]
+    },
+    "orangery": {
+      "name": "The Orangery",
+      "tag": "Three-Season Garden Room",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Between the oval dining bay and the library bay on the north face. Inside and outside blur. Ceiling fans, daybed swing, deep rattan chairs with faded indigo cushions. Screens against insects, breeze through. Looking south, you can see all the way to the front porch.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_orangery_hero.png",
+          "caption": "The Orangery"
+        }
+      ]
+    },
+    "powder-room": {
+      "name": "The Powder Room",
+      "tag": "The Indigo Jewel Box · Storm Shelter",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "The one room where color goes bold. Deep indigo walls — almost navy — white porcelain pedestal sink, brass-framed mirror, single sconce. Tiny and intentionally dramatic. Behind the door: ICF walls and poured concrete ceiling. This is Storm Shelter 2.",
+      "specs": [
+        {
+          "k": "Walls",
+          "v": "Indigo (near-navy)"
+        },
+        {
+          "k": "Structure",
+          "v": "ICF walls, poured concrete ceiling"
+        },
+        {
+          "k": "Function",
+          "v": "Storm Shelter 2 (core)"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_powderroom_hero.png",
+          "caption": "Indigo Walls, Hidden Storm Shelter"
+        }
+      ]
+    },
+    "right-passage": {
+      "name": "The Right Passage",
+      "tag": "The Longest Sight Line",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "Standing at the west end, you look east through the passage, through the sunroom's open glass walls, across the pool terrace, past the perimeter-overflow pool, into the canyon. An unbroken line of sight from the Georgian heart of the house to the edge of the world.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbg_rightpassage_hero.png",
+          "caption": "Passage to Canyon"
+        }
+      ]
+    },
+    "upper-gallery": {
+      "name": "The Upper Gallery",
+      "tag": "The Salon Hang",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "The landing at the top of the grand stair opens into a wide gallery connecting all four upper-floor rooms. Walls hung salon-style — paintings, photographs, children's art mixed at different heights. Small writing desk by the Palladian window at the north end.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_uppergallery_hero.png",
+          "caption": "Salon-Hung Art, Palladian Window"
+        }
+      ]
+    },
+    "primary-suite": {
+      "name": "The Main Bedroom Suite",
+      "tag": "The Private Wing",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "White vertical beadboard feature wall behind the bed — direct Cape Cod. En suite: sea glass teal subway tile, freestanding tub by the arched window, heated limestone floors. The \"widow's walk\" terrace sits on the roof of the sunroom wing — accessible only from this room. Coffee at sunrise.",
+      "specs": [
+        {
+          "k": "Beadboard",
+          "v": "Vertical, white (CJ rule)"
+        },
+        {
+          "k": "Tile",
+          "v": "Sea glass teal subway"
+        },
+        {
+          "k": "Floors",
+          "v": "Heated limestone"
+        }
+      ],
+      "helenNote": "White vertical beadboard wall, sea glass teal tile in the en suite, heated limestone, the widow's walk over the sunroom. The most private place in the compound.",
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_primarysuite_hero.png",
+          "caption": "Vertical Beadboard, Morning Light"
+        },
+        {
+          "file": "mbu_primaryensuite_hero.png",
+          "caption": "En Suite — Sea Glass Teal Tile"
+        },
+        {
+          "file": "mbu_primaryensuite_alt.png",
+          "caption": "En Suite — Freestanding Tub, Arched Window"
+        },
+        {
+          "file": "mbu_dressingroom_hero.png",
+          "caption": "Dressing Room — Beadboard, Brass, Island"
+        },
+        {
+          "file": "mbu_primaryterrace_hero.png",
+          "caption": "Primary Terrace — Coffee at Sunrise"
+        }
+      ]
+    },
+    "study": {
+      "name": "The Study",
+      "tag": "Above the Drawing Room",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Above the Drawing Room. Bay window rotated to the south face, catching afternoon light. Smaller and more private than the Library. Desk, reading chair, bookshelves. The door closes and the house goes quiet. View south is all sky and live oaks.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_study_hero.png",
+          "caption": "South-Facing Bay, Afternoon Light"
+        }
+      ]
+    },
+    "quiet-room": {
+      "name": "The Quiet Room",
+      "tag": "Where the Ancestors Converge",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "glebe",
+        "ptown",
+        "texas"
+      ],
+      "intent": "The room where all three ancestors stop being separate threads and become one thing. White walls, good height, a beautiful window, almost nothing else. The single-pane picture window is an intentional deviation from the 12-over-12 rule — it frames the canyon as a painting. A guest sleeps better here than they have in years and can't quite explain why.",
+      "specs": [
+        {
+          "k": "Window",
+          "v": "Single-pane picture (12-over-12 exception)"
+        },
+        {
+          "k": "Transom",
+          "v": "Triple-glazed acoustic, antique honey glass inner layer"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_quietroom_hero.png",
+          "caption": "Stillness, Canyon Framed"
+        },
+        {
+          "file": "mbu_quietroomensuite_hero.png",
+          "caption": "En Suite — Heated Limestone"
+        }
+      ]
+    },
+    "aurelias-room": {
+      "name": "Aurelia's Room",
+      "tag": "The Explorer's Room",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "Designed to work for a five-year-old now and a teenager later. White walls with one accent wall in soft indigo wash. Window seat with storage below. Picture books that will become novels. Her own art on the walls — framed properly.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_aureliaroom_hero.png",
+          "caption": "Growing with Her"
+        },
+        {
+          "file": "mbu_aureliaensuite_hero.png",
+          "caption": "En Suite — Warm Stone & White"
+        }
+      ]
+    },
+    "rafa-texas-room": {
+      "name": "Rafa's Texas Room",
+      "tag": "The Room That Belongs to the Land",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "upper",
+      "ancestors": [
+        "texas"
+      ],
+      "intent": "The most Texan room in the house. One wall of exposed limestone left bare because the stone was too beautiful to cover. Pendleton blanket on the bed. Butterfly chair. Boots by the door. The child who will grow up knowing this land by the bottoms of his feet.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "mbu_rafatexasroom_hero.png",
+          "caption": "Limestone Wall, Canyon View"
+        },
+        {
+          "file": "mbu_rafaensuite_hero.png",
+          "caption": "En Suite — Warm Stone & Terracotta"
+        }
+      ]
+    },
+    "kitchen": {
+      "name": "The Kitchen",
+      "tag": "460 SF Culinary Anchor",
+      "phase": "2B",
+      "building": "service-wing",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "glebe"
+      ],
+      "intent": "White board walls, Provincetown shelving. Cobalt concrete island. La Cornue range — the centerpiece. Belfast sink. Darkened copper hood. French doors opening south to the elevated herb terrace.",
+      "specs": [
+        {
+          "k": "Range",
+          "v": "La Cornue CornuFé 110, Ivory + Polished Brass"
+        },
+        {
+          "k": "Island",
+          "v": "Cobalt concrete"
+        },
+        {
+          "k": "Sink",
+          "v": "Belfast"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "sw_kitchen_hero.png",
+          "caption": "La Cornue, Cobalt Island, Belfast Sink"
+        },
+        {
+          "file": "sw_kitchen_alt.png",
+          "caption": "Kitchen — Alternate View"
+        }
+      ]
+    },
+    "pantry": {
+      "name": "The Pantry",
+      "tag": "Butler's Blue Shelving",
+      "phase": "2B",
+      "building": "service-wing",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Deep blue shelving. Limestone arch leading to the Wine Room / Storm Shelter 1. Thermally stable zone — north half of the wing.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "sw_pantry_hero.png",
+          "caption": "Butler's Blue, Limestone Arch"
+        }
+      ]
+    },
+    "scullery": {
+      "name": "The Scullery",
+      "tag": "Wet Room · Dirty-to-Clean Threshold",
+      "phase": "2B",
+      "building": "service-wing",
+      "floor": "ground",
+      "ancestors": [
+        "glebe"
+      ],
+      "intent": "Behind the kitchen. Where the dishes come back. Independent make-up air. The threshold between dirty and clean.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "sw_scullery_hero.png",
+          "caption": "Wet Room"
+        }
+      ]
+    },
+    "wine-room": {
+      "name": "The Wine Room",
+      "tag": "Storm Shelter 1",
+      "phase": "2B",
+      "building": "service-wing",
+      "floor": "ground",
+      "ancestors": [
+        "glebe"
+      ],
+      "intent": "Disguised as a wine room, engineered as a shelter. Reinforced ICF walls, poured concrete ceiling. The first of four storm shelters across the compound.",
+      "specs": [
+        {
+          "k": "Walls",
+          "v": "ICF reinforced"
+        },
+        {
+          "k": "Function",
+          "v": "Storm Shelter 1"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "sw_wineroom_hero.png",
+          "caption": "Wine Room / Storm Shelter"
+        }
+      ]
+    },
+    "mudroom": {
+      "name": "The Mudroom",
+      "tag": "140 SF Threshold",
+      "phase": "2B",
+      "building": "service-wing",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "texas"
+      ],
+      "intent": "Copper dog wash. Grey-blue-green beadboard walls. The threshold between the motor court and the kitchen — boots off, dog rinsed, groceries staged.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "sw_mudroom_hero.png",
+          "caption": "Copper Dog Wash, Beadboard"
+        }
+      ]
+    },
+    "sunroom": {
+      "name": "The Sunroom",
+      "tag": "Where Inside Becomes Outside",
+      "phase": "2B",
+      "building": "wharf-wing",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "texas"
+      ],
+      "intent": "Captain Jack's Wharf — the boundary dissolves. Glass walls pivot fully open; heated limestone floor. Rattan furniture, indigo striped cushions, ship's pulley on the rafter. Step through onto warm limestone, you're at the pool's edge.",
+      "specs": null,
+      "helenNote": "The boundary between inside and outside dissolving. Heated limestone year-round. On a still morning the perimeter pool is a perfect mirror.",
+      "zones": null,
+      "images": [
+        {
+          "file": "ww_sunroom_hero.png",
+          "caption": "Glass Walls to Pool"
+        },
+        {
+          "file": "ww_sunroom_alt.png",
+          "caption": "Rattan, Indigo, Open Panels"
+        }
+      ]
+    },
+    "guest-suite": {
+      "name": "The Guest Suite",
+      "tag": "Full Captain Jack's Wharf · Independent Dwelling",
+      "phase": "2B",
+      "building": "wharf-wing",
+      "floor": "ground",
+      "ancestors": [
+        "ptown"
+      ],
+      "intent": "The Wharf Wing Independent Dwelling — self-contained casita. Heritage kitchenette (furniture, not cabinetry), laundry closet, direct exterior door, full aging-in-place provisions. Connected to the family via Sunroom and Glass Bridge — only thirty steps from the main block. White vertical beadboard, dark timber rafters, grey painted floors.",
+      "specs": [
+        {
+          "k": "Walls",
+          "v": "Vertical beadboard, white"
+        },
+        {
+          "k": "Floor",
+          "v": "Grey painted"
+        },
+        {
+          "k": "Use",
+          "v": "Guest / aging in place / casita"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ww_guestsitting_hero.png",
+          "caption": "Sitting Room — Fireplace Wall, Salon Hang"
+        },
+        {
+          "file": "ww_guestbedroom_hero.png",
+          "caption": "Bedroom — Dark Timber Rafters, Indigo"
+        },
+        {
+          "file": "ww_guestensuite_hero.png",
+          "caption": "En Suite — White Beadboard, Brass"
+        }
+      ]
+    },
+    "pool-terrace": {
+      "name": "The Pool & Pool Terrace",
+      "tag": "Six Zones at the Edge of the World",
+      "phase": "2B",
+      "building": "pool",
+      "floor": "ground",
+      "ancestors": [
+        "texas",
+        "ptown",
+        "glebe"
+      ],
+      "intent": "Not a slab with furniture on it — a six-zone ground plane. Perimeter-overflow pool: zero-entry slope facing the sunroom, vanishing infinity edge facing the canyon, PLC-controlled 28-day lunar tidal algorithm creating gentle lapping sounds. Geothermal heated, swimmable March–November.",
+      "specs": [
+        {
+          "k": "Pool",
+          "v": "Perimeter-overflow, 28-day tidal algorithm"
+        },
+        {
+          "k": "Heating",
+          "v": "Geothermal"
+        },
+        {
+          "k": "Pest",
+          "v": "Mortared joints, hardware-cloth perimeter, pyrethrin misting (Westminster chime cue)"
+        }
+      ],
+      "helenNote": "Helen's Sail — Sunbrella Marine 16oz canvas in Linen, manila cord, bronze turnbuckles, brass spur grommets. Migrates from Shade Court to Canyon Perch when the live oak takes over shading the table.",
+      "zones": [
+        {
+          "z": "A",
+          "name": "The Shallows",
+          "desc": "Helen & Aurelia's zone. Baja shelf with 4–6 inches of water over honed limestone."
+        },
+        {
+          "z": "B",
+          "name": "The Shade Court",
+          "desc": "Daytime dining room under the heritage live oak. Helen's Sail above."
+        },
+        {
+          "z": "C",
+          "name": "The Morning Ledge",
+          "desc": "Helen's zone. PEX-tapped limestone capstone — radiant-warm at dawn."
+        },
+        {
+          "z": "D",
+          "name": "The Canyon Perch",
+          "desc": "Mortared semicircular seat wall, gas fire ring (locked from TBD), at the canyon edge."
+        },
+        {
+          "z": "E",
+          "name": "The Water's Edge",
+          "desc": "Jon's zone. Weathered teak chaises on widened limestone coping."
+        },
+        {
+          "z": "F",
+          "name": "The Sunroom",
+          "desc": "Climate-controlled backstop when Hill Country weather closes the terrace."
+        }
+      ],
+      "images": [
+        {
+          "file": "od_poolzeroentry_hero.png",
+          "caption": "Pool & Shallows — Zero-Entry, Sun Shelf"
+        },
+        {
+          "file": "od_poolinfinity_hero.png",
+          "caption": "Canyon Perch & Water's Edge — Vanishing Edge, Fire Ring"
+        }
+      ]
+    },
+    "motor-barn-ext": {
+      "name": "The Motor Barn — Exterior",
+      "tag": "Stable Block Vocabulary",
+      "phase": "2C",
+      "building": "motor-barn",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Belongs to the compound the way a stable block belongs to an English country house. Three arched openings, symmetrical facade, proper keystones and limestone voussoirs. Same string course, stone surrounds, dark bronze standing-seam hipped roof as the main house — at a humbler scale. Climbing jasmine on the east wall.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_motorbarnext_hero.png",
+          "caption": "Georgian Grammar at a Humbler Scale"
+        }
+      ]
+    },
+    "garage": {
+      "name": "The Garage",
+      "tag": "Three Bays",
+      "phase": "2C",
+      "building": "motor-barn",
+      "floor": "ground",
+      "ancestors": [
+        "glebe"
+      ],
+      "intent": "Polished concrete, three bays, EV charging. The working heart of the Motor Barn.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_motorbarngarage_hero.png",
+          "caption": "Polished Concrete, Three Bays"
+        }
+      ]
+    },
+    "greenhouse": {
+      "name": "Grandma Cornelia's Greenhouse",
+      "tag": "The Mississippi Trace",
+      "phase": "2C",
+      "building": "motor-barn",
+      "floor": "ground",
+      "ancestors": [
+        "miss",
+        "texas"
+      ],
+      "intent": "A tall arched window backed with green — the greenhouse pressing against the glass from inside. The fourth ancestor appears here, exactly once: the Mississippi tradition of growing things in utilitarian spaces.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_motorbarngreenhouse_hero.png",
+          "caption": "Cornelia's Greenhouse — Arched Window, Terra Cotta"
+        }
+      ]
+    },
+    "motor-barn-loft": {
+      "name": "The Loft",
+      "tag": "Above the Garage",
+      "phase": "2C",
+      "building": "motor-barn",
+      "floor": "upper",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "A pitched-ceiling refuge above the garage. Exposed dark beams, white plaster, wide-plank floors. Sectional sofa, vintage rug, a pool table, room for the family to spread out. The kind of upper-level retreat a stable block earns when it grows past its working role.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_motorbarnloft_hero.png",
+          "caption": "Beams, Sofa, Pool Table"
+        }
+      ]
+    },
+    "motor-barn-utility": {
+      "name": "Utility Room",
+      "tag": "The Working Wall",
+      "phase": "2C",
+      "building": "motor-barn",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Working wall: battery bank, radiant manifolds, pegboard with every tool labeled in its place. Limestone walls, exposed timber ceiling, polished concrete floor. Honest infrastructure, treated like the rest of the house — beautiful by being correct.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_motorbarnutility_hero.png",
+          "caption": "Battery Bank, Manifolds, Pegboard"
+        }
+      ]
+    },
+    "pavilion": {
+      "name": "Cedar Utility Pavilion",
+      "tag": "Heavy Timber Shelter",
+      "phase": "2C",
+      "building": "pavilion",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Cedar post-and-beam shelter. 20×24 ft, open on three sides, dark bronze metal roof. Heavy cedar timbers with mortise-and-tenon joints over crushed limestone. The kind of shelter a Georgian estate would have built for carriages, scaled down and translated into Texas cedar.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_pavilion_hero.png",
+          "caption": "Heavy Timber, Crushed Limestone"
+        }
+      ]
+    },
+    "covered-walkway": {
+      "name": "The Covered Walkway",
+      "tag": "Motor Barn → Service Wing",
+      "phase": "2C",
+      "building": "covered-walkway",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Limestone piers, simple metal roof, native plantings. Walk from your car to the kitchen without getting wet in a thunderstorm. Practical architecture that looks like it has been there forever.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_coveredwalkway_hero.png",
+          "caption": "Limestone Piers, Simple Roof"
+        }
+      ]
+    },
+    "observatory": {
+      "name": "The Observatory",
+      "tag": "The Folly at the Edge of the World",
+      "phase": "2C",
+      "building": "observatory",
+      "floor": "ground",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "A limestone folly inspired by the Radcliffe Observatory in Oxford. Octagonal tower at the far corner of the property, 150 feet from the Motor Barn, split clamshell dome housing a telescope. By day a reading room with 360° views; by night the dome opens and the telescope points at Jupiter. The folly that any proper English estate would build at the edge of its grounds.",
+      "specs": [
+        {
+          "k": "Geometry",
+          "v": "Octagonal, 7×12-over-12 sash + arched cobalt door"
+        },
+        {
+          "k": "Pier",
+          "v": "Isolated concrete (vibration-decoupled)"
+        },
+        {
+          "k": "Plumbing/HVAC",
+          "v": "NONE — prevents thermal plumes"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ob_observatoryextday_hero.png",
+          "caption": "Day — Limestone & Live Oaks"
+        },
+        {
+          "file": "ob_observatoryextnight_hero.png",
+          "caption": "Night — Dome Open, Dark Sky"
+        },
+        {
+          "file": "ob_observatoryint_hero.png",
+          "caption": "Reading Room by Day, Telescope by Night"
+        }
+      ]
+    },
+    "grape-pergola": {
+      "name": "Helen's Grape Pergola",
+      "tag": "The North Alley",
+      "phase": "2B",
+      "building": "grape-pergola",
+      "floor": "ground",
+      "ancestors": [
+        "ptown",
+        "texas"
+      ],
+      "intent": "Sal Del Deo brought grapevines from Italy in the 1950s for his restaurant on Commercial Street, and they grew into the iconic pergola at Sal's Place. We're letting those ancestors plant a flag in Texas. Corten steel crossbars on limestone columns — non-combustible per Firewise. Champanel grapevines — wild and overgrown. At the foot of every column, rosemary, thyme, oregano, basil — because the scent at Sal's was herbs, not grapes.",
+      "specs": null,
+      "helenNote": "This is personal. Helen's father was furious when the original came down. Helen still wears a Sal's Place shirt with the pergola on it.",
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_northalley_hero.png",
+          "caption": "Sal's Vines Replanted in Texas"
+        }
+      ]
+    },
+    "compound-approach": {
+      "name": "The Approach",
+      "tag": "Through Live Oaks",
+      "phase": "2A",
+      "building": "compound",
+      "floor": "site",
+      "ancestors": [
+        "texas",
+        "glebe"
+      ],
+      "intent": "Through live oaks, the compound revealing itself piece by piece.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_compoundapproach_hero.png",
+          "caption": "Compound Approach"
+        }
+      ]
+    },
+    "compound-night": {
+      "name": "The Compound at Night",
+      "tag": "Every Window Glowing",
+      "phase": "2A",
+      "building": "compound",
+      "floor": "site",
+      "ancestors": [
+        "texas",
+        "glebe",
+        "ptown"
+      ],
+      "intent": "Every window glowing under a 590nm amber Dark-Sky envelope. The compound earns its place in the canyon at dusk.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_compoundnight_hero.png",
+          "caption": "Every Window Glowing"
+        }
+      ]
+    },
+    "front-elevation": {
+      "name": "Front Elevation",
+      "tag": "The Five-Bay Face",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "site",
+      "ancestors": [
+        "glebe"
+      ],
+      "intent": "The five-bay Georgian face. Symmetry, sash windows, fanlight, stone surround. Twelve-foot porch.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_frontelevation_hero.png",
+          "caption": "The Five-Bay Face"
+        }
+      ]
+    },
+    "rear-garden": {
+      "name": "Rear & Garden Elevation",
+      "tag": "Three Projecting Forms",
+      "phase": "2A",
+      "building": "main-block",
+      "floor": "site",
+      "ancestors": [
+        "glebe",
+        "texas"
+      ],
+      "intent": "Oval bay, canted bay, primary cedar oriel. Three projecting forms reading the canyon.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_reargarden_hero.png",
+          "caption": "Three Projecting Forms"
+        }
+      ]
+    },
+    "wharf-wing-ext": {
+      "name": "Wharf Wing — Exterior",
+      "tag": "Sunroom & Guest Suite",
+      "phase": "2B",
+      "building": "wharf-wing",
+      "floor": "site",
+      "ancestors": [
+        "ptown"
+      ],
+      "intent": "White-painted cedar shingle with blue-family trim. The Provincetown wing made physical in Texas.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_wharfwing_hero.png",
+          "caption": "Sunroom & Guest Suite"
+        }
+      ]
+    },
+    "pool-terrace-ext": {
+      "name": "Pool Terrace — Exterior",
+      "tag": "Canyon Edge",
+      "phase": "2B",
+      "building": "pool",
+      "floor": "site",
+      "ancestors": [
+        "texas"
+      ],
+      "intent": "Six zones at the edge of the world. Six-zone ground plane.",
+      "specs": null,
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ext_poolterrace_hero.png",
+          "caption": "Pool Terrace — Canyon Edge"
+        }
+      ]
+    }
+  }
+}

@@ -1,17 +1,9 @@
 import { useMemo, useState } from 'react';
-import roomsData from './data/compound_rooms.json';
 import { validate, PALETTE } from './model/compoundModel.js';
+import { ALL_ROOMS, BUILDINGS, FLOORS, ANCESTORS } from './data/rooms.js';
 import CompoundScene from './scene/CompoundScene.jsx';
 
-const ALL_ROOMS = roomsData.rooms;
-
-const FLOOR_ORDER = ['ground', 'upper', 'loft', 'crown', 'site'];
 const TAG_LABEL = { L: 'Locked', D: 'Derived', A: 'Area locked · shape guessed', '~': 'Best-guess' };
-
-// Buildings in PALETTE order, restricted to those actually present.
-const BUILDINGS = Object.keys(PALETTE).filter((b) => ALL_ROOMS.some((r) => r.building === b));
-const FLOORS = FLOOR_ORDER.filter((f) => ALL_ROOMS.some((r) => r.floor === f));
-
 const rgbCss = (c) => `rgb(${c.map((v) => Math.round(v * 255)).join(',')})`;
 
 export default function App() {
@@ -125,17 +117,40 @@ export default function App() {
           {!selected && <div className="sel-empty">Click a space in the model.</div>}
           {selected && (
             <div className="sel">
+              {selected.renderImage
+                ? <img className="sel-hero" src={selected.renderImage} alt={selected.name} loading="lazy" />
+                : <div className="sel-hero placeholder">render not yet made</div>}
               <h3>{selected.name}</h3>
-              <div className="sub">{selected.building} · {selected.floor}</div>
+              <div className="sub">
+                {selected.building} · {selected.floor}{selected.phase ? ` · Phase ${selected.phase}` : ''}
+              </div>
+              {selected.ancestors?.length > 0 && (
+                <div className="chips">
+                  {selected.ancestors.map((a) => (
+                    <span key={a} className="chip" style={{ '--chip': ANCESTORS[a]?.color || '#999' }}>
+                      {ANCESTORS[a]?.name || a}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {selected.intent && <p className="intent">{selected.intent}</p>}
               <dl>
                 <dt>Footprint</dt><dd>{selected.w}′ × {selected.d}′</dd>
-                <dt>Area</dt><dd>{selected.w * selected.d} ft²</dd>
+                <dt>Area</dt><dd>{selected.area} ft²</dd>
                 <dt>Height</dt><dd>{selected.height}′</dd>
                 <dt>SW corner</dt><dd>({selected.x}, {selected.y})</dd>
-                <dt>Render</dt><dd>{selected.render}</dd>
+                <dt>State</dt><dd>{selected.render}</dd>
                 <dt>Provenance</dt><dd><span className="tagpill">{selected.tag}</span> {TAG_LABEL[selected.tag] || ''}</dd>
               </dl>
-              {selected.notes && <div className="notes">{selected.notes}</div>}
+              {selected.specs?.length > 0 && (
+                <div className="specs">
+                  {selected.specs.map((s, i) => (
+                    <div className="spec-row" key={i}><span className="k">{s.k}</span><span className="v">{s.v}</span></div>
+                  ))}
+                </div>
+              )}
+              {selected.helenNote && <div className="notes">— Helen: {selected.helenNote}</div>}
+              {selected.notes && <div className="notes geom-note">{selected.notes}</div>}
             </div>
           )}
         </section>

@@ -68,7 +68,19 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .sel dt { color: var(--ink-soft); }
 .sel dd { margin: 0; font-family: var(--mono); }
 .sel .notes { font-family: var(--serif-text); font-size: 13px; line-height: 1.45; margin-top: 10px; color: var(--ink); }
+.sel .notes.geom-note { color: var(--ink-soft); font-style: italic; }
 .tagpill { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,.06); }
+
+/* Selected-space hero render + writing */
+.sel-hero { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #e6e1d6; display: block; }
+.sel-hero.placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); border: 1px dashed var(--panel-edge); }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 4px; }
+.chip { font-size: 10.5px; letter-spacing: .02em; padding: 2px 8px; border-radius: 999px; color: #fff; background: var(--chip, #999); }
+.sel .intent { font-family: var(--serif-text); font-size: 13.5px; line-height: 1.5; margin: 10px 0 12px; color: var(--ink); }
+.specs { margin-top: 10px; border-top: 1px solid var(--panel-edge); padding-top: 8px; }
+.spec-row { display: flex; gap: 10px; font-size: 12px; padding: 2px 0; }
+.spec-row .k { color: var(--ink-soft); flex: 0 0 38%; }
+.spec-row .v { font-family: var(--mono); }
 
 @media (max-width: 760px) {
   .layout { flex-direction: column; }
