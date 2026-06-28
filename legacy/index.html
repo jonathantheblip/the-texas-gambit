@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hill Country Estate · Companion</title>
+<meta name="description" content="A living lookbook for the Hill Country Compound — DiBello, Imber, Sundt · 2026 → 2038" />
+<meta name="theme-color" content="#1E3A8A" />
+
+<link rel="icon" id="favicon" href="favicon-helen.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-helen-180.png" />
+<link rel="manifest" href="manifest-helen.webmanifest" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="HCE" />
+
+<!-- Type stack: Playfair Display (display serif) · Source Serif 4 (text serif) · Inter (sans) · JetBrains Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css?v=p4lens-fix" />
+<link rel="stylesheet" href="styles-floorplan.css" />
+</head>
+<body data-mode="helen">
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Shared backend (Supabase). Without these set, the app falls back
+     to localStorage-only mode (single device, no sharing). See SYNC.md. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+  window.__HCE_CONFIG = {
+    url: 'https://mxxymneemuofksoulxwp.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14eHltbmVlbXVvZmtzb3VseHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODYwNzAsImV4cCI6MjA5MzI2MjA3MH0.2ph9Agj9XPGgqbRCQ7HKp0UfsTmdfxZFbohdH9n-V1E',
+    // token: ''     // optional shared-secret URL gate (see SYNC.md)
+  };
+</script>
+
+<script src="data.js"></script>
+<script src="placeholder.js"></script>
+<script src="store.js"></script>
+<script src="sync.js"></script>
+<script type="text/babel" src="lightbox.jsx"></script>
+<script type="text/babel" src="views-rooms.jsx"></script>
+<script type="text/babel" src="views-helen-room.jsx"></script>
+<script type="text/babel" src="views-other.jsx"></script>
+<script type="text/babel" src="views-jon.jsx"></script>
+<script type="text/babel" src="pass3.jsx"></script>
+<script type="text/babel" src="pass4.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hill Country Estate — Compound Model (v2, editable)</title>
+<style>
+  :root{--ink:#2b2a26;--panel:#f4f1ea;--line:#d8d2c4;--ok:#3f7d4f;--bad:#b5462f;--accent:#7a6a52;}
+  *{box-sizing:border-box} html,body{margin:0;height:100%;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e9e5db;overflow:hidden}
+  #app{display:flex;height:100%}
+  #view{flex:1;position:relative}
+  #hud{position:absolute;top:10px;left:12px;font-size:12px;color:#5b5446;background:rgba(244,241,234,.82);padding:6px 9px;border-radius:6px;line-height:1.5;pointer-events:none}
+  #panel{width:332px;min-width:332px;background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
+  .sec{padding:11px 14px;border-bottom:1px solid var(--line)}
+  h1{font-size:14px;margin:0 0 2px} .sub{font-size:11px;color:#7d7466;margin:0}
+  h2{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#8a8170;margin:0 0 7px}
+  .scroll{overflow-y:auto;flex:1}
+  label.chk{display:flex;align-items:center;gap:7px;font-size:12.5px;padding:2px 0;cursor:pointer}
+  .swatch{width:11px;height:11px;border-radius:2px;border:1px solid rgba(0,0,0,.25);flex:none}
+  .row{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:12.5px;align-items:center}
+  .row .k{color:#8a8170}
+  .edit{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:8px}
+  .edit label{font-size:11px;color:#8a8170;display:flex;flex-direction:column;gap:3px}
+  .edit input{font:inherit;font-size:13px;padding:5px 7px;border:1px solid var(--line);border-radius:5px;background:#fff;width:100%}
+  .btns{display:flex;gap:8px;margin-top:10px}
+  button{font:inherit;font-size:12.5px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;color:var(--ink)}
+  button:hover{background:#efeadd} button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .status{font-size:12px;line-height:1.5}
+  .status .item{display:flex;gap:7px;align-items:flex-start;padding:2px 0}
+  .dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex:none}
+  .dot.ok{background:var(--ok)} .dot.bad{background:var(--bad)}
+  .muted{color:#8a8170;font-size:11.5px}
+  textarea{width:100%;height:120px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;border:1px solid var(--line);border-radius:6px;padding:7px;margin-top:8px;display:none}
+  .pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:9px;border:1px solid var(--line);color:#7d7466;background:#fff}
+  .hint{font-size:11px;color:#8a8170;margin-top:4px}
+</style></head>
+<body><div id="app">
+  <div id="view"><div id="hud">drag to orbit · scroll to zoom · right-drag to pan · click a room to edit it</div></div>
+  <div id="panel">
+    <div class="sec"><h1>Compound Model — v2</h1><p class="sub">Provisional feel-model · generated from the room table · nothing locked</p></div>
+    <div class="sec status" id="statusBox"><h2>Live checks</h2><div id="status"></div></div>
+    <div class="scroll">
+      <div class="sec" id="selSec"><h2>Selected room</h2><div id="sel"><p class="muted">Click a box in the model to inspect or edit it.</p></div></div>
+      <div class="sec"><h2>Buildings</h2><div id="bldg"></div></div>
+      <div class="sec"><h2>Floors</h2><div id="flr"></div>
+        <label class="chk" style="margin-top:6px"><input type="checkbox" id="showProv" checked> Show best-guess rooms (provisional)</label>
+        <label class="chk"><input type="checkbox" id="xray"> X-ray (all translucent)</label>
+      </div>
+      <div class="sec"><h2>Data round-trip</h2>
+        <div class="btns"><button class="primary" id="exportBtn">Export JSON</button><button id="resetBtn">Reset to baseline</button></div>
+        <p class="hint">Export the edited table, hand it back through Claude to re-validate and regenerate, or drop it straight into the PWA.</p>
+        <textarea id="out" readonly></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const ROOMS = [{"id": "drawing_room_sw", "name": "Drawing Room (SW)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 0, "y": 0, "w": 16, "d": 20, "zFloor": 0, "zCeil": 12, "height": 12, "area": 320, "tag": "D", "render": "locked", "notes": "Helen's gallery; west sashes kept"}, {"id": "great_room_se", "name": "Great Room (SE)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 28, "y": 0, "w": 16, "d": 20, "zFloor": 0, "zCeil": 12, "height": 12, "area": 320, "tag": "D", "render": "locked", "notes": "restored; Rafa's room stacks above"}, {"id": "oval_dining_nw", "name": "Oval Dining (NW)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 0, "y": 20, "w": 16, "d": 18, "zFloor": 0, "zCeil": 12, "height": 12, "area": 288, "tag": "D", "render": "locked", "notes": "curved cedar bay projects north"}, {"id": "library_ne", "name": "Library (NE)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 28, "y": 20, "w": 16, "d": 18, "zFloor": 0, "zCeil": 12, "height": 12, "area": 288, "tag": "D", "render": "locked", "notes": "canted bay projects north; Wharf transition"}, {"id": "entry_hall_front_s_ctr", "name": "Entry Hall (front, S-ctr)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 16, "y": 0, "w": 12, "d": 12, "zFloor": 0, "zCeil": 12, "height": 12, "area": 144, "tag": "L", "render": "locked", "notes": "single-height entry; Quiet Room sits above it"}, {"id": "octagonal_stair_hall", "name": "Octagonal Stair Hall", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 16, "y": 12, "w": 12, "d": 8, "zFloor": 0, "zCeil": 24, "height": 24, "area": 96, "tag": "L", "render": "container", "notes": "double-height open-well stair; oculus above; 10' clear x 32' sightline runs through it"}, {"id": "everyday_dining_n_ctr", "name": "Everyday Dining (N-ctr)", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 16, "y": 20, "w": 12, "d": 18, "zFloor": 0, "zCeil": 12, "height": 12, "area": 216, "tag": "D", "render": "container", "notes": "central-band width; French doors to Orangery; contains Powder Rm"}, {"id": "powder_room", "name": "Powder Room", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 16, "y": 20, "w": 5, "d": 6, "zFloor": 0, "zCeil": 12, "height": 12, "area": 30, "tag": "L", "render": "locked", "notes": "back-center, windowless; shelter #2 (ICF); carved into Everyday Dining"}, {"id": "front_porch", "name": "Front Porch", "building": "Main Block", "section": "Main Block \u2014 ground", "floor": "ground", "x": 8, "y": -12, "w": 28, "d": 12, "zFloor": 0, "zCeil": 12, "height": 12, "area": 336, "tag": "L", "render": "locked", "notes": "depth 12' locked; width best-guess; Tuscan, unconditioned"}, {"id": "study_sw_over_drawing", "name": "Study (SW, over Drawing)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 0, "y": 0, "w": 16, "d": 20, "zFloor": 12, "zCeil": 22, "height": 10, "area": 320, "tag": "L", "render": "locked", "notes": "Jonathan-locked; no en-suite; jib door to Quiet Rm"}, {"id": "rafa_s_texas_room_se_over_great", "name": "Rafa's Texas Room (SE, over Great)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 28, "y": 0, "w": 16, "d": 20, "zFloor": 12, "zCeil": 22, "height": 10, "area": 320, "tag": "L", "render": "container", "notes": "limestone feature wall"}, {"id": "aurelia_s_provincetown_suite_nw_over_oval", "name": "Aurelia's Provincetown Suite (NW, over Oval)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 0, "y": 20, "w": 16, "d": 18, "zFloor": 12, "zCeil": 22, "height": 10, "area": 288, "tag": "L", "render": "container", "notes": "bedroom; contains Pink en-suite"}, {"id": "primary_bedroom_ne_over_library", "name": "Primary Bedroom (NE, over Library)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 28, "y": 20, "w": 16, "d": 18, "zFloor": 12, "zCeil": 22, "height": 10, "area": 288, "tag": "L", "render": "locked", "notes": "canted cedar oriel over North Alley; contains Rafa-no; dressing+teal reach into central band"}, {"id": "quiet_room_s_ctr", "name": "Quiet Room (S-ctr)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 16, "y": 0, "w": 12, "d": 12, "zFloor": 12, "zCeil": 22, "height": 10, "area": 144, "tag": "L", "render": "locked", "notes": "~10x12; single picture-window pane; honey clerestory; over the Entry Hall"}, {"id": "upper_gallery_landing", "name": "Upper Gallery / Landing", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 16, "y": 20, "w": 12, "d": 8, "zFloor": 12, "zCeil": 22, "height": 10, "area": 96, "tag": "~", "render": "provisional", "notes": "Freddy wall; wraps the open stair well from the north"}, {"id": "primary_dressing", "name": "Primary Dressing", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 16, "y": 28, "w": 6, "d": 10, "zFloor": 12, "zCeil": 22, "height": 10, "area": 60, "tag": "~", "render": "provisional", "notes": "[U] subdivision; reaches into central band"}, {"id": "primary_en_suite_teal", "name": "Primary En-Suite (Teal)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 22, "y": 28, "w": 6, "d": 10, "zFloor": 12, "zCeil": 22, "height": 10, "area": 60, "tag": "~", "render": "provisional", "notes": "[U] subdivision; reaches into central band; cast-iron stacks"}, {"id": "pink_en_suite_aurelia", "name": "Pink En-Suite (Aurelia)", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 0, "y": 20, "w": 7, "d": 8, "zFloor": 12, "zCeil": 22, "height": 10, "area": 56, "tag": "~", "render": "provisional", "notes": "[U] carved into Aurelia's corner"}, {"id": "rafa_en_suite", "name": "Rafa En-Suite", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "upper", "x": 28, "y": 0, "w": 8, "d": 7, "zFloor": 12, "zCeil": 22, "height": 10, "area": 56, "tag": "~", "render": "provisional", "notes": "[U] carved into Rafa's corner"}, {"id": "primary_terrace", "name": "Primary Terrace", "building": "Main Block", "section": "Main Block \u2014 upper (floor z=12)", "floor": "site", "x": 44, "y": 20, "w": 10, "d": 12, "zFloor": 12, "zCeil": null, "height": 0.4, "area": 120, "tag": "~", "render": "provisional", "notes": "[U] roof terrace off Primary (east); deck"}, {"id": "dome_oculus", "name": "Dome / Oculus", "building": "Main Block", "section": "Main Block \u2014 crown", "floor": "crown", "x": 18, "y": 12, "w": 8, "d": 8, "zFloor": 24, "zCeil": 30, "height": 6, "area": 64, "tag": "A", "render": "provisional", "notes": "6' clear oculus [L]; matte saucer dome; decoupled lantern; over the stair hall"}, {"id": "orangery", "name": "Orangery", "building": "Orangery", "section": "Orangery (Main Block N face)", "floor": "ground", "x": 10, "y": 39, "w": 24, "d": 18, "zFloor": 0, "zCeil": 14, "height": 14, "area": 432, "tag": "A", "render": "provisional", "notes": "~450 ft2 locked; glass garden room N of Main Block; Sal's Place N trellis; Phase 2B"}, {"id": "covered_walkway", "name": "Covered Walkway", "building": "Covered Walkway", "section": "Covered Walkway (Left hyphen)", "floor": "ground", "x": -12, "y": 6, "w": 12, "d": 14, "zFloor": 0, "zCeil": 11, "height": 11, "area": 168, "tag": "~", "render": "provisional", "notes": "limestone Tuscan loggia spanning the 12' gap to the Service Wing; geometry [U]"}, {"id": "kitchen", "name": "Kitchen", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -58, "y": 0, "w": 23, "d": 20, "zFloor": 0, "zCeil": 14, "height": 14, "area": 460, "tag": "A", "render": "provisional", "notes": "460 ft2 locked; Option B / La Cornue; tall-ceilinged"}, {"id": "pantry_wine_room", "name": "Pantry + Wine Room", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -58, "y": 20, "w": 15, "d": 15, "zFloor": 0, "zCeil": 12, "height": 12, "area": 225, "tag": "A", "render": "provisional", "notes": "220 ft2 locked (combined; split [U]); Wine Rm = shelter #1 (ICF)"}, {"id": "scullery", "name": "Scullery", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -35, "y": 20, "w": 9, "d": 12, "zFloor": 0, "zCeil": 12, "height": 12, "area": 108, "tag": "L", "render": "locked", "notes": "9x12 locked; decontamination buffer"}, {"id": "mudroom", "name": "Mudroom", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -35, "y": 0, "w": 14, "d": 10, "zFloor": 0, "zCeil": 12, "height": 12, "area": 140, "tag": "A", "render": "provisional", "notes": "140 ft2 locked; 'eyes on drive'; path to Cedar Pavilion"}, {"id": "mechanical_laundry", "name": "Mechanical / Laundry", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -26, "y": 20, "w": 14, "d": 14, "zFloor": 0, "zCeil": 12, "height": 12, "area": 196, "tag": "~", "render": "provisional", "notes": "[U] well filtration, greywater, pool equip; 14\" chute from Upper Gallery"}, {"id": "tea_station", "name": "Tea Station", "building": "Service Wing", "section": "Service Wing (west)", "floor": "ground", "x": -21, "y": 8, "w": 6, "d": 8, "zFloor": 0, "zCeil": 12, "height": 12, "area": 48, "tag": "~", "render": "provisional", "notes": "[U] kettle, tea cabinet, Helen's cups; Main-Block end"}, {"id": "glass_bridge", "name": "Glass Bridge", "building": "Wharf Wing", "section": "Glass Bridge (Right hyphen)", "floor": "ground", "x": 56, "y": 8, "w": 12, "d": 8, "zFloor": 0, "zCeil": 11, "height": 11, "area": 96, "tag": "L", "render": "locked", "notes": "8x12 glass [L]; the 100' canyon vista seam; limestone<->shingle"}, {"id": "right_passage_freddy_s_gallery", "name": "Right Passage / Freddy's Gallery", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 44, "y": 0, "w": 12, "d": 20, "zFloor": 0, "zCeil": 12, "height": 12, "area": 240, "tag": "A", "render": "provisional", "notes": "240 ft2 locked; Main Block's E gallery on the vista line (Great Rm -> here -> Bridge -> Sunroom); Freddy collection, densest wall"}, {"id": "sunroom", "name": "Sunroom", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 68, "y": -8, "w": 28, "d": 24, "zFloor": 0, "zCeil": 16, "height": 16, "area": 672, "tag": "A", "render": "provisional", "notes": "680 ft2 locked; glass 2+ sides; vaulted; faces pool (zero-entry)"}, {"id": "guest_bedroom", "name": "Guest Bedroom", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 68, "y": 20, "w": 16, "d": 11, "zFloor": 0, "zCeil": 11, "height": 11, "area": 176, "tag": "A", "render": "provisional", "notes": "part of 350 ft2 Guest Suite [L]; vertical beadboard, vaulted cedar"}, {"id": "guest_sitting", "name": "Guest Sitting", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 84, "y": 20, "w": 10, "d": 11, "zFloor": 0, "zCeil": 11, "height": 11, "area": 110, "tag": "~", "render": "provisional", "notes": "[U] split of Guest Suite"}, {"id": "guest_en_suite", "name": "Guest En-Suite", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 68, "y": 31, "w": 8, "d": 8, "zFloor": 0, "zCeil": 11, "height": 11, "area": 64, "tag": "~", "render": "provisional", "notes": "[U] curbless; clawfoot; aging-in-place clearances"}, {"id": "pool_bath", "name": "Pool Bath", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 96, "y": -8, "w": 8, "d": 8, "zFloor": 0, "zCeil": 11, "height": 11, "area": 64, "tag": "A", "render": "provisional", "notes": "~60 ft2 locked; shared sauna/pool threshold"}, {"id": "sauna", "name": "Sauna", "building": "Wharf Wing", "section": "Wharf Wing (east)", "floor": "ground", "x": 96, "y": -18, "w": 8, "d": 10, "zFloor": 0, "zCeil": 9, "height": 9, "area": 80, "tag": "~", "render": "provisional", "notes": "[U] electric cedar hot room; shares Pool Bath threshold; on terrace edge"}, {"id": "cornelia_s_greenhouse", "name": "Cornelia's Greenhouse", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -130, "y": 150, "w": 15, "d": 12, "zFloor": 0, "zCeil": 12, "height": 12, "area": 180, "tag": "~", "render": "provisional", "notes": "[U] ~180 ft2; Phase 3; Mississippi; citrus; Versailles rotation w/ Orangery"}, {"id": "vehicle_bay_1", "name": "Vehicle Bay 1", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -115, "y": 150, "w": 14, "d": 24, "zFloor": 0, "zCeil": 14, "height": 14, "area": 336, "tag": "~", "render": "provisional", "notes": "3 arched limestone bays [L]; size best-guess"}, {"id": "vehicle_bay_2", "name": "Vehicle Bay 2", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -101, "y": 150, "w": 14, "d": 24, "zFloor": 0, "zCeil": 14, "height": 14, "area": 336, "tag": "~", "render": "provisional", "notes": ""}, {"id": "vehicle_bay_3", "name": "Vehicle Bay 3", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -87, "y": 150, "w": 14, "d": 24, "zFloor": 0, "zCeil": 14, "height": 14, "area": 336, "tag": "~", "render": "provisional", "notes": ""}, {"id": "energy_forge", "name": "Energy Forge", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -73, "y": 150, "w": 22, "d": 24, "zFloor": 0, "zCeil": 14, "height": 14, "area": 528, "tag": "~", "render": "provisional", "notes": "[U] battery vault (105 kWh), SPAN/aGate, heat recovery; shelter #3 pit under"}, {"id": "airlock", "name": "Airlock", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -51, "y": 150, "w": 5, "d": 10, "zFloor": 0, "zCeil": 12, "height": 12, "area": 50, "tag": "A", "render": "provisional", "notes": "~50 ft2 locked; vestibule from bays into the expansion"}, {"id": "compute_room", "name": "Compute Room", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -46, "y": 150, "w": 15, "d": 14, "zFloor": 0, "zCeil": 12, "height": 12, "area": 210, "tag": "A", "render": "provisional", "notes": "~200 ft2 locked; racks, in-row liquid cooling"}, {"id": "research_room", "name": "Research Room", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -46, "y": 164, "w": 18, "d": 14, "zFloor": 0, "zCeil": 12, "height": 12, "area": 252, "tag": "A", "render": "provisional", "notes": "~250 ft2 locked; Jonathan-locked; mullioned partition onto Compute"}, {"id": "instrument_bay_upgrade", "name": "Instrument Bay (upgrade)", "building": "Motor Barn", "section": "Motor Barn (NW, 150'+ out)", "floor": "ground", "x": -28, "y": 150, "w": 16, "d": 14, "zFloor": 0, "zCeil": 12, "height": 12, "area": 224, "tag": "~", "render": "provisional", "notes": "UPGRADE, not committed; 2A east-end extensibility reservation only"}, {"id": "loft", "name": "Loft", "building": "Motor Barn", "section": "Motor Barn \u2014 loft (over Forge, floor z=14)", "floor": "loft", "x": -73, "y": 150, "w": 18, "d": 24, "zFloor": 14, "zCeil": 24, "height": 10, "area": 432, "tag": "L", "render": "container", "notes": "18x24 vaulted E-W; exercise, air-hockey heirloom, screen"}, {"id": "podcast_studio", "name": "Podcast Studio", "building": "Motor Barn", "section": "Motor Barn \u2014 loft (over Forge, floor z=14)", "floor": "loft", "x": -63, "y": 162, "w": 8, "d": 12, "zFloor": 14, "zCeil": 24, "height": 10, "area": 96, "tag": "L", "render": "locked", "notes": "8x12 [L]; NE loft corner vs E gable; Jonathan-locked"}, {"id": "observatory_tower", "name": "Observatory tower", "building": "Observatory", "section": "Observatory (isolated)", "floor": "ground", "x": 150, "y": -270, "w": 13, "d": 13, "zFloor": 0, "zCeil": 22, "height": 22, "area": 169, "tag": "A", "render": "provisional", "notes": "~120 ft2 octagon [L]; 18\" limestone; pier 2A / shell 2C; vault (U-2) below; >=200' pool, >=150' Motor Barn"}, {"id": "cedar_pavilion", "name": "Cedar Pavilion", "building": "Cedar Pavilion", "section": "Cedar Pavilion", "floor": "ground", "x": -58, "y": -30, "w": 20, "d": 24, "zFloor": 0, "zCeil": 14, "height": 14, "area": 480, "tag": "L", "render": "locked", "notes": "20x24 locked; open cedar; 2x L2 chargers; slab 2A / structure 2B"}, {"id": "pool", "name": "Pool", "building": "Pool & Terrace", "section": "Pool & Terrace (canyon side)", "floor": "site", "x": 74, "y": -50, "w": 16, "d": 40, "zFloor": -1, "zCeil": 0, "height": 1, "area": 640, "tag": "~", "render": "provisional", "notes": "[U] zero-entry from Sunroom; infinity edge to canyon; lunar tidal algorithm"}, {"id": "pool_terrace", "name": "Pool Terrace", "building": "Pool & Terrace", "section": "Pool & Terrace (canyon side)", "floor": "site", "x": 62, "y": -58, "w": 48, "d": 48, "zFloor": 0, "zCeil": null, "height": 0.4, "area": 2304, "tag": "~", "render": "container", "notes": "[U] terrace deck around pool; three climate poles; Sauna sits at its edge"}, {"id": "north_alley_pergola", "name": "North Alley Pergola", "building": "North Alley Pergola", "section": "North Alley Pergola", "floor": "ground", "x": -10, "y": 60, "w": 60, "d": 12, "zFloor": 0, "zCeil": 9, "height": 9, "area": 720, "tag": "~", "render": "provisional", "notes": "[U] Corten steel + limestone bases; Champanel grape; Firewise; under Primary oriel"}];
+const META = {"origin": "Main Block SW ground-floor corner (0,0,0)", "axes": "x=East(+), y=North(+), z=Up(+)  [feet]", "locks": {"guestSuiteTotal": 350, "observatoryPoolMin": 200, "observatoryMotorBarnMin": 150, "mainBlockEnvelope": "44 x 38"}, "containers": ["Aurelia's Provincetown Suite (NW, over Oval)", "Everyday Dining (N-ctr)", "Loft", "Octagonal Stair Hall", "Pool Terrace", "Rafa's Texas Room (SE, over Great)"], "note": "Source of truth for the PWA model. Geometry is generated from this table. Provisional; re-derive at Imber DD."};
+const ALLOW_PAIRS = [["powder_room", "everyday_dining_n_ctr"], ["pink_en_suite_aurelia", "aurelia_s_provincetown_suite_nw_over_oval"], ["rafa_en_suite", "rafa_s_texas_room_se_over_great"], ["podcast_studio", "loft"], ["pool", "pool_terrace"]];
+const GUEST_IDS = ["guest_bedroom", "guest_sitting", "guest_en_suite"];
+const OBS_ID = "observatory_tower", POOL_ID = "pool";
+const PALETTE = {"Main Block": [0.79, 0.72, 0.61], "Service Wing": [0.73, 0.66, 0.55], "Wharf Wing": [0.62, 0.71, 0.76], "Motor Barn": [0.55, 0.48, 0.39], "Observatory": [0.37, 0.42, 0.45], "Orangery": [0.65, 0.76, 0.69], "Covered Walkway": [0.76, 0.76, 0.74], "Cedar Pavilion": [0.65, 0.46, 0.29], "Pool & Terrace": [0.44, 0.66, 0.78], "North Alley Pergola": [0.61, 0.42, 0.31], "Other": [0.7, 0.7, 0.7]};
+const BUILDINGS = ["Cedar Pavilion", "Covered Walkway", "Main Block", "Motor Barn", "North Alley Pergola", "Observatory", "Orangery", "Pool & Terrace", "Service Wing", "Wharf Wing"];
+const FLOORS = ["ground", "upper", "loft", "crown", "site"];
+const ALPHA = {locked:1.0, provisional:0.55, container:0.16};
+const BASELINE = JSON.parse(JSON.stringify(ROOMS));
+const allowSet = new Set(); ALLOW_PAIRS.forEach(p=>{allowSet.add(p[0]+'|'+p[1]);allowSet.add(p[1]+'|'+p[0]);});
+
+// ---------- three setup ----------
+const view=document.getElementById('view');
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0xe9e5db);
+const camera=new THREE.PerspectiveCamera(45, view.clientWidth/view.clientHeight, 0.5, 5000);
+const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(devicePixelRatio);
+renderer.setSize(view.clientWidth, view.clientHeight); view.appendChild(renderer.domElement);
+scene.add(new THREE.AmbientLight(0xffffff,0.72));
+const dir=new THREE.DirectionalLight(0xffffff,0.7); dir.position.set(0.5,1,0.35); scene.add(dir);
+const dir2=new THREE.DirectionalLight(0xffffff,0.28); dir2.position.set(-0.6,0.4,-0.5); scene.add(dir2);
+
+// gltf-space helpers (x=East, y=Up, z=-North)
+function center(r){return [r.x+r.w/2, r.zFloor+r.height/2, -(r.y+r.d/2)];}
+let bmin=[1e9,1e9,1e9], bmax=[-1e9,-1e9,-1e9];
+ROOMS.forEach(r=>{const c=center(r);const s=[r.w,r.height,r.d];
+  for(let i=0;i<3;i++){bmin[i]=Math.min(bmin[i],c[i]-s[i]/2);bmax[i]=Math.max(bmax[i],c[i]+s[i]/2);}});
+const ctr=[(bmin[0]+bmax[0])/2,0,(bmin[2]+bmax[2])/2];
+const diag=Math.hypot(bmax[0]-bmin[0],bmax[2]-bmin[2]);
+// ground grid + axes
+const grid=new THREE.GridHelper(Math.ceil(diag*1.2/20)*20, Math.ceil(diag*1.2/20), 0xbfb8a8, 0xd5cfc0);
+grid.position.set(ctr[0],0,ctr[2]); scene.add(grid);
+// north arrow (toward -Z)
+const arrow=new THREE.ArrowHelper(new THREE.Vector3(0,0,-1), new THREE.Vector3(ctr[0],1,bmax[2]+8), 26, 0x9a3b2a, 9, 6);
+scene.add(arrow);
+const nLabel=makeLabel("N"); nLabel.position.set(ctr[0],6,bmax[2]-22); scene.add(nLabel);
+
+function makeLabel(t){const c=document.createElement('canvas');c.width=64;c.height=64;const x=c.getContext('2d');
+  x.fillStyle="#9a3b2a";x.font="bold 44px sans-serif";x.textAlign="center";x.fillText(t,32,46);
+  const tx=new THREE.CanvasTexture(c);const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true}));
+  sp.scale.set(10,10,1);return sp;}
+
+const group=new THREE.Group(); scene.add(group);
+const meshById={};
+function matFor(r){
+  const col=PALETTE[r.building]||PALETTE.Other;
+  let a=ALPHA[r.render]; if(document.getElementById('xray').checked) a=Math.min(a,0.3);
+  const m=new THREE.MeshStandardMaterial({color:new THREE.Color(col[0],col[1],col[2]),
+    roughness:0.9,metalness:0.0,transparent:a<1.0,opacity:a,depthWrite:a>=0.99});
+  return m;
+}
+function visible(r){
+  if(!bldgState[r.building]) return false;
+  if(!flrState[r.floor]) return false;
+  if(!document.getElementById('showProv').checked && r.render!=='locked') return false;
+  return true;
+}
+function rebuild(){
+  while(group.children.length) group.remove(group.children[0]);
+  for(const id in meshById) delete meshById[id];
+  ROOMS.forEach(r=>{
+    if(!visible(r)) return;
+    const g=new THREE.BoxGeometry(r.w, r.height, r.d);
+    const mesh=new THREE.Mesh(g, matFor(r));
+    const c=center(r); mesh.position.set(c[0],c[1],c[2]); mesh.userData=r;
+    const edge=new THREE.LineSegments(new THREE.EdgesGeometry(g),
+        new THREE.LineBasicMaterial({color:0x3a352c,transparent:true,opacity:r.render==='container'?0.4:0.6}));
+    mesh.add(edge); mesh.userData.edge=edge;
+    group.add(mesh); meshById[r.id]=mesh;
+  });
+  if(selId && meshById[selId]) highlight(meshById[selId]);
+  validate();
+}
+
+// ---------- selection ----------
+const ray=new THREE.Raycaster(); const ndc=new THREE.Vector2(); let selId=null;
+renderer.domElement.addEventListener('click',e=>{
+  if(dragMoved) return;
+  const rect=renderer.domElement.getBoundingClientRect();
+  ndc.x=((e.clientX-rect.left)/rect.width)*2-1; ndc.y=-((e.clientY-rect.top)/rect.height)*2+1;
+  ray.setFromCamera(ndc,camera);
+  const hits=ray.intersectObjects(group.children,false);
+  if(hits.length){ select(hits[0].object.userData.id); } else { select(null); }
+});
+function highlight(mesh){ mesh.userData.edge.material.color.set(0xb5462f); mesh.userData.edge.material.opacity=1; }
+function select(id){
+  selId=id;
+  ROOMS.forEach(r=>{const m=meshById[r.id]; if(m){m.userData.edge.material.color.set(0x3a352c);
+    m.userData.edge.material.opacity=(r.render==='container'?0.4:0.6);}});
+  const r=ROOMS.find(x=>x.id===id);
+  const el=document.getElementById('sel');
+  if(!r){ el.innerHTML='<p class="muted">Click a box in the model to inspect or edit it.</p>'; return; }
+  if(meshById[id]) highlight(meshById[id]);
+  const area=Math.round(r.w*r.d);
+  el.innerHTML=`<div class="row">
+     <span class="k">Name</span><span><b>${r.name}</b></span>
+     <span class="k">Building</span><span>${r.building} · <span class="pill">${r.floor}</span></span>
+     <span class="k">Tag</span><span>${tagName(r.tag)} ${r.render==='container'?'· container':''}</span>
+     <span class="k">Area</span><span id="areav">${area} ft²</span>
+   </div>
+   <div class="edit">
+     <label>Width W (E–W)<input type="number" step="1" id="e_w" value="${r.w}"></label>
+     <label>Depth D (N–S)<input type="number" step="1" id="e_d" value="${r.d}"></label>
+     <label>X (East)<input type="number" step="1" id="e_x" value="${r.x}"></label>
+     <label>Y (North)<input type="number" step="1" id="e_y" value="${r.y}"></label>
+     <label>Height<input type="number" step="1" id="e_h" value="${r.height}"></label>
+   </div>
+   <p class="hint">${r.notes||''}</p>`;
+  ['e_w','e_d','e_x','e_y','e_h'].forEach(k=>{const inp=document.getElementById(k);
+    inp.addEventListener('change',()=>applyEdit(r.id));});
+}
+function applyEdit(id){
+  const r=ROOMS.find(x=>x.id===id);
+  const g=k=>{const v=parseFloat(document.getElementById(k).value);return isNaN(v)?null:v;};
+  const w=g('e_w'),d=g('e_d'),x=g('e_x'),y=g('e_y'),h=g('e_h');
+  if(w!==null)r.w=w; if(d!==null)r.d=d; if(x!==null)r.x=x; if(y!==null)r.y=y; if(h!==null)r.height=h;
+  r.area=Math.round(r.w*r.d);
+  const av=document.getElementById('areav'); if(av) av.textContent=r.area+' ft²';
+  rebuild();
+}
+function tagName(t){return {L:'Locked',D:'Derived',A:'Area locked, shape guessed','~':'Best-guess'}[t]||t;}
+
+// ---------- validators (the v2 checks, live) ----------
+function rect(r){return [r.x, r.y, r.x+r.w, r.y+r.d];}
+function rectDist(a,b){const A=rect(a),B=rect(b);
+  const dx=Math.max(B[0]-A[2], A[0]-B[2], 0), dy=Math.max(B[1]-A[3], A[1]-B[3], 0);
+  return Math.hypot(dx,dy);}
+function overlapArea(a,b){const A=rect(a),B=rect(b);
+  const ox=Math.max(0,Math.min(A[2],B[2])-Math.max(A[0],B[0]));
+  const oy=Math.max(0,Math.min(A[3],B[3])-Math.max(A[1],B[1])); return ox*oy;}
+function find(id){return ROOMS.find(r=>r.id===id);}
+function validate(){
+  const out=[];
+  // 1 guest suite
+  const gsum=GUEST_IDS.reduce((s,id)=>{const r=find(id);return s+(r?r.w*r.d:0);},0);
+  out.push({ok:Math.abs(gsum-META.locks.guestSuiteTotal)<=5,
+    msg:`Guest Suite ${Math.round(gsum)} ft² vs ${META.locks.guestSuiteTotal} locked`});
+  // 2 setbacks
+  const obs=find(OBS_ID), pool=find(POOL_ID);
+  const dPool=rectDist(obs,pool);
+  const mb=ROOMS.filter(r=>r.building==='Motor Barn');
+  const dMb=Math.min.apply(null, mb.map(m=>rectDist(obs,m)));
+  out.push({ok:dPool>=META.locks.observatoryPoolMin,
+    msg:`Observatory → pool ${Math.round(dPool)}′ (≥${META.locks.observatoryPoolMin})`});
+  out.push({ok:dMb>=META.locks.observatoryMotorBarnMin,
+    msg:`Observatory → Motor Barn ${Math.round(dMb)}′ (≥${META.locks.observatoryMotorBarnMin})`});
+  // 3 overlaps
+  let bad=[];
+  for(let i=0;i<ROOMS.length;i++)for(let j=i+1;j<ROOMS.length;j++){
+    const a=ROOMS[i],b=ROOMS[j];
+    if(a.building!==b.building) continue;
+    if(a.zFloor!==b.zFloor) continue;
+    if(allowSet.has(a.id+'|'+b.id)) continue;
+    if(overlapArea(a,b)>0.5) bad.push(a.name+' × '+b.name);
+  }
+  out.push({ok:bad.length===0, msg: bad.length? (bad.length+' overlap: '+bad[0]) : 'No accidental overlaps'});
+  const box=document.getElementById('status');
+  box.innerHTML=out.map(o=>`<div class="item"><span class="dot ${o.ok?'ok':'bad'}"></span><span>${o.msg}</span></div>`).join('');
+}
+
+// ---------- toggles ----------
+const bldgState={}, flrState={};
+const bWrap=document.getElementById('bldg');
+BUILDINGS.forEach(b=>{bldgState[b]=true;const col=PALETTE[b]||PALETTE.Other;
+  const l=document.createElement('label');l.className='chk';
+  l.innerHTML=`<input type="checkbox" checked><span class="swatch" style="background:rgb(${col.map(c=>Math.round(c*255)).join(',')})"></span>${b}`;
+  l.querySelector('input').addEventListener('change',e=>{bldgState[b]=e.target.checked;rebuild();});
+  bWrap.appendChild(l);});
+const fWrap=document.getElementById('flr');
+FLOORS.forEach(f=>{flrState[f]=true;const l=document.createElement('label');l.className='chk';
+  l.innerHTML=`<input type="checkbox" checked> ${f}`;
+  l.querySelector('input').addEventListener('change',e=>{flrState[f]=e.target.checked;rebuild();});
+  fWrap.appendChild(l);});
+document.getElementById('showProv').addEventListener('change',rebuild);
+document.getElementById('xray').addEventListener('change',rebuild);
+
+// export / reset
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const clean=ROOMS.map(r=>({...r,area:Math.round(r.w*r.d)}));
+  const txt=JSON.stringify({meta:META,rooms:clean},null,2);
+  const ta=document.getElementById('out'); ta.style.display='block'; ta.value=txt; ta.select();
+  try{navigator.clipboard.writeText(txt);}catch(e){}
+  try{const blob=new Blob([txt],{type:'application/json'});const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='compound_rooms_edited.json';a.click();}catch(e){}
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  ROOMS.length=0; JSON.parse(JSON.stringify(BASELINE)).forEach(r=>ROOMS.push(r));
+  document.getElementById('out').style.display='none'; select(null); rebuild();
+});
+
+// ---------- minimal orbit camera ----------
+let theta=0.9, phi=1.05, radius=diag*0.95; const target=new THREE.Vector3(ctr[0],3,ctr[2]);
+let dragging=false, panning=false, dragMoved=false, px=0, py=0;
+function updcam(){
+  camera.position.set(target.x+radius*Math.sin(phi)*Math.cos(theta),
+                      target.y+radius*Math.cos(phi),
+                      target.z+radius*Math.sin(phi)*Math.sin(theta));
+  camera.lookAt(target);
+}
+renderer.domElement.addEventListener('mousedown',e=>{dragging=true;panning=(e.button===2);dragMoved=false;px=e.clientX;py=e.clientY;});
+window.addEventListener('mouseup',()=>{dragging=false;panning=false;});
+window.addEventListener('mousemove',e=>{if(!dragging)return;const dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;
+  if(Math.abs(dx)+Math.abs(dy)>3)dragMoved=true;
+  if(panning){const ps=radius*0.0016;const right=new THREE.Vector3().setFromMatrixColumn(camera.matrix,0);
+    const up=new THREE.Vector3().setFromMatrixColumn(camera.matrix,1);
+    target.addScaledVector(right,-dx*ps); target.addScaledVector(up,dy*ps);}
+  else{theta+=dx*0.005; phi=Math.max(0.12,Math.min(1.5,phi+dy*0.005));}
+  updcam();});
+renderer.domElement.addEventListener('wheel',e=>{e.preventDefault();
+  radius=Math.max(15,Math.min(diag*2.4,radius*(1+Math.sign(e.deltaY)*0.08)));updcam();},{passive:false});
+renderer.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+window.addEventListener('resize',()=>{camera.aspect=view.clientWidth/view.clientHeight;camera.updateProjectionMatrix();
+  renderer.setSize(view.clientWidth,view.clientHeight);});
+
+rebuild(); updcam();
+(function loop(){requestAnimationFrame(loop);renderer.render(scene,camera);})();
+</script></body></html>
