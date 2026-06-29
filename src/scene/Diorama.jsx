@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Billboard, Image } from '@react-three/drei';
+import { canonicalId } from '../data/aliases.js';
 
 /**
  * Diorama mode — the colored-pencil renders standing in 3D space, each at its
@@ -36,10 +37,13 @@ function Card({ room, selected, onSelect }) {
   );
 }
 
-export default function Diorama({ rooms, selectedId, onSelect }) {
+export default function Diorama({ rooms, selectedId, focusId, onSelect }) {
+  // When a room is focused, isolate it — show only its render card, so Renders/Both
+  // honor the focus instead of flooding every render back into the scene.
+  const shown = focusId ? rooms.filter((r) => canonicalId(r.id) === focusId) : rooms;
   // Per-card Suspense so renders pop in independently as their textures decode —
   // one slow/missing image can't blank the whole diorama.
-  return rooms.map((r) => (
+  return shown.map((r) => (
     <Suspense key={r.id} fallback={null}>
       <Card room={r} selected={r.id === selectedId} onSelect={onSelect} />
     </Suspense>

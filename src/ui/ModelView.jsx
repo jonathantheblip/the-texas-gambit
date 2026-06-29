@@ -45,11 +45,17 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
   // lit), not Both (which billboards all 41 renders into an overlapping collage).
   // The renders live in the Walk you just came from; the 3D is for volume.
   const [viewMode, setViewMode] = useState(arriving ? 'massing' : 'both');
-  // Focus mode (step-in from the walk): frame the room close, fade the others to
-  // ghosts, show only this room's render. Clears the moment the view mode is
-  // changed — the panel stays user-agnostic, anyone can choose to see everything.
+  // Focus (step-in from the walk, or via the toggle): frame the room close, fade
+  // the others to ghosts, show only this room's render. It STAYS PUT across the
+  // Both/Renders/Massing toggle — the view mode changes what you see *of* the
+  // focused scene, it doesn't blow the focus away. The Focus toggle is the one
+  // explicit way to drop it and see the whole compound.
   const [focusActive, setFocusActive] = useState(arriving);
-  const pickMode = (m) => { setViewMode(m); setFocusActive(false); };
+  const pickMode = (m) => setViewMode(m);
+  const toggleFocus = () => setFocusActive((on) => !on);
+  // While focused, an empty-space click keeps the room isolated (focus is sticky);
+  // clicking another space moves the focus there.
+  const handleSelect = (id) => { if (id === null && focusActive) return; setSelectedId(id); };
   const [identity, setIdent] = useState(getIdentity);
   const fileRef = useRef();
 
@@ -117,11 +123,21 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
             <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => pickMode(m)}>{label}</button>
           ))}
         </div>
+        <button
+          className={`focus-toggle${focusActive ? ' on' : ''}`}
+          onClick={toggleFocus}
+          disabled={!selectedId}
+          aria-pressed={focusActive}
+          title={selectedId ? 'Keep one space in focus and fade the rest' : 'Click a space to focus on it'}
+        >
+          <span className="dot" aria-hidden="true" />
+          {focusActive ? 'Focused' : 'Focus'}
+        </button>
         <CompoundScene
           rooms={visibleRooms}
           framingRooms={ALL_ROOMS}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          onSelect={handleSelect}
           xray={xray}
           mode={viewMode}
           entryFacing={facing}

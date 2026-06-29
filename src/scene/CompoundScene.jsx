@@ -146,7 +146,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
         <RoomBox key={r.id} room={r} selected={canonicalId(r.id) === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && canonicalId(r.id) !== focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       ))}
       {mode !== 'massing' && (
-        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={(rid) => onSelect(canonicalId(rid))} />
+        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} focusId={focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       )}
 
       <OrbitControls ref={controls} makeDefault enabled={enableControls} enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
