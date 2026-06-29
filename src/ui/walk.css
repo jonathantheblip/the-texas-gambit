@@ -13,6 +13,22 @@
   --wk-glass:rgba(16,13,9,.66); --wk-panel:rgba(16,13,9,.92);
   --wk-ease:cubic-bezier(.22,.61,.36,1); --wk-arrive:cubic-bezier(.16,.84,.30,1);
 
+  /* ── render-pin tokens (Design handoff: render-pins.tokens.css) ──────────────
+     The two eases Design names (--ease-arrive / --ease-walk) already exist above as
+     --wk-arrive / --wk-ease; only --ease-tactile (the note's soft overshoot) is new. */
+  --pin-rest:#C47C52;
+  --kind-material:#B96A43; --kind-material-soft:#DB9268;
+  --kind-view:#2E8C84;     --kind-view-soft:#5FBFB4;
+  --kind-feature:#5867AE;  --kind-feature-soft:#97A2DC;
+  --kind-heritage:#9B566B; --kind-heritage-soft:#D08AA0;
+  --pin-hit:44px; --pin-ring-d:20px; --pin-ring-stroke:1.8px;
+  --pin-ring-shadow:drop-shadow(0 0 1px rgba(0,0,0,.78)) drop-shadow(0 1px 2px rgba(0,0,0,.55));
+  --lc-z:12; --lc-dim:rgba(6,5,3,.80); --lc-dim-blur:3px; --lc-render-inset:.94;
+  --lc-render-shadow:0 26px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(236,228,212,.14);
+  --note-w:240px; --note-radius:13px; --note-bg:rgba(18,15,10,.92); --note-blur:16px; --note-stem:9px;
+  --pin-breathe:3.8s; --lc-lift:.60s; --lc-draw:.56s; --note-unfurl:.42s;
+  --ease-tactile:cubic-bezier(.20,.90,.28,1.12);
+
   position:fixed; inset:0; z-index:10; overflow:hidden;
   background:radial-gradient(120% 80% at 50% -10%, #1b1710, #0e0c08 60%), var(--wk-bg);
   color:var(--wk-ink); font-family:var(--wk-sans);
@@ -262,41 +278,96 @@
 .wk-flybtn.on .g{ color:#E7BE72; }
 .wk-flybtn:disabled{ opacity:.32; pointer-events:none; }
 
-/* ── RENDER PINS — tap features on the render ─────────────────────────────────
-   Entry chip in the caption, and a "look closer" overlay showing the WHOLE render
-   (the walk crops the sides on a phone) with the authored pins. First pass — the
-   affordance + treatment are Code's placeholder for Design. */
-.wk-pinsbtn{ font-family:var(--wk-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--wk-ink); background:var(--wk-glass); backdrop-filter:blur(8px); border:1px solid var(--wk-line); border-radius:999px;
-  padding:6px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; -webkit-tap-highlight-color:transparent; }
-.wk-pinsbtn:active{ transform:scale(.97); }
-.wk-pinsbtn .pd{ width:7px; height:7px; border-radius:50%; background:#b5462f; box-shadow:0 0 0 2px rgba(181,70,47,.3); flex:none; }
+/* ── RENDER PINS — Design's treatment ─────────────────────────────────────────
+   The pins ARE the invitation: faint terracotta rings that breathe on the render
+   itself (no chip, no badge). They ride the frame's cover-crop (positioned in JS,
+   RestingPins.jsx); tap one and the whole render LIFTS into the look-closer, where
+   each ring sketches itself in, takes its kind colour, and unfurls a note. */
 
-.wk-pins{ position:absolute; inset:0; z-index:12; background:rgba(8,7,4,.93); backdrop-filter:blur(10px);
-  display:flex; flex-direction:column; animation:wkPinsIn .26s ease; }
-@keyframes wkPinsIn{ from{ opacity:0 } to{ opacity:1 } }
-.wk-pins-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-  padding:calc(16px + env(safe-area-inset-top,0px)) 18px 10px; }
-.wk-pins-head .ttl{ font-family:var(--wk-serif); font-size:21px; color:var(--wk-ink); }
-.wk-pins-head .ttl small{ display:block; font-family:var(--wk-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--wk-dim); margin-top:4px; }
-.wk-pins-close{ flex:none; font-family:var(--wk-mono); font-size:16px; color:var(--wk-ink); background:var(--wk-glass);
-  border:1px solid var(--wk-line); border-radius:50%; width:34px; height:34px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+/* resting pins on the immersive frame */
+.wk-pinlayer{ position:absolute; inset:0; z-index:3; pointer-events:none;
+  animation:wkPinLayerIn .5s var(--wk-ease) .5s both; }
+@keyframes wkPinLayerIn{ from{ opacity:0 } to{ opacity:1 } }
+.wk-pinrest{ position:absolute; transform:translate(-50%,-50%); width:var(--pin-hit); height:var(--pin-hit);
+  border:0; padding:0; background:none; cursor:pointer; pointer-events:auto; display:grid; place-items:center;
+  -webkit-tap-highlight-color:transparent; }
+.wk-pinrest::after{ content:''; position:absolute; top:50%; left:50%; width:var(--pin-ring-d); height:var(--pin-ring-d);
+  border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, rgba(196,124,82,.5), rgba(196,124,82,0) 70%);
+  transform:translate(-50%,-50%) scale(1); animation:wkPinBreathe var(--pin-breathe) var(--wk-ease) infinite; }
+@keyframes wkPinBreathe{ 0%,100%{ transform:translate(-50%,-50%) scale(.7); opacity:0 } 50%{ transform:translate(-50%,-50%) scale(1.5); opacity:.7 } }
+.wk-pin-svg{ position:relative; width:var(--pin-hit); height:var(--pin-hit); overflow:visible; filter:var(--pin-ring-shadow); }
+.wk-pin-svg .ring{ fill:none; stroke:var(--pin-rest); stroke-width:var(--pin-ring-stroke); transition:stroke-width .15s; }
+.wk-pin-svg .dot{ fill:var(--pin-rest); }
+.wk-pinrest:active .wk-pin-svg{ transform:scale(.9); }
+@media (hover:hover){ .wk-pinrest:hover .ring{ stroke-width:calc(var(--pin-ring-stroke) + .7px); } }
 
-.wk-pins-stage{ flex:1; display:grid; place-items:center; padding:6px 16px calc(20px + env(safe-area-inset-bottom,0px)); min-height:0; }
-.wk-pins-frame{ position:relative; width:100%; max-width:560px; aspect-ratio:3/2; border-radius:14px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,.55); }
-.wk-pins-frame img{ width:100%; height:100%; object-fit:cover; display:block; user-select:none; -webkit-user-select:none; }
+/* the look-closer (full-stage lift) */
+.wk-lc{ position:absolute; inset:0; z-index:var(--lc-z); animation:wkLcFade var(--lc-lift) var(--wk-arrive) both; }
+@keyframes wkLcFade{ from{ opacity:0 } to{ opacity:1 } }
+.wk-lc-dim{ position:absolute; inset:0; background:var(--lc-dim); backdrop-filter:blur(var(--lc-dim-blur)); }
+.wk-lc-stage{ position:absolute; inset:0; }
+.wk-lc-render{ position:absolute; border-radius:6px; box-shadow:var(--lc-render-shadow);
+  transform-origin:center; animation:wkLcLift var(--lc-lift) var(--wk-arrive) both; }
+@keyframes wkLcLift{ from{ transform:scale(var(--lc-render-inset)) } to{ transform:none } }
+.wk-lc-render img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:6px;
+  user-select:none; -webkit-user-select:none; }
 
-.wk-pin{ position:absolute; transform:translate(-50%,-50%); width:34px; height:34px; border:none; background:none; cursor:pointer; display:grid; place-items:center; -webkit-tap-highlight-color:transparent; }
-.wk-pin .dot{ width:16px; height:16px; border-radius:50%; background:#b5462f; border:2px solid #fff; box-shadow:0 1px 5px rgba(0,0,0,.45); transition:transform .15s, box-shadow .15s; }
-.wk-pin:hover .dot{ transform:scale(1.15); }
-.wk-pin.on .dot{ background:#fff; box-shadow:0 0 0 5px rgba(181,70,47,.45); }
+/* look-closer pins — kind colour, drawn on (staggered 55ms/pin) */
+.wk-lc-pin{ position:absolute; transform:translate(-50%,-50%); width:var(--pin-hit); height:var(--pin-hit);
+  border:0; padding:0; background:none; cursor:pointer; display:grid; place-items:center; -webkit-tap-highlight-color:transparent; }
+.wk-lc-pin-svg{ width:var(--pin-hit); height:var(--pin-hit); overflow:visible; filter:var(--pin-ring-shadow); }
+.wk-lc-pin-svg .ring{ fill:none; stroke-width:var(--pin-ring-stroke); stroke-dasharray:100; stroke-dashoffset:100;
+  animation:wkLcDraw var(--lc-draw) var(--wk-arrive) both; animation-delay:calc(var(--i) * 55ms); }
+@keyframes wkLcDraw{ to{ stroke-dashoffset:0 } }
+.wk-lc-pin-svg .dot{ opacity:0; animation:wkLcDot .3s var(--wk-arrive) both; animation-delay:calc(var(--i) * 55ms + .22s); }
+@keyframes wkLcDot{ to{ opacity:1 } }
+.wk-lc-pin[data-kind="material"] .ring{ stroke:var(--kind-material) } .wk-lc-pin[data-kind="material"] .dot{ fill:var(--kind-material) }
+.wk-lc-pin[data-kind="view"] .ring{ stroke:var(--kind-view) }         .wk-lc-pin[data-kind="view"] .dot{ fill:var(--kind-view) }
+.wk-lc-pin[data-kind="feature"] .ring{ stroke:var(--kind-feature) }   .wk-lc-pin[data-kind="feature"] .dot{ fill:var(--kind-feature) }
+.wk-lc-pin[data-kind="heritage"] .ring{ stroke:var(--kind-heritage) } .wk-lc-pin[data-kind="heritage"] .dot{ fill:var(--kind-heritage) }
+.wk-lc-pin.on{ z-index:3; } .wk-lc-pin.on .ring{ stroke-width:calc(var(--pin-ring-stroke) + 1.1px); }
 
-.wk-pin-card{ position:absolute; left:12px; right:12px; bottom:12px; z-index:2; background:var(--wk-panel); backdrop-filter:blur(16px);
-  border:1px solid var(--wk-line); border-radius:13px; padding:12px 14px; animation:wkPinCard .22s var(--wk-arrive); }
-@keyframes wkPinCard{ from{ opacity:0; transform:translateY(8px) } to{ opacity:1; transform:none } }
-.wk-pin-card .k{ font-family:var(--wk-mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:#E7BE72; }
-.wk-pin-card .l{ font-family:var(--wk-serif); font-size:18px; color:var(--wk-ink); margin:3px 0 5px; }
-.wk-pin-card .n{ font-family:var(--wk-sans); font-size:13px; line-height:1.5; color:rgba(236,228,212,.92); text-wrap:pretty; }
+/* the inline note — unfurls beside the active pin, flips to the side with room */
+.wk-lc-note{ position:absolute; z-index:4; width:min(var(--note-w), 72vw); opacity:0;
+  background:var(--note-bg); backdrop-filter:blur(var(--note-blur));
+  border:1px solid var(--wk-line); border-radius:var(--note-radius); padding:11px 13px 12px;
+  box-shadow:0 18px 44px rgba(0,0,0,.5); }
+.wk-lc-note.ready{ animation:wkNoteUnfurlR var(--note-unfurl) var(--ease-tactile) both; }
+.wk-lc-note.ready[data-side="left"]{ animation-name:wkNoteUnfurlL; }
+@keyframes wkNoteUnfurlR{ from{ opacity:0; clip-path:inset(0 100% 0 0) } to{ opacity:1; clip-path:inset(0 0 0 0) } }
+@keyframes wkNoteUnfurlL{ from{ opacity:0; clip-path:inset(0 0 0 100%) } to{ opacity:1; clip-path:inset(0 0 0 0) } }
+.wk-lc-note::before{ content:''; position:absolute; top:var(--stemY,50%); transform:translateY(-50%); width:0; height:0; }
+.wk-lc-note[data-side="right"]::before{ left:calc(-1 * var(--note-stem)); border:var(--note-stem) solid transparent; border-left:0; border-right-color:var(--note-bg); }
+.wk-lc-note[data-side="left"]::before{ right:calc(-1 * var(--note-stem)); border:var(--note-stem) solid transparent; border-right:0; border-left-color:var(--note-bg); }
+.wk-lc-note .kind{ display:flex; align-items:center; gap:6px; font-family:var(--wk-mono); font-size:8.5px;
+  letter-spacing:.2em; text-transform:uppercase; }
+.wk-lc-note .wk-kind-ico{ width:11px; height:11px; flex:none; }
+.wk-lc-note[data-kind="material"] .kind{ color:var(--kind-material-soft) }
+.wk-lc-note[data-kind="view"] .kind{ color:var(--kind-view-soft) }
+.wk-lc-note[data-kind="feature"] .kind{ color:var(--kind-feature-soft) }
+.wk-lc-note[data-kind="heritage"] .kind{ color:var(--kind-heritage-soft) }
+.wk-lc-note .l{ font-family:var(--wk-serif); font-weight:500; font-size:15.5px; color:var(--wk-ink); margin:5px 0 4px; }
+.wk-lc-note .n{ font-family:var(--wk-sans); font-size:12px; line-height:1.45; color:var(--wk-dim); text-wrap:pretty; }
+
+/* header: room · Close */
+.wk-lc-top{ position:absolute; left:0; right:0; top:0; z-index:5; display:flex; align-items:center;
+  justify-content:space-between; gap:10px; padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px;
+  background:linear-gradient(to bottom, rgba(6,5,3,.72), transparent); pointer-events:none; }
+.wk-lc-top .where{ font-family:var(--wk-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--wk-dim); }
+.wk-lc-top .where i{ font-style:normal; color:var(--wk-faint); }
+.wk-lc-close{ pointer-events:auto; flex:none; font-family:var(--wk-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--wk-ink); background:var(--wk-glass); backdrop-filter:blur(10px); border:1px solid var(--wk-line);
+  border-radius:999px; padding:8px 13px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; -webkit-tap-highlight-color:transparent; }
+.wk-lc-close:active{ transform:scale(.96); }
+
+@media (prefers-reduced-motion:reduce){
+  .wk-pinlayer{ animation:none; opacity:1; }
+  .wk-pinrest::after{ animation:none; opacity:.3; }
+  .wk-lc, .wk-lc-render, .wk-lc-note{ animation-duration:.001s !important; }
+  .wk-lc-pin-svg .ring{ animation:none; stroke-dashoffset:0; }
+  .wk-lc-pin-svg .dot{ animation:none; opacity:1; }
+}
 
 /* survey column hidden by default; landscape reveals it */
 .wk-survey{ display:none; }

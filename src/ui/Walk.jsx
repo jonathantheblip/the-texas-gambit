@@ -10,6 +10,7 @@ import { pinsFor } from '../data/pins.js';
 import WalkMap from './WalkMap.jsx';
 import ReadingSheet from './ReadingSheet.jsx';
 import RenderPins from './RenderPins.jsx';
+import RestingPins from './RestingPins.jsx';
 
 // The 3D substrate that flies you between rooms (Fly mode). Lazy so three.js
 // stays out of the render-led first paint — warmed when you enter the walk.
@@ -24,14 +25,19 @@ const FLY_LAND_MS = 520;   // the arriving render fades in over this long, after
 const FLY_MAX_MS = 2200;   // safety: settle the arriving render even if onArrival never fires
 const firstSentence = (t) => { const m = t && t.match(/^[^.]+\./); return m ? m[0] : (t || '').slice(0, 90); };
 
-/** A render frame — the "you are standing here" surface, with its caption. */
-function Frame({ room, anim, onReadMore, pinCount = 0, onPins }) {
+/** A render frame — the "you are standing here" surface, with its caption.
+ *  Render pins (Design's entry affordance) breathe on the render itself — no chip;
+ *  they're passed only to the room you're standing in, never the one leaving. */
+function Frame({ room, anim, onReadMore, pins = null, onOpenPin }) {
   const anc = lineageOf(room.building);
   const cues = (FEEL[room.id] || []).slice(0, 2);
   return (
     <div className={`wk-frame ${room.renderImage ? 'has-render' : 'no-render'} ${anim}`}
       style={room.renderImage ? { backgroundImage: `url("${room.renderImage}")` } : undefined}>
       {!room.renderImage && <div className="wk-massing-mark"><div className="box" /></div>}
+      {room.renderImage && pins && pins.length > 0 && (
+        <RestingPins render={room.renderImage} pins={pins} onOpen={onOpenPin} />
+      )}
       <div className="wk-cap">
         <div className="wk-cap-meta">
           <span className="fam" style={{ background: anc.hex }} />
@@ -44,11 +50,6 @@ function Frame({ room, anim, onReadMore, pinCount = 0, onPins }) {
           <button className="wk-readmore" onClick={(e) => { e.stopPropagation(); onReadMore(); }}>
             Reading the room <span>↗</span>
           </button>
-          {pinCount > 0 && (
-            <button className="wk-pinsbtn" onClick={(e) => { e.stopPropagation(); onPins(); }}>
-              <span className="pd" aria-hidden="true" />{pinCount} details
-            </button>
-          )}
         </div>
       </div>
     </div>
@@ -70,7 +71,7 @@ export default function Walk({ rooms }) {
   const pins = useMemo(() => pinsFor(roomId), [roomId]);
 
   const [reading, setReading] = useState(false);
-  const [pinsOpen, setPinsOpen] = useState(false);
+  const [lcPin, setLcPin] = useState(null);   // look-closer: null = closed, else the tapped pin index
   const [mapScope, setMapScope] = useState(null);   // null = closed, else 'building' | 'compound'
   const [hint, setHint] = useState('');
   const [exiting, setExiting] = useState(null);     // { room, dir, key, kind:'wipe'|'fly' }
@@ -156,8 +157,8 @@ export default function Walk({ rooms }) {
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // close the pins overlay whenever you move to another room
-  useEffect(() => { setPinsOpen(false); }, [roomId]);
+  // close the look-closer whenever you move to another room
+  useEffect(() => { setLcPin(null); }, [roomId]);
 
   // keep the caption clear of the (variable-height) dock
   useLayoutEffect(() => {
@@ -215,7 +216,7 @@ export default function Walk({ rooms }) {
         <Frame key={current.key} room={current.room || room}
           anim={current.kind === 'fly' ? (flyPhase === 'land' ? 'fly-land' : 'fly-hold') : `enter-${current.dir}`}
           onReadMore={() => setReading(true)}
-          pinCount={pins.length} onPins={() => setPinsOpen(true)} />
+          pins={pins} onOpenPin={(i) => setLcPin(i)} />
       </div>
 
       {exiting && <div className="wk-wipe" key={`w${exiting.key}`} style={{ '--wk-wipe-angle': WIPE_ANGLE[exiting.dir] || '90deg' }} />}
@@ -319,7 +320,8 @@ export default function Walk({ rooms }) {
 
       <ReadingSheet room={room} open={reading} onClose={() => setReading(false)} onStepInto={(id) => nav.enterMassing(id)} />
 
-      {pinsOpen && room.renderImage && <RenderPins room={room} pins={pins} onClose={() => setPinsOpen(false)} />}
+      {lcPin != null && room.renderImage && pins.length > 0 &&
+        <RenderPins room={room} pins={pins} initial={lcPin} onClose={() => setLcPin(null)} />}
     </div>
   );
 }
