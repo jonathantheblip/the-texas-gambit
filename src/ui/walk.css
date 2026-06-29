@@ -262,6 +262,42 @@
 .wk-flybtn.on .g{ color:#E7BE72; }
 .wk-flybtn:disabled{ opacity:.32; pointer-events:none; }
 
+/* ── RENDER PINS — tap features on the render ─────────────────────────────────
+   Entry chip in the caption, and a "look closer" overlay showing the WHOLE render
+   (the walk crops the sides on a phone) with the authored pins. First pass — the
+   affordance + treatment are Code's placeholder for Design. */
+.wk-pinsbtn{ font-family:var(--wk-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--wk-ink); background:var(--wk-glass); backdrop-filter:blur(8px); border:1px solid var(--wk-line); border-radius:999px;
+  padding:6px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; -webkit-tap-highlight-color:transparent; }
+.wk-pinsbtn:active{ transform:scale(.97); }
+.wk-pinsbtn .pd{ width:7px; height:7px; border-radius:50%; background:#b5462f; box-shadow:0 0 0 2px rgba(181,70,47,.3); flex:none; }
+
+.wk-pins{ position:absolute; inset:0; z-index:12; background:rgba(8,7,4,.93); backdrop-filter:blur(10px);
+  display:flex; flex-direction:column; animation:wkPinsIn .26s ease; }
+@keyframes wkPinsIn{ from{ opacity:0 } to{ opacity:1 } }
+.wk-pins-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+  padding:calc(16px + env(safe-area-inset-top,0px)) 18px 10px; }
+.wk-pins-head .ttl{ font-family:var(--wk-serif); font-size:21px; color:var(--wk-ink); }
+.wk-pins-head .ttl small{ display:block; font-family:var(--wk-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--wk-dim); margin-top:4px; }
+.wk-pins-close{ flex:none; font-family:var(--wk-mono); font-size:16px; color:var(--wk-ink); background:var(--wk-glass);
+  border:1px solid var(--wk-line); border-radius:50%; width:34px; height:34px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+
+.wk-pins-stage{ flex:1; display:grid; place-items:center; padding:6px 16px calc(20px + env(safe-area-inset-bottom,0px)); min-height:0; }
+.wk-pins-frame{ position:relative; width:100%; max-width:560px; aspect-ratio:3/2; border-radius:14px; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,.55); }
+.wk-pins-frame img{ width:100%; height:100%; object-fit:cover; display:block; user-select:none; -webkit-user-select:none; }
+
+.wk-pin{ position:absolute; transform:translate(-50%,-50%); width:34px; height:34px; border:none; background:none; cursor:pointer; display:grid; place-items:center; -webkit-tap-highlight-color:transparent; }
+.wk-pin .dot{ width:16px; height:16px; border-radius:50%; background:#b5462f; border:2px solid #fff; box-shadow:0 1px 5px rgba(0,0,0,.45); transition:transform .15s, box-shadow .15s; }
+.wk-pin:hover .dot{ transform:scale(1.15); }
+.wk-pin.on .dot{ background:#fff; box-shadow:0 0 0 5px rgba(181,70,47,.45); }
+
+.wk-pin-card{ position:absolute; left:12px; right:12px; bottom:12px; z-index:2; background:var(--wk-panel); backdrop-filter:blur(16px);
+  border:1px solid var(--wk-line); border-radius:13px; padding:12px 14px; animation:wkPinCard .22s var(--wk-arrive); }
+@keyframes wkPinCard{ from{ opacity:0; transform:translateY(8px) } to{ opacity:1; transform:none } }
+.wk-pin-card .k{ font-family:var(--wk-mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:#E7BE72; }
+.wk-pin-card .l{ font-family:var(--wk-serif); font-size:18px; color:var(--wk-ink); margin:3px 0 5px; }
+.wk-pin-card .n{ font-family:var(--wk-sans); font-size:13px; line-height:1.5; color:rgba(236,228,212,.92); text-wrap:pretty; }
+
 /* survey column hidden by default; landscape reveals it */
 .wk-survey{ display:none; }
 

@@ -6,8 +6,10 @@ import { lineageOf } from '../data/lineage.js';
 import { FEEL } from '../data/feel.js';
 import { cameraBus } from '../scene/cameraBus.js';
 import { getFlyEnabled, setFlyEnabled as persistFlyEnabled, arrivalFacing } from '../scene/flyto.js';
+import { pinsFor } from '../data/pins.js';
 import WalkMap from './WalkMap.jsx';
 import ReadingSheet from './ReadingSheet.jsx';
+import RenderPins from './RenderPins.jsx';
 
 // The 3D substrate that flies you between rooms (Fly mode). Lazy so three.js
 // stays out of the render-led first paint — warmed when you enter the walk.
@@ -23,7 +25,7 @@ const FLY_MAX_MS = 2200;   // safety: settle the arriving render even if onArriv
 const firstSentence = (t) => { const m = t && t.match(/^[^.]+\./); return m ? m[0] : (t || '').slice(0, 90); };
 
 /** A render frame — the "you are standing here" surface, with its caption. */
-function Frame({ room, anim, onReadMore }) {
+function Frame({ room, anim, onReadMore, pinCount = 0, onPins }) {
   const anc = lineageOf(room.building);
   const cues = (FEEL[room.id] || []).slice(0, 2);
   return (
@@ -42,6 +44,11 @@ function Frame({ room, anim, onReadMore }) {
           <button className="wk-readmore" onClick={(e) => { e.stopPropagation(); onReadMore(); }}>
             Reading the room <span>↗</span>
           </button>
+          {pinCount > 0 && (
+            <button className="wk-pinsbtn" onClick={(e) => { e.stopPropagation(); onPins(); }}>
+              <span className="pd" aria-hidden="true" />{pinCount} details
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -60,8 +67,10 @@ export default function Walk({ rooms }) {
   const names = useMemo(() => Object.fromEntries(rooms.map((r) => [r.id, r.displayName])), [rooms]);
   const roomId = view.roomId;
   const room = byId[roomId];
+  const pins = useMemo(() => pinsFor(roomId), [roomId]);
 
   const [reading, setReading] = useState(false);
+  const [pinsOpen, setPinsOpen] = useState(false);
   const [mapScope, setMapScope] = useState(null);   // null = closed, else 'building' | 'compound'
   const [hint, setHint] = useState('');
   const [exiting, setExiting] = useState(null);     // { room, dir, key, kind:'wipe'|'fly' }
@@ -147,6 +156,9 @@ export default function Walk({ rooms }) {
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // close the pins overlay whenever you move to another room
+  useEffect(() => { setPinsOpen(false); }, [roomId]);
+
   // keep the caption clear of the (variable-height) dock
   useLayoutEffect(() => {
     const setH = () => {
@@ -202,7 +214,8 @@ export default function Walk({ rooms }) {
           anim={exiting.kind === 'fly' ? 'fly-veil' : `leave-${exiting.dir}`} onReadMore={() => setReading(true)} />}
         <Frame key={current.key} room={current.room || room}
           anim={current.kind === 'fly' ? (flyPhase === 'land' ? 'fly-land' : 'fly-hold') : `enter-${current.dir}`}
-          onReadMore={() => setReading(true)} />
+          onReadMore={() => setReading(true)}
+          pinCount={pins.length} onPins={() => setPinsOpen(true)} />
       </div>
 
       {exiting && <div className="wk-wipe" key={`w${exiting.key}`} style={{ '--wk-wipe-angle': WIPE_ANGLE[exiting.dir] || '90deg' }} />}
@@ -305,6 +318,8 @@ export default function Walk({ rooms }) {
       </div>
 
       <ReadingSheet room={room} open={reading} onClose={() => setReading(false)} onStepInto={(id) => nav.enterMassing(id)} />
+
+      {pinsOpen && room.renderImage && <RenderPins room={room} pins={pins} onClose={() => setPinsOpen(false)} />}
     </div>
   );
 }
