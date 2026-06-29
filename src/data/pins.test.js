@@ -12,8 +12,9 @@ describe('pinsFor', () => {
     expect(Array.isArray(pinsFor('octagonal_stair_hall'))).toBe(true);
   });
 
-  it('returns [] for rooms without pins', () => {
-    expect(pinsFor('sauna')).toEqual([]);
+  it('returns [] for an unknown / unpinned room id', () => {
+    // synthetic id (not a real room) so this stays true as new pin batches land
+    expect(pinsFor('__no_such_room__')).toEqual([]);
   });
 
   it('every authored pin has in-range coords and a known kind', () => {

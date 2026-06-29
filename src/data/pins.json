@@ -120,5 +120,250 @@
     { "x": 88, "y": 48, "label": "Limestone Hearth", "kind": "material", "note": "Limestone fireplace flanking the shelves — Hill Country ground layer anchoring the Glebe proportions in a room built for thinking." },
     { "x": 55, "y": 78, "label": "Desk Surface", "kind": "heritage", "note": "Open books, coffee, a pen — the desk is the room's purpose; everything else exists to make this surface productive." },
     { "x": 45, "y": 52, "label": "Window Seat", "kind": "feature", "note": "Blue-striped cushion with books piled at one end — the reading position that isn't the desk, for when thinking needs to change posture." }
+  ],
+
+  "quiet_room_s_ctr": [
+    { "x": 45, "y": 32, "label": "Picture Window", "kind": "feature", "note": "Single uninterrupted pane — the accepted deviation from twelve-over-twelve, because muntins in this contemplative room would read as fussy." },
+    { "x": 45, "y": 52, "label": "Cedar Window Seat", "kind": "feature", "note": "Built-in seat framing the Hill Country panorama — the room's primary position for looking without doing." },
+    { "x": 15, "y": 45, "label": "Limestone Fireplace", "kind": "material", "note": "Fireplace on the west wall with books and landscape painting on the mantel — Hill Country ground anchoring the room's stillness." },
+    { "x": 85, "y": 35, "label": "Honey Clerestory", "kind": "feature", "note": "Antique-cast honey glass facing the stair hall — borrowed warm light from the fanlight below, soul not lux, the compound's only tinted glazing." },
+    { "x": 85, "y": 55, "label": "Reading Chair", "kind": "heritage", "note": "Leather wingback with brass lamp — entered through a concealed jib door from the Study, this room hides from the rest of the house." }
+  ],
+
+  "front_porch": [
+    { "x": 48, "y": 48, "label": "Front Door", "kind": "material", "note": "Mesquite and cedar with iron hardware in a Glebe stone surround — semi-circular fanlight with radiating muntins and flanking sidelights, matte finish." },
+    { "x": 22, "y": 38, "label": "Dark Green Shutters", "kind": "feature", "note": "Helen-locked: operable dark green painted shutters on all sash windows, with motorized conduit rough-in for conservation and storm automation." },
+    { "x": 25, "y": 15, "label": "Tuscan Columns", "kind": "material", "note": "Classical Tuscan order supporting the twelve-foot porch — Glebe bones at Texas scale, proportioned by Imber." },
+    { "x": 48, "y": 30, "label": "Fanlight", "kind": "feature", "note": "UV-filtering Low-E glazing in the semi-circular transom — south light enters here and rises through the Entry Hall to the Quiet Room honey clerestory above." },
+    { "x": 10, "y": 50, "label": "Stone Veneer", "kind": "material", "note": "Locally quarried limestone on a ventilated rainscreen with six-inch-deep window returns — the visual weight of solid masonry from skilled construction." }
+  ],
+
+  "powder_room": [
+    { "x": 48, "y": 28, "label": "Dark Jewel-Box Walls", "kind": "material", "note": "Saturated Captain Jack's color — a deliberate light-to-dark counterpoint encountered off the bright octagonal stair hall." },
+    { "x": 48, "y": 38, "label": "Salon Hang", "kind": "heritage", "note": "Children's watercolors and family art covering the dark wall — the windowless room is conservation-ideal for light-sensitive pieces." },
+    { "x": 48, "y": 68, "label": "Brass and Stone", "kind": "material", "note": "Wall-mounted basin with brass cross-handle faucets against limestone side walls — Glebe material meeting Captain Jack's hardware." },
+    { "x": 12, "y": 50, "label": "Storm Shelter Door", "kind": "feature", "note": "Shelter #2: reinforced but deliberately residential-looking door panelized to match millwork — operable by one person in seconds, PoE/Wi-Fi inside." }
+  ],
+
+  "aurelia_s_provincetown_suite_nw_over_oval": [
+    { "x": 45, "y": 30, "label": "Stacked Curved Oriel", "kind": "feature", "note": "Five sash panels mirroring the Oval Dining bay directly below — the Glebe's paired vertical rhythm, canyon panorama from Aurelia's bed." },
+    { "x": 10, "y": 35, "label": "Collage Wall", "kind": "heritage", "note": "Photos, postcards, ticket stubs pinned and taped — the one wall in the house designed to be covered by a teenager, not an architect." },
+    { "x": 50, "y": 58, "label": "Turntable", "kind": "heritage", "note": "Every major living space gets a turntable position — in Aurelia's room it sits center-stage in the bay, music facing the canyon." },
+    { "x": 30, "y": 52, "label": "Green Velvet Sofa", "kind": "heritage", "note": "Curved sofa with stuffed animals — Captain Jack's accumulated-life quality operating as a teenager's actual living room." },
+    { "x": 50, "y": 8, "label": "Cedar Ceiling", "kind": "material", "note": "Exposed timber structure — the ceiling above the Oval Dining's conical roof becomes the room's overhead character." }
+  ],
+
+  "rafa_s_texas_room_se_over_great": [
+    { "x": 12, "y": 30, "label": "Limestone Headboard Wall", "kind": "material", "note": "Raw stone as the bed's backdrop — Hill Country ground claiming the room's primary ancestor; the cowboy hat confirms the territory." },
+    { "x": 75, "y": 32, "label": "East Sash Windows", "kind": "view", "note": "Tall south and east sash flooding the room with morning light — this room sits directly above the Great Room." },
+    { "x": 65, "y": 62, "label": "Window Bookcase", "kind": "heritage", "note": "Olive green low bookcase running the window wall — books, colored pencils, treasures at a child's height." },
+    { "x": 25, "y": 55, "label": "Kilim Quilt", "kind": "heritage", "note": "Southwest textile on a cedar bed frame — Hill Country ground layer in the fabric, not just the stone." }
+  ],
+
+  "primary_en_suite_teal": [
+    { "x": 48, "y": 60, "label": "Freestanding Tub", "kind": "feature", "note": "Soaking tub centered under the arched window — the room's anchor, brass faucet on axis with the view above." },
+    { "x": 48, "y": 28, "label": "Sea Glass Mosaic", "kind": "material", "note": "Teal and aqua pebble detail in the window recess — Captain Jack's harbor memory rendered in bathroom material." },
+    { "x": 18, "y": 30, "label": "Beadboard Walls", "kind": "material", "note": "White vertical beadboard continuous with the Primary Bedroom — the suite reads as one vocabulary across bed, bath, and dressing." },
+    { "x": 85, "y": 45, "label": "Glass Shower", "kind": "feature", "note": "Natural stone tile with brass hardware — grab-bar blocking behind tile at all wet locations for aging-in-place." }
+  ],
+
+  "pink_en_suite_aurelia": [
+    { "x": 45, "y": 40, "label": "Pink Herringbone Shower", "kind": "material", "note": "Arched niche with pink chevron tile — Aurelia's color carried from the Oval Dining's dusty pink into her private bathroom." },
+    { "x": 55, "y": 18, "label": "Brass Rain Shower", "kind": "material", "note": "Exposed brass fixtures aging naturally — unlacquered brass is compound-wide, and it looks better every year." },
+    { "x": 50, "y": 88, "label": "Penny Tile Floor", "kind": "material", "note": "Warm copper penny rounds — the floor's color rhymes with the shower tile without matching it." },
+    { "x": 18, "y": 35, "label": "Seascape Painting", "kind": "heritage", "note": "A small harbor painting above the tub — Captain Jack's soul in the children's bathroom, not just the public rooms." }
+  ],
+
+  "rafa_en_suite": [
+    { "x": 48, "y": 55, "label": "Pedestal Tub", "kind": "feature", "note": "Freestanding tub with brass wall-mount faucet — scaled for a child's bathroom, grown-up enough to last." },
+    { "x": 30, "y": 40, "label": "Beadboard Wainscot", "kind": "material", "note": "Vertical beadboard below a warm peach upper wall — Hill Country warmth meeting Captain Jack's board vocabulary." },
+    { "x": 72, "y": 35, "label": "Live Oak Window", "kind": "view", "note": "Corner sash with family photos propped on the sill — the view is a tree, not a landscape, and that's enough." },
+    { "x": 20, "y": 75, "label": "Bath Toy Basket", "kind": "heritage", "note": "Woven basket full of toys next to a red step stool — Rule IV says the house is lived in, including the bathroom." }
+  ],
+
+  "primary_dressing": [
+    { "x": 48, "y": 45, "label": "Center Island", "kind": "feature", "note": "White cabinetry island with brass-edged counter and leather storage below — the dressing room organized around a working surface." },
+    { "x": 48, "y": 20, "label": "Brass Picture Light", "kind": "feature", "note": "Gold-framed mirror under a brass picture light — the room's one deliberate moment of vanity in a house that resists it." },
+    { "x": 12, "y": 35, "label": "Open Shelving", "kind": "material", "note": "Cedar shelves on white beadboard — visible storage, not hidden; the dressing room reads as a room, not a closet." },
+    { "x": 85, "y": 40, "label": "Brass Hardware", "kind": "material", "note": "Unlacquered brass pulls compound-wide — the dressing room uses the same hardware language as the Kitchen and Entry Hall." }
+  ],
+
+  "primary_terrace": [
+    { "x": 48, "y": 35, "label": "Canyon Panorama", "kind": "view", "note": "The compound's deepest private view — limestone bluffs and Hill Country canopy extending to the horizon from the upper floor." },
+    { "x": 35, "y": 55, "label": "Weathered Chairs", "kind": "heritage", "note": "Teak armchairs with blue-striped cushions aging in the sun — Captain Jack's harbor furniture living outdoors." },
+    { "x": 48, "y": 60, "label": "Painted Metal Table", "kind": "heritage", "note": "Distressed drum table with coffee and lemons — the terrace furniture is not precious, it's used every morning." },
+    { "x": 12, "y": 38, "label": "Bedroom Threshold", "kind": "feature", "note": "French doors to the Primary Suite — zero-threshold transition for aging-in-place, canyon air into the room." }
+  ],
+
+  "covered_walkway": [
+    { "x": 65, "y": 35, "label": "Limestone Columns", "kind": "material", "note": "Square piers joining the Main Block to the Service Wing — the Covered Walkway is a limestone loggia, not a corridor." },
+    { "x": 45, "y": 12, "label": "Cedar Roof Structure", "kind": "material", "note": "Exposed timber rafters — Hill Country utilitarian structure overhead, honest and warm." },
+    { "x": 45, "y": 55, "label": "Limestone Flag Floor", "kind": "material", "note": "Zero-threshold transition at both ends — the loggia connects without interrupting the ground plane." },
+    { "x": 12, "y": 55, "label": "Potted Herbs", "kind": "heritage", "note": "Rosemary and lavender along the Main Block wall — the Service Wing's dirty-to-clean spine begins at the landscape." }
+  ],
+
+  "glass_bridge": [
+    { "x": 12, "y": 40, "label": "Art on Limestone", "kind": "heritage", "note": "Framed landscapes hung on the Main Block's stone face — the bridge doubles as a gallery wall where you pass Freddy's work daily." },
+    { "x": 75, "y": 38, "label": "Glass to Live Oaks", "kind": "view", "note": "Floor-to-ceiling glass on the open side — the bridge is transparent to the landscape; you walk through the canopy, not past it." },
+    { "x": 50, "y": 8, "label": "Cedar and Glass Roof", "kind": "material", "note": "Timber beams with glazed panels between — the roof lets sky in overhead while the cedar matches the compound's honest-structure rule." },
+    { "x": 85, "y": 30, "label": "Wharf Wing Shingle", "kind": "material", "note": "White-painted cedar shingle visible at the far end — the bridge connects limestone to shingle, and you see both materials the whole way." },
+    { "x": 50, "y": 75, "label": "Flush Limestone Floor", "kind": "feature", "note": "Zero-threshold transition — the same honed stone runs from the Main Block through the bridge into the Wharf Wing without a single lip or step." }
+  ],
+
+  "pantry_wine_room": [
+    { "x": 45, "y": 38, "label": "Stone Arch Entry", "kind": "feature", "note": "Limestone arch framing the wine storage — the Fortified Wine Room doubles as Storm Shelter #1 (ICF walls, vault door, PoE/Wi-Fi inside)." },
+    { "x": 55, "y": 35, "label": "Wine Grid", "kind": "material", "note": "Cedar wine rack against a blue-painted back wall — Hill Country utilitarian storage with a Captain Jack's color note." },
+    { "x": 20, "y": 55, "label": "Tasting Table", "kind": "heritage", "note": "Simple walnut table with a stool — wine from the North Alley Champanel vines and the Orangery Trebbiano ends up here." },
+    { "x": 45, "y": 85, "label": "Saltillo Floor", "kind": "material", "note": "Terra cotta tile — the Service Wing's utilitarian ground layer, warm underfoot and forgiving of spills." }
+  ],
+
+  "scullery": [
+    { "x": 18, "y": 45, "label": "Teal Tile Alcove", "kind": "material", "note": "Deep utility sink in a teal-tiled recess with brass wall-mount faucet — the decontamination buffer between outside and kitchen." },
+    { "x": 48, "y": 40, "label": "Tall Sash Window", "kind": "view", "note": "Narrow sash bringing Hill Country light deep into the Service Wing — the workaday rooms still get a view." },
+    { "x": 80, "y": 40, "label": "Louvered Cabinets", "kind": "feature", "note": "White louvered doors with brass hardware — ventilated storage for the scullery's role as the kitchen's support spine." },
+    { "x": 80, "y": 65, "label": "Belfast Sink", "kind": "feature", "note": "Farmhouse sink with brass faucet — the scullery is where real work happens, and the sink is built for it." }
+  ],
+
+  "mudroom": [
+    { "x": 15, "y": 40, "label": "Blue-Green Beadboard", "kind": "material", "note": "Grey-blue-green vertical beadboard cubbies with iron hooks — the Mudroom's own color within the Provincetown board vocabulary." },
+    { "x": 15, "y": 60, "label": "Cedar Bench", "kind": "feature", "note": "Walnut bench with boot storage below — the dirty-to-clean spine starts here, eyes on the drive through the door." },
+    { "x": 82, "y": 55, "label": "Copper Dog Wash", "kind": "feature", "note": "Full-size copper tub against limestone — for the dogs after the land, before the house." },
+    { "x": 48, "y": 35, "label": "Drive View Door", "kind": "view", "note": "French doors facing the approach — 'eyes on drive' so you see who's coming before they knock." }
+  ],
+
+  "tea_station": [
+    { "x": 50, "y": 22, "label": "Helen's Cup Collection", "kind": "heritage", "note": "Two shelves of mismatched colorful cups on blue-painted shelves — every mug a different trip, a different gift, a different morning." },
+    { "x": 65, "y": 58, "label": "Brass Kettle", "kind": "feature", "note": "Kettle and faucet at the Main Block end — the first thing reached from the house without entering the Service Wing." },
+    { "x": 30, "y": 58, "label": "Tea Caddy", "kind": "heritage", "note": "Wooden grinder box on the counter — the station operates independently of the kitchen, always ready." },
+    { "x": 50, "y": 72, "label": "Brass Hardware", "kind": "material", "note": "White cabinets with unlacquered brass knobs — the Tea Station speaks the same hardware language as the Kitchen next door." }
+  ],
+
+  "mechanical_laundry": [
+    { "x": 18, "y": 42, "label": "Teal Utility Alcove", "kind": "material", "note": "Tiled alcove with brass wall-mount faucet and cedar shelves — the laundry room gets the same material care as the kitchen." },
+    { "x": 48, "y": 35, "label": "Sash Window", "kind": "view", "note": "Tall narrow sash bringing Hill Country light into the back of the Service Wing — even the mechanical spaces see the sky." },
+    { "x": 78, "y": 55, "label": "Belfast Sink", "kind": "feature", "note": "Deep farmhouse sink for hand-washing and heavy-duty cleanup — the laundry chute from the Upper Gallery empties near here." },
+    { "x": 78, "y": 30, "label": "Louvered Storage", "kind": "feature", "note": "Ventilated cabinets for linens and cleaning supplies — well filtration and greywater terminus equipment lives behind the finished face." }
+  ],
+
+  "pool": [
+    { "x": 35, "y": 55, "label": "Zero-Entry Slope", "kind": "feature", "note": "Gentle slope facing the Sunroom — the pool begins as wet limestone before it becomes water, no edge to step over." },
+    { "x": 65, "y": 40, "label": "Canyon Horizon", "kind": "view", "note": "The infinity edge faces the canyon — the water drops into the landscape and the landscape drops into the sky." },
+    { "x": 50, "y": 45, "label": "Lunar Tidal Algorithm", "kind": "feature", "note": "PLC-controlled 28-day cycle in the overflow coping — the pool is a Georgian Enlightenment instrument, not a utility." },
+    { "x": 50, "y": 80, "label": "Continuous Limestone", "kind": "material", "note": "Honed stone running from Sunroom interior through the zero-entry to the pool surround — one surface, no break." }
+  ],
+
+  "pool_terrace": [
+    { "x": 25, "y": 50, "label": "Rattan Loungers", "kind": "heritage", "note": "Wicker chaises with blue-striped cushions — Captain Jack's harbor furniture arranged around the pool, not a resort." },
+    { "x": 50, "y": 65, "label": "Reflecting Pool", "kind": "view", "note": "Still water mirroring the live oak canopy and the Sunroom's glass wall — the terrace is designed around this reflection." },
+    { "x": 15, "y": 25, "label": "Sunroom Glass Wall", "kind": "feature", "note": "The steel pivot panels visible from outside — when open, the Sunroom and terrace are one continuous space." },
+    { "x": 80, "y": 30, "label": "Live Oak Canopy", "kind": "view", "note": "A single live oak framing the canyon view — the tree was here first, and the compound was placed around it." }
+  ],
+
+  "pool_bath": [
+    { "x": 18, "y": 42, "label": "Brass Rain Shower", "kind": "feature", "note": "Exposed brass shower fixture against white beadboard — poolside rinse-off in Captain Jack's vocabulary, not resort tile." },
+    { "x": 55, "y": 25, "label": "Beadboard Walls", "kind": "material", "note": "White vertical beadboard continuous with the Wharf Wing — the Pool Bath speaks the same language as the Guest Suite and Sunroom." },
+    { "x": 60, "y": 55, "label": "Cedar Bench", "kind": "material", "note": "Teak bench for changing — simple, poolside, built to get wet." },
+    { "x": 55, "y": 22, "label": "Brass Towel Hooks", "kind": "heritage", "note": "A row of brass hooks with a colorful towel — the pool bath is the threshold between wet and dry." }
+  ],
+
+  "sauna": [
+    { "x": 35, "y": 35, "label": "Cedar Interior", "kind": "material", "note": "All-cedar walls, ceiling, and floor — the sauna is pure Hill Country material, no stone, no plaster, just wood and heat." },
+    { "x": 60, "y": 35, "label": "Canyon Bluff Window", "kind": "view", "note": "Picture window facing the limestone bluffs — you sit in heat and look at the geology that made the land." },
+    { "x": 35, "y": 62, "label": "Cedar Bench", "kind": "feature", "note": "The Wharf Wing's third climate pole: Sunroom is warm, pool is cold, sauna is hot — the full thermal range of harbor life." }
+  ],
+
+  "cedar_pavilion": [
+    { "x": 45, "y": 15, "label": "Timber Frame", "kind": "material", "note": "Cedar post-and-beam structure on limestone pier bases — Hill Country barn vernacular, no walls, all sky." },
+    { "x": 45, "y": 8, "label": "Standing-Seam Roof", "kind": "material", "note": "Dark-bronze Galvalume matching the compound roofline — the Pavilion reads as part of the family even from the road." },
+    { "x": 50, "y": 55, "label": "EV Daily Port", "kind": "feature", "note": "V2G pre-wired charging location — the Pavilion is the compound's daily vehicle parking, not the Motor Barn." },
+    { "x": 85, "y": 60, "label": "Firewood Cart", "kind": "heritage", "note": "Wheelbarrow and split wood — the working landscape starts at the edge of where you park." }
+  ],
+
+  "north_alley_pergola": [
+    { "x": 45, "y": 18, "label": "Corten Crossbars", "kind": "material", "note": "Corten steel disappearing under vine on limestone column bases — the metal rusts to match the land, then the grapes hide it entirely." },
+    { "x": 45, "y": 25, "label": "Champanel Grapevines", "kind": "feature", "note": "PD-resistant Phase 1 production grape — supersedes Black Spanish; the pergola is infrastructure, not ornament." },
+    { "x": 45, "y": 65, "label": "Canyon Through Vine", "kind": "view", "note": "Hill Country rolling to the horizon framed by grape leaf and limestone — the North Alley's defining axis view." },
+    { "x": 25, "y": 80, "label": "Italian Herb Beds", "kind": "heritage", "note": "Herbs at the column bases — the pergola's ground layer is edible, Firewise-compliant, and feeds the kitchen." }
+  ],
+
+  "dome_oculus": [
+    { "x": 50, "y": 8, "label": "Glass Dome", "kind": "feature", "note": "Sealed six-foot oculus — Helen's pick; nothing passes through in or out, answering the falling-scorpion concern by spec." },
+    { "x": 50, "y": 22, "label": "Brass Lantern", "kind": "material", "note": "Georgian lantern pendant hanging in the open well — the light fixture the oculus illuminates from above." },
+    { "x": 42, "y": 48, "label": "Octagonal Stair", "kind": "feature", "note": "Open-well stair wrapping the faceted perimeter — the elongated octagon deliberately rhyming with the Oval Dining below." },
+    { "x": 15, "y": 40, "label": "Salon Hang", "kind": "heritage", "note": "Art and frames covering every available wall from ground to gallery — the stair hall is the compound's vertical autobiography." },
+    { "x": 50, "y": 12, "label": "Dark-Sky Light Seal", "kind": "feature", "note": "Motorized damper seals the thermal chimney whenever the well is lit at night — the lantern cannot leak uplight, independent of Observatory Mode." }
+  ],
+
+  "cornelia_s_greenhouse": [
+    { "x": 48, "y": 30, "label": "Arched Glass Wall", "kind": "feature", "note": "Steel-muntin arched window looking onto live oaks — the Greenhouse's one grand gesture, light pouring onto the potting bench." },
+    { "x": 15, "y": 40, "label": "Terra Cotta Shelves", "kind": "heritage", "note": "Cedar shelving with clay pots and seedlings — Mississippi ancestor exclusively: the tradition of growing things in utilitarian spaces." },
+    { "x": 85, "y": 55, "label": "Straw Hat and Vine", "kind": "heritage", "note": "Trailing plant, garden hat, woven baskets — Grandma Cornelia's memorial is a working greenhouse, not a shrine." },
+    { "x": 48, "y": 85, "label": "Limestone Flag Floor", "kind": "material", "note": "Irregular flagstone continuous with the Motor Barn — the Greenhouse is attached to the barn, not the house." }
+  ],
+
+  "vehicle_bay_1": [
+    { "x": 38, "y": 35, "label": "Arched Bays", "kind": "material", "note": "Limestone arches opening onto the drive — Georgian proportions scaled to trucks, not carriages." },
+    { "x": 55, "y": 45, "label": "EV Charger", "kind": "feature", "note": "Wall-mounted charger between bays — V2G pre-wired Phase 2A, the compound's energy system starts at the vehicle." },
+    { "x": 48, "y": 10, "label": "Barrel-Vault Ceiling", "kind": "material", "note": "Cedar barrel vault — the Motor Barn's interior reads as architecture, not garage." },
+    { "x": 18, "y": 55, "label": "Walnut Workbench", "kind": "heritage", "note": "Coffee cup, radio, leather tool roll — the bay is a workshop that happens to store vehicles." },
+    { "x": 48, "y": 85, "label": "Storm Shelter Access", "kind": "feature", "note": "Flush-mount pit beneath the slab — Shelter #3, prefab steel, brass hinged door, PoE/Wi-Fi via buried conduit." }
+  ],
+
+  "energy_forge": [
+    { "x": 55, "y": 45, "label": "Battery Bank", "kind": "feature", "note": "Seven FranklinWH aPower 2 units totaling 105 kWh — sodium-ion preferred, LFP fallback; Phase 2A shell, Phase 2C install." },
+    { "x": 18, "y": 52, "label": "Monitoring Desk", "kind": "feature", "note": "Workbench with the aGate controller and SPAN panel — the compound's energy nervous system managed from one surface." },
+    { "x": 45, "y": 10, "label": "Cedar Joists", "kind": "material", "note": "Exposed roof structure — even the battery room gets Hill Country utilitarian honesty overhead." },
+    { "x": 88, "y": 45, "label": "Limestone Wall", "kind": "material", "note": "Raw stone on the Motor Barn's exterior face — the Energy Forge sits inside the same limestone shell as the vehicle bays." }
+  ],
+
+  "loft": [
+    { "x": 45, "y": 10, "label": "Dark Timber Trusses", "kind": "material", "note": "Exposed roof structure in the Motor Barn's vaulted loft — Hill Country barn grammar, the ceiling is the building." },
+    { "x": 55, "y": 55, "label": "Limestone Chimney", "kind": "material", "note": "Raw stone chimney wall dividing the loft — the Motor Barn's structural spine doubling as the room's visual anchor." },
+    { "x": 72, "y": 58, "label": "Air Hockey Table", "kind": "heritage", "note": "Helen's heirloom (first date) — the table stays, something else moves if there's a conflict. Non-negotiable." },
+    { "x": 30, "y": 55, "label": "Sectional Sofa", "kind": "heritage", "note": "Olive green deep sectional with board games — the Loft is the family's second living room, less curated than the Great Room." },
+    { "x": 30, "y": 35, "label": "Phase 2C Contingency", "kind": "feature", "note": "First on the kill order if budget tightens — if killed, the air hockey table relocates to the Drawing Room and gets pride of place." }
+  ],
+
+  "podcast_studio": [
+    { "x": 48, "y": 28, "label": "Acoustic Panels", "kind": "feature", "note": "Corner-mounted absorbers flanking a bookshelf — the booth is acoustically isolated from the loft family room on the other side of the wall." },
+    { "x": 25, "y": 52, "label": "Condenser Mic", "kind": "feature", "note": "Jonathan-locked space — voice acting booth and podcast studio, the room's purpose visible in one piece of equipment." },
+    { "x": 42, "y": 55, "label": "Leather Club Chairs", "kind": "heritage", "note": "Two chairs facing each other with a low table — interview format, not broadcasting desk; the room is for conversation." },
+    { "x": 48, "y": 82, "label": "Heavy Acoustic Door", "kind": "feature", "note": "The threshold between the loft's family noise and the studio's silence — one door changes the compound's register entirely." }
+  ],
+
+  "airlock": [
+    { "x": 50, "y": 15, "label": "Limestone Arch", "kind": "material", "note": "Stone surround at the thermal boundary — the arch announces that you're passing from unconditioned bays into the conditioned Motor Barn." },
+    { "x": 50, "y": 22, "label": "Brass Pendant", "kind": "material", "note": "Conical brass light marking the transition — the airlock gets one deliberate design gesture in an otherwise utilitarian passage." },
+    { "x": 50, "y": 82, "label": "Brass Boot Tray", "kind": "feature", "note": "Floor-level tray at the threshold — gravel and mud stop here; the clean side of the Motor Barn begins on the other side." },
+    { "x": 25, "y": 42, "label": "Cedar Doors", "kind": "material", "note": "Solid cedar doors flanking the passage — the airlock is a room, not a hallway, with doors that close on both sides." }
+  ],
+
+  "compute_room": [
+    { "x": 22, "y": 45, "label": "Server Racks", "kind": "feature", "note": "Liquid-cooled compute hardware — waste heat feeds domestic hot water and pool through an automated switching valve." },
+    { "x": 58, "y": 42, "label": "Workstation", "kind": "feature", "note": "Monitor, stool, coffee cup — the Compute Room is managed on-site, not just remotely; someone sits here." },
+    { "x": 88, "y": 40, "label": "Limestone Slit Window", "kind": "view", "note": "Narrow opening in the stone wall casting a blade of Hill Country light across the servers — even infrastructure sees the land." },
+    { "x": 45, "y": 10, "label": "Exposed Cable Runs", "kind": "material", "note": "Cables visible overhead — Hill Country utilitarian honesty; the Compute Room doesn't pretend to be anything but what it is." }
+  ],
+
+  "research_room": [
+    { "x": 48, "y": 58, "label": "Walnut Research Table", "kind": "heritage", "note": "Papers, notebooks, and coffee spread across walnut — Hill Country body with Enlightenment touches; the table is the room's purpose." },
+    { "x": 48, "y": 32, "label": "Mullioned Glass Doors", "kind": "feature", "note": "Cedar-framed French doors looking through to the Compute Room — the research instrument visible from the research space." },
+    { "x": 12, "y": 35, "label": "Limestone Walls", "kind": "material", "note": "Raw stone on both sides — the Research Room sits inside the Motor Barn's shell, not a finished-out office." },
+    { "x": 82, "y": 40, "label": "Reference Library", "kind": "heritage", "note": "Dark bookshelf with binders and files — the physical knowledge base that the Compute Room's digital one complements." }
+  ],
+
+  "instrument_bay_upgrade": [
+    { "x": 50, "y": 50, "label": "Empty Shell", "kind": "feature", "note": "Deliberately unfinished — the Instrument Bay is built as a blank room with infrastructure rough-in, waiting for equipment that doesn't exist yet." },
+    { "x": 50, "y": 12, "label": "Timber Ceiling", "kind": "material", "note": "Cedar structure overhead — even the shell reads as Hill Country utilitarian, not warehouse." },
+    { "x": 82, "y": 50, "label": "Equipment Door", "kind": "feature", "note": "Oversized opening for moving large instruments in and out — the room is designed to accept whatever the research program needs." },
+    { "x": 15, "y": 75, "label": "Infrastructure Rough-In", "kind": "feature", "note": "Power outlets, data conduit, and climate control stubs — the bay is useless without equipment, but ready for anything with it." }
+  ],
+
+  "observatory_tower": [
+    { "x": 48, "y": 48, "label": "Isolated Pier", "kind": "feature", "note": "Concrete pier poured Phase 2A during foundation work — structurally independent of the tower walls, vibration-free for the telescope mount." },
+    { "x": 48, "y": 15, "label": "Observatory Dome", "kind": "feature", "note": "Shell and telescope deferred Phase 2C — the pier is the only part that must go in during foundations." },
+    { "x": 20, "y": 35, "label": "Limestone Tower Walls", "kind": "material", "note": "Raw limestone with multiple sash windows — the Observatory reads as a Glebe folly from outside, an instrument room from inside." },
+    { "x": 75, "y": 55, "label": "Reading Corner", "kind": "heritage", "note": "Leather chair and bookshelf between the windows — the room doubles as a retreat when the telescope isn't in use." },
+    { "x": 48, "y": 80, "label": "Setback Validation", "kind": "feature", "note": "At least 200 feet from Pool, 150 feet from Motor Barn — locked distances enforced by the compound model's validation gates." }
   ]
 }
