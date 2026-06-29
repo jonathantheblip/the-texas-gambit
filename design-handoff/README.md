@@ -35,6 +35,12 @@ Filenames only here. The colored-pencil renders themselves are yours (design-stu
 side) / Jon can send the `lookbook_images/` WebPs. Path in-app: `lookbook_images/<render>`.
 
 ## Things Code owns and implements for you (you specify the behavior)
+- **Step through a render into the massing** — `massing.open(roomId, { facing, onReady, onExit })`
+  + `cameraBus.onReady` (first paint). Already wired: the render is held over the
+  loading 3D and cross-fades out on ready, focused on the room with a facing-aware
+  arrival pose, then free orbit; "← Back to the walk" returns. Full signatures in
+  **CODE_DESIGN_CONTRACT.md** (included in this pack, §6). Send your per-room facing
+  (N/E/S/W) + the cross-fade timing/easing and Code applies them.
 - **3D camera drift** — `cameraBus.driftTo(roomId, fromHeading)` + `onArrival(cb)`.
   Code runs the move (ease-in-out, ~1.1s) and fires arrival on settle; tell us the
   easing/framing you want. (Not callable in your sandbox — it lives in the 3D scene.)
