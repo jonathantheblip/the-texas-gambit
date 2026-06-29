@@ -6,6 +6,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 // `base` makes built asset URLs resolve under that subpath; in dev it's '/'.
 export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/the-texas-gambit/' : '/',
+  // Dev only: honor a harness-assigned port (PORT env) so the app can run on any
+  // free port; falls back to Vite's default 5173. Ignored by `vite build`.
+  server: { port: Number(process.env.PORT) || 5173 },
   plugins: [
     react(),
     VitePWA({
