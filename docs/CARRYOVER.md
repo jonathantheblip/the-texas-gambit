@@ -46,6 +46,14 @@ The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, prove
 - **Supabase**: set up by Jon (schema included) — treat it as done, don't re-flag it. The sandbox preview shows "Local only" only because the preview can't reach realtime; that's the sandbox, not a missing table. Verify sync post-deploy, not in the sandbox.
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
+## Iteration after launch (2026-06-29, live)
+Shipped to `main`/live in response to Jon's review of the live app:
+- **Plain-language names** — `room.displayName` drops the architect suffix ("(front, S-ctr)", "(SW)") everywhere Helen reads; full `r.name` kept for validation. Floors read Ground/Upper/Roof/Outdoor.
+- **Calm step-into** — stepping in from the walk lands in Massing (not the all-renders "Both" collage) AND focuses: camera frames the entered room, other rooms fade to ghosts, their renders gone; the room you're in stays prominent. Any view-toggle clears focus → see everything (panel stays user-agnostic).
+- **Old-icon 404 fix** earlier: `public/{helen,jon,Hill Country Estate}.html` redirect into the app (Helen's existing home-screen icon works — no re-add; she "doesn't do homework").
+
+**⚠️ Supabase gap (needs Jon, one-time):** the live project is missing the `room_overrides` table (REST returns 404) — so **dimension-edit sync is local-only**. The other tables (`notes`, `room_state`, `pins`, `journal`) DO exist, so the **notes/feel-chip sync works live**. Fix: run the `room_overrides` block at the bottom of [`supabase/schema.sql`](../supabase/schema.sql) in the Supabase SQL editor (idempotent). See [[reference-deploy-push-credential]] for why I can't run it.
+
 ## Deploy — DONE (live)
 **Shipped 2026-06-29.** `main` pushed at `e269646` → `.github/workflows/deploy.yml` published to **https://jonathantheblip.github.io/the-texas-gambit/** (CI green; live URL 200, serving the new app). Unblocked when Jon granted the session account (`jonathan-crescent`) Write on the repo — see [[reference-deploy-push-credential]]; future autonomous pushes work with that access in place. **One open post-deploy check:** confirm cross-device **sync** on a real device (note on one → appears on another); can't be tested in the sandbox (shows "Local only"). Per the north star, only deploy after integrated + green (`npm test` + `npm run validate` + build) + phone-verified — never half-built.
 
