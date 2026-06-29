@@ -56,7 +56,7 @@ export const ROOM_JOIN = {
   tea_station:                                { source: null,             render: null },
 
   // ── Wharf Wing ──
-  glass_bridge:                               { source: null,             render: null },
+  glass_bridge:                               { source: null,             render: 'ww_glassbridge_hero.png' },
   right_passage_freddy_s_gallery:             { source: 'right-passage',  render: 'mbg_rightpassage_hero.png' },
   sunroom:                                    { source: 'sunroom',        render: 'ww_sunroom_hero.png' },
   guest_bedroom:                              { source: 'guest-suite',    render: 'ww_guestbedroom_hero.png' },
