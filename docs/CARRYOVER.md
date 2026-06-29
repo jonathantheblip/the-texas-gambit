@@ -37,11 +37,11 @@ The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, prove
 
 ## Gotchas
 - **npm EACCES** (root-owned `~/.npm`): pass `--cache /private/tmp/<scratchpad>/.npmcache`. Don't `sudo`.
-- **Supabase**: sync shows "Local only" until the `room_overrides` table exists (it's in `supabase/schema.sql`). Applying it needs the dashboard — Jon's action, not Code's. The sandbox preview can't fully test realtime sync or PWA install regardless; verify those post-deploy.
+- **Supabase**: set up by Jon (schema included) — treat it as done, don't re-flag it. The sandbox preview shows "Local only" only because the preview can't reach realtime; that's the sandbox, not a missing table. Verify sync post-deploy, not in the sandbox.
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
 ## Deploy
-Dormant. `.github/workflows/deploy.yml` deploys on push to `main` once **Settings → Pages → Source = GitHub Actions** (Jon's one-time switch). `ci.yml` runs locks + tests + build on every push. Per the north star: **deploy after Design's experience is integrated and verified** — not half-built.
+Dormant. `.github/workflows/deploy.yml` deploys on push to `main` once the **repo's** Pages source is set to GitHub Actions — at `https://github.com/jonathantheblip/the-texas-gambit/settings/pages` (the repository Settings → Pages → Build and deployment → Source; *not* the account-level settings page). Jon's one-time switch. `ci.yml` runs locks + tests + build on every push. Per the north star: **deploy after Design's experience is integrated and verified** — not half-built.
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
@@ -49,7 +49,7 @@ Dormant. `.github/workflows/deploy.yml` deploys on push to `main` once **Setting
 3. **Then run autonomously:** integrate Design's work against the live APIs; wire facing + cross-fade; build the unified wayfinding / Reading-the-Room as Design specs; add tests for new logic; **verify on a phone viewport**; commit checkpoints with clear messages.
 4. **Pre-authorized** (per Jon): commits, pushes, deployment — but only once integrated, green (`npm test` + `npm run validate` + build), and verified. Don't deploy half-built.
 5. **Don't** rabbit-hole, break the locks, touch the parked dream, or collide with Design's experience layer beyond integrating their handoff.
-6. **Leave a running log + a final summary**: what shipped, what's open, decisions made, anything Jon must do (e.g. apply the Supabase table, flip the Pages setting).
+6. **Leave a running log + a final summary**: what shipped, what's open, decisions made, anything Jon must do (e.g. the one-time repo Pages source switch, if not already done).
 
 ## Pointers
 HANDOFF_FOR_CLAUDE_CODE.md (original brief) · DESIGN_BRIEF.md (what Design owns) · IMMERSIVE_PROMPTS.md (the dream) · ../SYNC.md · ../README.md · ../GH_PAGES_SETUP.md · `design-handoff/` (portable pack) · memory at `~/.claude/projects/-Users-jjackson-dev-the-texas-gambit/memory/` (MEMORY.md auto-loads).

@@ -3,8 +3,10 @@
 The app now has a **build step** (Vite), so the old "deploy from a branch / root" setup no longer applies — Pages serves the built `dist/`, produced by GitHub Actions.
 
 ## One-time setup
-1. On github.com → repo **Settings → Pages**.
-2. **Source: GitHub Actions** (not "Deploy from a branch").
+1. Open the **repository's** Pages settings (not your account settings):
+   **https://github.com/jonathantheblip/the-texas-gambit/settings/pages**
+   (i.e. open the repo, click its own **Settings** tab in the repo top bar, then **Pages** in the left sidebar — *not* the avatar-menu Settings, which only shows "Verified domains").
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (not "Deploy from a branch").
 
 That's the whole switch. The workflow at `.github/workflows/deploy.yml` does the rest.
 
