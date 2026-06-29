@@ -34,9 +34,9 @@ export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk })
           <div className="g-grid">
             {rs.map((r) => (
               <button className="g-card" key={r.id} onClick={() => onOpenRoom(r.id)}>
-                <div className="g-card-img"><img src={r.renderImage} alt={r.name} loading="lazy" /></div>
+                <div className="g-card-img"><img src={r.renderImage} alt={r.displayName} loading="lazy" /></div>
                 <div className="g-card-cap">
-                  <span className="g-card-name">{r.name}</span>
+                  <span className="g-card-name">{r.displayName}</span>
                   {r.ancestors?.[0] && (
                     <span className="g-card-anc" style={{ '--chip': ANCESTORS[r.ancestors[0]]?.color || '#999' }}>
                       {ANCESTORS[r.ancestors[0]]?.name || r.ancestors[0]}

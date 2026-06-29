@@ -17,11 +17,20 @@ const asset = (file) => (file ? `${import.meta.env.BASE_URL}lookbook_images/${fi
 export const ANCESTORS = legacy.ancestors;
 export const META = roomsData.meta;
 
+// Plain-language display name for the UI: drop the architect's positional suffix
+// ("(front, S-ctr)", "(SW)", "(NW, over Oval)") that Helen shouldn't have to read.
+// The full r.name stays the source of truth — validation anchors key on it.
+const prettyName = (name) => name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+const FLOOR_LABEL = { ground: 'Ground', upper: 'Upper', loft: 'Loft', crown: 'Roof', site: 'Outdoor' };
+
 export const ALL_ROOMS = roomsData.rooms.map((r) => {
   const join = ROOM_JOIN[r.id] || {};
   const content = join.source ? legacy.rooms[join.source] : null;
   return {
     ...r,
+    name: r.name,                     // full, technical — kept for validation/anchors
+    displayName: prettyName(r.name),  // what Helen reads everywhere in the UI
+    floorLabel: FLOOR_LABEL[r.floor] || r.floor,
     area: r.w * r.d,                  // always derived from the footprint
     renderImage: asset(join.render),  // the colored-pencil hero (null = none yet)
     intent: content?.intent || null,  // the writing (null = not written yet)

@@ -12,7 +12,6 @@ const ARROW = { N: '↑', S: '↓', E: '→', W: '←' };
 const STAIR_ARROW = { up: '⇧', down: '⇩' };
 const HEADING_WORD = { N: 'North', S: 'South', E: 'East', W: 'West' };
 const WIPE_ANGLE = { N: '180deg', S: '0deg', E: '90deg', W: '270deg', up: '180deg', down: '0deg', none: '90deg' };
-const shortName = (s) => (s || '').replace(/\s*\(.*\)$/, '');
 const firstSentence = (t) => { const m = t && t.match(/^[^.]+\./); return m ? m[0] : (t || '').slice(0, 90); };
 
 /** A render frame — the "you are standing here" surface, with its caption. */
@@ -26,9 +25,9 @@ function Frame({ room, anim, onReadMore }) {
       <div className="wk-cap">
         <div className="wk-cap-meta">
           <span className="fam" style={{ background: anc.hex }} />
-          <span>{room.building} · {room.floor} · {room.area} ft²</span>
+          <span>{room.building} · {room.floorLabel} · {room.area} ft²</span>
         </div>
-        <h1 className="wk-cap-name">{room.name}</h1>
+        <h1 className="wk-cap-name">{room.displayName}</h1>
         {room.intent && <div className="wk-cap-read">{firstSentence(room.intent)}</div>}
         <div className="wk-cap-foot">
           {cues.map((t) => <span className="wk-feel" key={t}>{t}</span>)}
@@ -50,7 +49,7 @@ function Frame({ room, anim, onReadMore }) {
 export default function Walk({ rooms }) {
   const view = useNav();
   const byId = useMemo(() => { const m = {}; for (const r of rooms) m[r.id] = r; return m; }, [rooms]);
-  const names = useMemo(() => Object.fromEntries(rooms.map((r) => [r.id, r.name])), [rooms]);
+  const names = useMemo(() => Object.fromEntries(rooms.map((r) => [r.id, r.displayName])), [rooms]);
   const roomId = view.roomId;
   const room = byId[roomId];
 
@@ -80,14 +79,14 @@ export default function Walk({ rooms }) {
     const ms = (dir === 'up' || dir === 'down') ? 720 : (dir === 'none' ? 560 : 640);
     const t = setTimeout(() => setExiting(null), ms + 60);
     // arrival hint
-    if (rel?.vert) showHint(`${rel.vert === 'up' ? 'Up the stair to ' : 'Down to '}${shortName(byId[roomId]?.name)}`);
-    else if (rel?.heading) showHint(`${HEADING_WORD[rel.heading]} into ${shortName(byId[roomId]?.name)}`);
+    if (rel?.vert) showHint(`${rel.vert === 'up' ? 'Up the stair to ' : 'Down to '}${byId[roomId]?.displayName}`);
+    else if (rel?.heading) showHint(`${HEADING_WORD[rel.heading]} into ${byId[roomId]?.displayName}`);
     return () => clearTimeout(t);
   }, [roomId, byId]);
 
   // welcome hint on first mount
   useEffect(() => {
-    const t = setTimeout(() => showHint(roomId === 'front_porch' ? "You're on the Front Porch — walk inside" : `You're in ${shortName(room?.name)}`), 450);
+    const t = setTimeout(() => showHint(roomId === 'front_porch' ? "You're on the Front Porch — walk inside" : `You're in ${room?.displayName}`), 450);
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -150,7 +149,7 @@ export default function Walk({ rooms }) {
           <span className="wk-crumb-sep">›</span>
           <button className="wk-crumb link" onClick={() => openMap('building')}>{room.building}</button>
           <span className="wk-crumb-sep">›</span>
-          <span className="wk-crumb here">{shortName(room.name)}</span>
+          <span className="wk-crumb here">{room.displayName}</span>
         </div>
         <button className="wk-mapbtn" onClick={() => openMap('building')} aria-label="Open the map">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
@@ -171,7 +170,7 @@ export default function Walk({ rooms }) {
               <button key={n.id} className={`wk-exit${n.via === 'opening' ? ' opening' : ''}${n.vert ? ' stair' : ''}`}
                 data-fam={f} onClick={() => travel(n.id)}>
                 <span className="arw">{arw}</span>
-                <span className="nm">{shortName(r.name)}</span>
+                <span className="nm">{r.displayName}</span>
                 <span className="via">{n.vert ? `${n.vert} · stair` : n.via}</span>
               </button>
             );
@@ -188,7 +187,7 @@ export default function Walk({ rooms }) {
       <div className="wk-survey">
         <div className="sv-map"><WalkMap scope="building" currentId={roomId} names={names} onPick={travel} /></div>
         <div className="sv-read">
-          <div className="nm" style={{ color: anc.hex }}>{room.name}</div>
+          <div className="nm" style={{ color: anc.hex }}>{room.displayName}</div>
           <div className="ln">{room.intent ? firstSentence(room.intent) : 'Step into the massing to read this volume.'}</div>
         </div>
         <div className="sv-exits">
@@ -198,7 +197,7 @@ export default function Walk({ rooms }) {
             return (
               <button key={n.id} className={`wk-exit${n.via === 'opening' ? ' opening' : ''}${n.vert ? ' stair' : ''}`}
                 data-fam={lineageOf(r.building).fam} onClick={() => travel(n.id)}>
-                <span className="arw">{arw}</span><span className="nm">{shortName(r.name)}</span>
+                <span className="arw">{arw}</span><span className="nm">{r.displayName}</span>
                 <span className="via">{n.vert ? `${n.vert} · stair` : n.via}</span>
               </button>
             );

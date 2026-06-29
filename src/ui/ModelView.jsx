@@ -41,7 +41,10 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
   const [hiddenFloors, setHiddenFloors] = useState(() => new Set());
   const [showProvisional, setShowProvisional] = useState(true);
   const [xray, setXray] = useState(false);
-  const [viewMode, setViewMode] = useState('both');
+  // Stepping in from the walk → land in clean Massing (solid volumes, your room
+  // lit), not Both (which billboards all 41 renders into an overlapping collage).
+  // The renders live in the Walk you just came from; the 3D is for volume.
+  const [viewMode, setViewMode] = useState(arriving ? 'massing' : 'both');
   const [identity, setIdent] = useState(getIdentity);
   const fileRef = useRef();
 
@@ -180,11 +183,11 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           {selected && (
             <div className="sel">
               {selected.renderImage
-                ? <img className="sel-hero" src={selected.renderImage} alt={selected.name} loading="lazy" />
+                ? <img className="sel-hero" src={selected.renderImage} alt={selected.displayName} loading="lazy" />
                 : <div className="sel-hero placeholder">render not yet made</div>}
-              <h3>{selected.name}</h3>
+              <h3>{selected.displayName}</h3>
               <div className="sub">
-                {selected.building} · {selected.floor}{selected.phase ? ` · Phase ${selected.phase}` : ''}
+                {selected.building} · {selected.floorLabel}{selected.phase ? ` · Phase ${selected.phase}` : ''}
               </div>
               {selected.renderImage && (
                 <button className="render-link" onClick={() => onOpenRender(selected.id)}>See the render ↗</button>

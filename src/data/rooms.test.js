@@ -18,6 +18,26 @@ describe('applyOverrides', () => {
   });
 });
 
+describe('displayName — plain-language names for Helen', () => {
+  it('drops the architect positional suffix but keeps the full name as source of truth', () => {
+    const entry = byId(ALL_ROOMS, 'entry_hall_front_s_ctr');
+    expect(entry.name).toBe('Entry Hall (front, S-ctr)');   // unchanged — validation anchors key on it
+    expect(entry.displayName).toBe('Entry Hall');
+    expect(byId(ALL_ROOMS, 'drawing_room_sw').displayName).toBe('Drawing Room');
+    expect(byId(ALL_ROOMS, 'aurelia_s_provincetown_suite_nw_over_oval').displayName)
+      .toBe("Aurelia's Provincetown Suite");
+  });
+
+  it('every room has a non-empty displayName with no leftover "(...)" and a floor label', () => {
+    for (const r of ALL_ROOMS) {
+      expect(r.displayName.length).toBeGreaterThan(0);
+      expect(r.displayName).not.toMatch(/\($/);
+      expect(r.displayName).not.toMatch(/\([^)]*\)\s*$/);
+      expect(r.floorLabel).toBeTruthy();
+    }
+  });
+});
+
 describe('table round-trip (export → import)', () => {
   it('recovers the overrides from an exported table', () => {
     const edited = applyOverrides(ALL_ROOMS, { kitchen: { w: 25 } });

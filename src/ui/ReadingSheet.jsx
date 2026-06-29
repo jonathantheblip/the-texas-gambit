@@ -24,10 +24,10 @@ export default function ReadingSheet({ room, open, onClose, onStepInto }) {
   return (
     <>
       <div className={`wk-scrim${open ? ' on' : ''}`} onClick={onClose} />
-      <div className={`wk-sheet${open ? ' open' : ''}`} role="dialog" aria-label={`Reading the room — ${room.name}`} aria-hidden={!open}>
+      <div className={`wk-sheet${open ? ' open' : ''}`} role="dialog" aria-label={`Reading the room — ${room.displayName}`} aria-hidden={!open}>
         <div className="wk-grab" />
-        <h3>{room.name}</h3>
-        <div className="sub">{room.building} · {room.floor} · {room.w}×{room.d} ft · {room.area} ft²</div>
+        <h3>{room.displayName}</h3>
+        <div className="sub">{room.building} · {room.floorLabel} · {room.w}×{room.d} ft · {room.area} ft²</div>
 
         {room.intent && <div className="intent">{room.intent}</div>}
 
