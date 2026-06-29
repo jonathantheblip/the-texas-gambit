@@ -45,20 +45,29 @@
 /* ── room caption (rises on arrival; text always readable) ── */
 .wk-cap{
   position:absolute; left:0; right:0; bottom:calc(var(--wk-dock-h,200px) + 14px); z-index:2; padding:8px 22px 14px;
-  display:flex; flex-direction:column; gap:9px; opacity:1;
+  display:flex; flex-direction:column; gap:9px; opacity:1; isolation:isolate;
 }
-.wk-cap-meta{ font-family:var(--wk-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--wk-dim);
-  display:flex; align-items:center; gap:9px; }
-.wk-cap-meta .fam{ width:8px; height:8px; border-radius:2px; flex:none; }
+/* Legibility wash: a localized scrim behind the caption so the text reads over ANY
+   render — bright limestone or dark interior — wherever the dock height pushes it.
+   Anchored to the caption (moves with it), solidly dark through the text band and
+   fading out only at the very top edge. */
+.wk-cap::before{
+  content:''; position:absolute; z-index:-1; pointer-events:none; inset:-30px -40px -18px -40px;
+  background:linear-gradient(to top, rgba(5,4,2,.9) 0%, rgba(5,4,2,.8) 52%, rgba(5,4,2,.5) 82%, transparent 100%);
+}
+.wk-cap-meta{ font-family:var(--wk-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(236,228,212,.82);
+  display:flex; align-items:center; gap:9px; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+.wk-cap-meta .fam{ width:8px; height:8px; border-radius:2px; flex:none; box-shadow:0 0 0 1px rgba(0,0,0,.3); }
 .wk-cap-name{ font-family:var(--wk-serif); font-weight:500; font-size:clamp(28px,8vw,38px); line-height:1.02; letter-spacing:-.012em;
-  text-shadow:0 1px 24px rgba(0,0,0,.45); margin:0; }
-.wk-cap-read{ font-family:var(--wk-serif); font-style:italic; font-size:15.5px; line-height:1.4; color:rgba(236,228,212,.9);
-  max-width:34ch; text-wrap:pretty; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  text-shadow:0 1px 2px rgba(0,0,0,.55), 0 2px 30px rgba(0,0,0,.5); margin:0; }
+.wk-cap-read{ font-family:var(--wk-serif); font-style:italic; font-size:15.5px; line-height:1.4; color:rgba(236,228,212,.95);
+  max-width:34ch; text-wrap:pretty; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  text-shadow:0 1px 3px rgba(0,0,0,.55); }
 .wk-cap-foot{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-top:3px; }
 .wk-feel{ font-family:var(--wk-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--wk-dim); border:1px solid var(--wk-line); border-radius:999px; padding:5px 9px; }
+  color:rgba(236,228,212,.82); background:var(--wk-glass); backdrop-filter:blur(8px); border:1px solid var(--wk-line); border-radius:999px; padding:5px 9px; }
 .wk-readmore{ font-family:var(--wk-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--wk-ink); background:rgba(236,228,212,.10); border:1px solid var(--wk-line); border-radius:999px;
+  color:var(--wk-ink); background:var(--wk-glass); backdrop-filter:blur(8px); border:1px solid var(--wk-line); border-radius:999px;
   padding:6px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; -webkit-tap-highlight-color:transparent; }
 .wk-readmore:active{ transform:scale(.97); }
 
