@@ -1,17 +1,25 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { nav } from '../nav/navStore.js';
 import { useNav } from '../nav/useNav.js';
 import { neighborsOf } from '../data/adjacency.js';
 import { lineageOf } from '../data/lineage.js';
 import { FEEL } from '../data/feel.js';
+import { cameraBus } from '../scene/cameraBus.js';
+import { getFlyEnabled, setFlyEnabled as persistFlyEnabled, arrivalFacing } from '../scene/flyto.js';
 import WalkMap from './WalkMap.jsx';
 import ReadingSheet from './ReadingSheet.jsx';
+
+// The 3D substrate that flies you between rooms (Fly mode). Lazy so three.js
+// stays out of the render-led first paint — warmed when you enter the walk.
+const Flythrough = lazy(() => import('./Flythrough.jsx'));
 
 const ORDER = { N: 0, E: 1, S: 2, W: 3 };
 const ARROW = { N: '↑', S: '↓', E: '→', W: '←' };
 const STAIR_ARROW = { up: '⇧', down: '⇩' };
 const HEADING_WORD = { N: 'North', S: 'South', E: 'East', W: 'West' };
 const WIPE_ANGLE = { N: '180deg', S: '0deg', E: '90deg', W: '270deg', up: '180deg', down: '0deg', none: '90deg' };
+const FLY_LAND_MS = 520;   // the arriving render fades in over this long, after the camera lands
+const FLY_MAX_MS = 2200;   // safety: settle the arriving render even if onArrival never fires
 const firstSentence = (t) => { const m = t && t.match(/^[^.]+\./); return m ? m[0] : (t || '').slice(0, 90); };
 
 /** A render frame — the "you are standing here" surface, with its caption. */
@@ -56,14 +64,37 @@ export default function Walk({ rooms }) {
   const [reading, setReading] = useState(false);
   const [mapScope, setMapScope] = useState(null);   // null = closed, else 'building' | 'compound'
   const [hint, setHint] = useState('');
-  const [exiting, setExiting] = useState(null);     // { room, dir, key }
+  const [exiting, setExiting] = useState(null);     // { room, dir, key, kind:'wipe'|'fly' }
   const [current, setCurrent] = useState(() => ({ room, dir: 'none', key: 'k0' }));
+  // Fly mode: the camera flies through the 3D massing between rooms instead of the
+  // flat render wipe. flyReady flips once the substrate's first frame has painted.
+  const [flyEnabled, setFlyEnabled] = useState(getFlyEnabled);
+  const [flyReady, setFlyReady] = useState(false);
+  const [flyActive, setFlyActive] = useState(false);   // a flight is in progress (drives the substrate frameloop)
+  const [flyPhase, setFlyPhase] = useState('idle');    // 'idle' | 'lift' | 'land'
+  const [reduceMotion] = useState(() => {
+    try { return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false; }
+    catch { return false; }
+  });
   const seq = useRef(0);
   const prevId = useRef(roomId);
   const history = useRef([]);
   const rootRef = useRef(null);
   const dockRef = useRef(null);
   const hintT = useRef(null);
+
+  // The substrate emits onReady when its first frame paints (camera seated in the
+  // current room). Until then we fall back to the wipe so a flight never starts cold.
+  useEffect(() => cameraBus.onReady(() => setFlyReady(true)), []);
+
+  function toggleFly() {
+    setFlyEnabled((on) => {
+      const next = !on;
+      persistFlyEnabled(next);
+      if (!next) { setFlyReady(false); setFlyActive(false); setFlyPhase('idle'); }
+      return next;
+    });
+  }
 
   // arrival: when the current room changes, animate the new render in from the
   // travel heading and the old one out the opposite way (direction from the graph).
@@ -73,16 +104,42 @@ export default function Walk({ rooms }) {
     const rel = neighborsOf(prevId.current).find((n) => n.id === roomId);
     const dir = rel ? (rel.vert || rel.heading || 'none') : 'none';
     seq.current += 1;
-    if (from) setExiting({ room: from, dir, key: `x${seq.current}` });
-    setCurrent({ room: byId[roomId], dir, key: `e${seq.current}` });
+
+    // arrival hint (both paths)
+    if (rel?.vert) showHint(`${rel.vert === 'up' ? 'Up the stair to ' : 'Down to '}${byId[roomId]?.displayName}`);
+    else if (rel?.heading) showHint(`${HEADING_WORD[rel.heading]} into ${byId[roomId]?.displayName}`);
+
+    // FLY — dissolve the leaving render to reveal the massing, fly the camera to
+    // the next room, then settle its render in on arrival. Only once the substrate
+    // is warm (flyReady); otherwise fall through to the wipe so a hop never starts cold.
+    const flyNow = flyEnabled && !reduceMotion && flyReady && cameraBus.isReady();
+    if (flyNow) {
+      setExiting(from ? { room: from, dir, key: `x${seq.current}`, kind: 'fly' } : null);
+      setCurrent({ room: byId[roomId], dir, key: `e${seq.current}`, kind: 'fly' });
+      setFlyPhase('lift');
+      setFlyActive(true);
+      cameraBus.driftTo(roomId, arrivalFacing(rel, roomId));
+      prevId.current = roomId;
+
+      let landed = false, landT;
+      const land = () => {
+        if (landed) return; landed = true;
+        setFlyPhase('land');                                     // arriving render fades in over the 3D
+        landT = setTimeout(() => { setExiting(null); setFlyActive(false); }, FLY_LAND_MS);
+      };
+      const offArr = cameraBus.onArrival((id) => { if (id === roomId) { offArr(); land(); } });
+      const safety = setTimeout(() => { offArr(); land(); }, FLY_MAX_MS);
+      return () => { offArr(); clearTimeout(safety); clearTimeout(landT); };
+    }
+
+    // WIPE — the directional render cross-fade (the original behaviour).
+    if (from) setExiting({ room: from, dir, key: `x${seq.current}`, kind: 'wipe' });
+    setCurrent({ room: byId[roomId], dir, key: `e${seq.current}`, kind: 'wipe' });
     prevId.current = roomId;
     const ms = (dir === 'up' || dir === 'down') ? 720 : (dir === 'none' ? 560 : 640);
     const t = setTimeout(() => setExiting(null), ms + 60);
-    // arrival hint
-    if (rel?.vert) showHint(`${rel.vert === 'up' ? 'Up the stair to ' : 'Down to '}${byId[roomId]?.displayName}`);
-    else if (rel?.heading) showHint(`${HEADING_WORD[rel.heading]} into ${byId[roomId]?.displayName}`);
     return () => clearTimeout(t);
-  }, [roomId, byId]);
+  }, [roomId, byId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // welcome hint on first mount
   useEffect(() => {
@@ -136,8 +193,16 @@ export default function Walk({ rooms }) {
   return (
     <div className="walk-root" ref={rootRef}>
       <div className="wk-frames">
-        {exiting && <Frame key={exiting.key} room={exiting.room} anim={`leave-${exiting.dir}`} onReadMore={() => setReading(true)} />}
-        <Frame key={current.key} room={current.room || room} anim={`enter-${current.dir}`} onReadMore={() => setReading(true)} />
+        {flyEnabled && (
+          <Suspense fallback={null}>
+            <Flythrough rooms={rooms} currentId={roomId} active={flyActive} />
+          </Suspense>
+        )}
+        {exiting && <Frame key={exiting.key} room={exiting.room}
+          anim={exiting.kind === 'fly' ? 'fly-veil' : `leave-${exiting.dir}`} onReadMore={() => setReading(true)} />}
+        <Frame key={current.key} room={current.room || room}
+          anim={current.kind === 'fly' ? (flyPhase === 'land' ? 'fly-land' : 'fly-hold') : `enter-${current.dir}`}
+          onReadMore={() => setReading(true)} />
       </div>
 
       {exiting && <div className="wk-wipe" key={`w${exiting.key}`} style={{ '--wk-wipe-angle': WIPE_ANGLE[exiting.dir] || '90deg' }} />}
@@ -178,6 +243,11 @@ export default function Walk({ rooms }) {
         </div>
         <div className="wk-dock-row">
           <button className="wk-iconbtn" onClick={goBack}>← Back</button>
+          <button className={`wk-flybtn${flyEnabled ? ' on' : ''}`} onClick={toggleFly}
+            aria-pressed={flyEnabled} disabled={reduceMotion}
+            title={reduceMotion ? 'Off while your device is set to reduced motion' : 'Fly through the 3D model when you move between rooms'}>
+            <span className="g" aria-hidden="true">✈</span> Fly
+          </button>
           <span className="spacer" />
           <span className="wk-north-hint">N<b>↑</b></span>
         </div>
@@ -203,6 +273,11 @@ export default function Walk({ rooms }) {
             );
           })}
           <button className="wk-iconbtn" onClick={() => setReading(true)}>Reading the room ↗</button>
+          <button className={`wk-flybtn${flyEnabled ? ' on' : ''}`} onClick={toggleFly}
+            aria-pressed={flyEnabled} disabled={reduceMotion}
+            title="Fly through the 3D model when you move between rooms">
+            <span className="g" aria-hidden="true">✈</span> Fly between rooms
+          </button>
         </div>
       </div>
 

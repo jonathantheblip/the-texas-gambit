@@ -36,7 +36,7 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing, focusId }) {
+function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing, focusId, instantArrival = false, enableControls = true, background = '#e9e5db' }) {
   const controls = useRef();
   const { camera } = useThree();
   const tween = useRef(null);
@@ -59,31 +59,57 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
       default:  return [dist * 0.6, h, dist * 0.7]; // isometric default
     }
   }
-  function driftToRoom(roomId, facing = null) {
+  // Where the camera sits to "stand in" a room: framed close enough to land ON
+  // that space (not the whole estate), with enough back-off to read its shape.
+  function poseFor(roomId, facing) {
     const room = allRooms?.find((r) => r.id === roomId);
-    if (!room || !controls.current) return;
+    if (!room) return null;
     const b = roomBox(room);
     const target = new THREE.Vector3(b.position[0], b.position[1], b.position[2]);
-    // Frame the room closely so stepping in lands ON that space, not the whole estate
-    // — but with enough room to read its full shape against the faded neighbors.
     const dist = Math.max(room.w, room.d, room.height) * 2.0 + 16;
     const [ox, oy, oz] = offsetFor(facing, dist);
+    return { target, pos: target.clone().add(new THREE.Vector3(ox, oy, oz)) };
+  }
+  function driftToRoom(roomId, facing = null, { arc = false } = {}) {
+    if (!controls.current) return;
+    const pose = poseFor(roomId, facing);
+    if (!pose) return;
+    const fromPos = camera.position.clone();
+    // A flight lifts up and over the masses at mid-move (so you read the building
+    // you're crossing, not the dark insides of close-framed rooms), then descends
+    // onto the destination. Lift scales with how far you're travelling.
+    const horiz = Math.hypot(pose.pos.x - fromPos.x, pose.pos.z - fromPos.z);
+    const arcLift = arc ? Math.max(16, Math.min(140, horiz * 0.4)) : 0;
     tween.current = {
-      t: 0, dur: 1.1, roomId,
-      fromPos: camera.position.clone(),
-      toPos: target.clone().add(new THREE.Vector3(ox, oy, oz)),
+      t: 0, dur: 1.1, roomId, arcLift,
+      fromPos,
+      toPos: pose.pos,
       fromTarget: controls.current.target.clone(),
-      toTarget: target,
+      toTarget: pose.target,
     };
+  }
+  // Snap straight to a room's pose, no glide — used to seat the fly-to substrate
+  // exactly where the eye already is before the first flight (so the reveal matches).
+  function placeAtRoom(roomId, facing = null) {
+    if (!controls.current) return;
+    const pose = poseFor(roomId, facing);
+    if (!pose) return;
+    tween.current = null;
+    camera.position.copy(pose.pos);
+    controls.current.target.copy(pose.target);
+    controls.current.update();
   }
 
   // Design's camera API: cameraBus.driftTo(roomId, facing). Code owns the move.
-  useEffect(() => cameraBus._register((roomId, facing) => driftToRoom(roomId, facing)), [allRooms, camera]);
+  // Calls through the bus are flights between rooms → arc up and over the masses.
+  useEffect(() => cameraBus._register((roomId, facing) => driftToRoom(roomId, facing, { arc: true })), [allRooms, camera]);
 
   useFrame((_, dt) => {
     if (!inited.current) {
       inited.current = true;
-      if (selectedId) driftToRoom(selectedId, entryFacing); // arrival pose on entry
+      // arrival pose on entry — snap (fly-to substrate, seated behind the render)
+      // or glide (step-into, watched through the cross-fade).
+      if (selectedId) (instantArrival ? placeAtRoom : driftToRoom)(selectedId, entryFacing);
       cameraBus._ready(selectedId || null);                  // first frame painted → safe to cross-fade
     }
     const tw = tween.current;
@@ -91,6 +117,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
     tw.t = Math.min(1, tw.t + dt / tw.dur);
     const e = tw.t < 0.5 ? 2 * tw.t * tw.t : 1 - Math.pow(-2 * tw.t + 2, 2) / 2; // ease in-out
     camera.position.lerpVectors(tw.fromPos, tw.toPos, e);
+    if (tw.arcLift) camera.position.y += tw.arcLift * Math.sin(Math.PI * e); // rise at mid-flight, settle on arrival
     controls.current.target.lerpVectors(tw.fromTarget, tw.toTarget, e);
     controls.current.update();
     if (tw.t >= 1) { tween.current = null; cameraBus._arrived(tw.roomId); }
@@ -101,7 +128,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
 
   return (
     <>
-      <color attach="background" args={['#e9e5db']} />
+      <color attach="background" args={[background]} />
       <ambientLight intensity={0.72} />
       <directionalLight position={[0.5, 1, 0.35].map((v) => v * radius)} intensity={0.7} />
       <directionalLight position={[-0.6, 0.4, -0.5].map((v) => v * radius)} intensity={0.28} />
@@ -122,12 +149,12 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
         <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       )}
 
-      <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
+      <OrbitControls ref={controls} makeDefault enabled={enableControls} enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
     </>
   );
 }
 
-export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null, focusId = null }) {
+export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null, focusId = null, frameloop, instantArrival = false, enableControls = true, background = '#e9e5db' }) {
   const framing = useFraming(framingRooms);
   const camPos = useMemo(() => {
     const [cx, cy, cz] = framing.center;
@@ -137,11 +164,12 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
 
   return (
     <Canvas
+      frameloop={frameloop}
       camera={{ position: camPos, fov: 45, near: 0.5, far: 8000 }}
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} focusId={focusId} />
+      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} focusId={focusId} instantArrival={instantArrival} enableControls={enableControls} background={background} />
     </Canvas>
   );
 }

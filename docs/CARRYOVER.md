@@ -31,7 +31,7 @@ Design's drop (`Lookbook (1).zip`) is fully integrated against the live APIs:
 - **Facings** (`src/data/facings.js`) → `navStore.enterMassing` defaults the arrival pose. **Cross-fade** push-through (4 tunable knobs in `styles.css`, counter-motion in `ModelView`).
 - **Notes/chips sync** (`src/store/roomLayerStore.js`) via the existing `notes` table + `room_state.mood` — **no schema change**; local-first, degrades to local.
 - New data: `src/data/lineage.js` (color = building/ancestor family), `feel.js`. Retired `RoomView.jsx` + `Minimap.jsx`.
-- **Open (deferred):** ④ richer whole-compound bird's-eye (building masses + phase opacity + click-to-fly); Design's other next-layer items (walk-between fly-to in 3D, grab-a-wall editing, spatial render pins). Facings + cross-fade knobs are first-pass — tune live with Design.
+- **Open (deferred):** ④ richer whole-compound bird's-eye (building masses + phase opacity + click-to-fly); Design's other next-layer items (grab-a-wall editing, spatial render pins). **Walk-between fly-to in 3D is now built** — see its section below. Facings + cross-fade knobs are first-pass — tune live with Design.
 
 ## Parked
 The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, proven, not now. Don't spend overnight effort here.
@@ -61,13 +61,22 @@ Shipped to `main`/live in response to Jon's review of the live app:
 ## Deploy — DONE (live)
 **Shipped 2026-06-29.** `main` pushed at `e269646` → `.github/workflows/deploy.yml` published to **https://jonathantheblip.github.io/the-texas-gambit/** (CI green; live URL 200, serving the new app). Unblocked when Jon granted the session account (`jonathan-crescent`) Write on the repo — see [[reference-deploy-push-credential]]; future autonomous pushes work with that access in place. **One open post-deploy check:** confirm cross-device **sync** on a real device (note on one → appears on another); can't be tested in the sandbox (shows "Local only"). Per the north star, only deploy after integrated + green (`npm test` + `npm run validate` + build) + phone-verified — never half-built.
 
+## Fly-to between rooms — BUILT (2026-06-29)
+The first of Design's next-layer items. Walking to an adjoining space no longer flat-cross-fades — the leaving render **dissolves to reveal the 3D massing, the camera lifts up and over the building and flies to the next room (`cameraBus.driftTo` + `onArrival`), then that room's render settles back over it.** Render-first throughout: renders are the destinations, the 3D is the connective tissue.
+- **Fly toggle** (`src/scene/flyto.js` — `getFlyEnabled`/`setFlyEnabled`, persisted `tg.fly`; **default ON**, Jon's call) in the thumb dock + landscape survey. Off → the original directional wipe, and the substrate fully unmounts.
+- **The substrate** (`src/ui/Flythrough.jsx`, lazy) is one `CompoundScene` mounted under the render veil while Fly is on: massing-only, dark bg, non-interactive, `instantArrival` seats it where the eye already is. **Frameloop `demand`↔`always`** — idle costs ~no GPU; only flights pump frames. three.js stays code-split (`Flythrough` is a 0.5 kB chunk; engine in the shared `CompoundScene` chunk) so first paint stays light.
+- **The dissolve/settle** is the existing `wk-frame` pair driven by fly phase (`fly-veil`/`fly-hold`/`fly-land` in `walk.css`); **the camera arc** (lift up and over, scaled by distance) lives in `CompoundScene.driftToRoom({arc})` — only bus flights arc; the step-into glide is unchanged.
+- **New `CompoundScene` props** (all default to old behaviour, so ModelView is untouched): `frameloop`, `instantArrival`, `enableControls`, `background`. Verified: step-into massing + locks/editing still work.
+- **Tunables (first-pass, by feel):** flight `dur` (1.1s) + `arc` lift in `CompoundScene`; `--wk-fly-lift` / `--wk-fly-land` in `walk.css`; arrival facing in `flyto.arrivalFacing` (travel heading for flat moves, considered pose for stairs/teleport).
+- Reduced-motion: fly is disabled (button greyed) → wipe. Falls back to the wipe until the substrate is warm (`flyReady`) so a hop never starts cold.
+
 ## Open / next session
-The app is shipped, live, and clean — no known bugs; 31 tests + validate + build green. What's genuinely left:
+Fly-to shipped this session. 35 tests + validate + build green; phone-verified portrait + landscape; no known bugs. What's left:
 1. **Real-device sync check (Jon only — can't be done in-sandbox):** open on two devices, leave a note (or nudge a wall) on one, confirm it appears on the other. Code is additive + degrades to local, so low risk; just unconfirmed end-to-end.
 2. **More renders:** 11 rooms still show the striped placeholder (mostly back-of-house: mechanical/laundry, tea station, pool bath, sauna, airlock, compute/research rooms, instrument bay, podcast studio, dome/oculus). Fill the *experienced* ones as Midjourney produces them — Jon drops files in `~/Downloads` named by room, Code converts (`optimize_images.mjs`) + wires the join. The reusable Midjourney kickoff prompt is in this session's history.
-3. **Design's next-layer items** (still on the table): walk-between fly-to *in 3D* (`cameraBus.driftTo` + `onArrival`), grab-a-wall tactile editing (number inputs today), spatial pins on the render, and ④ the whole-compound **bird's-eye** (building masses + phase opacity + click-to-fly).
+3. **Design's remaining next-layer items:** grab-a-wall tactile editing (number inputs today), spatial pins on the render, and ④ the whole-compound **bird's-eye** (building masses + phase opacity + click-to-fly). (Walk-between fly-to ✓ done.)
 4. **A second staircase view** — Jon wants it eventually; Claude Chat is struggling to generate it. Parked, not blocking.
-5. **First-pass tunables** (fine to leave): per-room facings + the cross-fade knobs (in `styles.css`), the compound-map squash from the Observatory outlier, and the Glass Bridge's generic feel-chips (no seeded set).
+5. **First-pass tunables** (fine to leave): the fly knobs above, per-room facings + the cross-fade knobs (in `styles.css`), the compound-map squash from the Observatory outlier, and the Glass Bridge's generic feel-chips (no seeded set).
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.

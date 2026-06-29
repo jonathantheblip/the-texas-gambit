@@ -233,6 +233,35 @@
   animation:wkWipe .42s ease; }
 @media (prefers-reduced-motion:reduce){ .wk-wipe{ animation:none; } }
 
+/* ── FLY-TO ──────────────────────────────────────────────────────────────────
+   The 3D massing "substrate" sits BEHIND the render frames (first child of
+   .wk-frames — bottom by DOM order, no z-index needed) and never takes pointer
+   input: it's a transition, not the inspector you step into. On a flight the
+   leaving render dissolves to reveal the camera flying to the next room, then the
+   arriving render settles over it. Knobs (lift / land durations) are CSS vars. */
+.wk-fly{ position:absolute; inset:0; pointer-events:none; background:var(--wk-bg); }
+.wk-fly canvas{ display:block; }
+
+@keyframes wkFlyVeil{ from{ opacity:1; transform:scale(1) } to{ opacity:0; transform:scale(1.06) } }
+@keyframes wkFlyLand{ from{ opacity:0; transform:scale(1.04) } to{ opacity:1; transform:none } }
+.wk-frame.fly-veil{ animation:wkFlyVeil var(--wk-fly-lift,560ms) var(--wk-ease) both; }   /* leaving render dissolves */
+.wk-frame.fly-hold{ opacity:0; }                                                          /* arriving render waits hidden */
+.wk-frame.fly-land{ animation:wkFlyLand var(--wk-fly-land,520ms) var(--wk-arrive) both; } /* …then resolves in on arrival */
+@media (prefers-reduced-motion:reduce){
+  .wk-frame.fly-veil, .wk-frame.fly-land{ animation-duration:.001s !important; }
+}
+
+/* Fly toggle (thumb dock + landscape survey) — amber "on", matching the compass accents. */
+.wk-flybtn{ display:inline-flex; align-items:center; gap:7px; flex:none;
+  font-family:var(--wk-mono); font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--wk-dim);
+  background:var(--wk-glass); backdrop-filter:blur(14px); border:1px solid var(--wk-line);
+  border-radius:999px; padding:10px 13px; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:.18s; }
+.wk-flybtn .g{ font-size:12px; line-height:1; transform:translateY(-.5px); }
+.wk-flybtn:active{ transform:scale(.96); }
+.wk-flybtn.on{ color:var(--wk-ink); border-color:rgba(210,162,76,.5); background:rgba(210,162,76,.14); }
+.wk-flybtn.on .g{ color:#E7BE72; }
+.wk-flybtn:disabled{ opacity:.32; pointer-events:none; }
+
 /* survey column hidden by default; landscape reveals it */
 .wk-survey{ display:none; }
 
