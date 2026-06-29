@@ -2,16 +2,16 @@
 
 A **render-forward 3D instrument** for the Hill Country compound: a private tool for Jon and Helen to *feel* the house and iterate on it, years before it's built (horizon 2033–2040). The colored-pencil renders are the front door — you step into them to a navigable 3D massing, and walk from room to room.
 
-> Live (when deployed): https://jonathantheblip.github.io/the-texas-gambit/
+> **Live:** https://jonathantheblip.github.io/the-texas-gambit/
 
 ## The one principle
 **`src/data/compound_rooms.json` is the source of truth.** The 3D geometry is *generated from it* at runtime; validation gates every edit; the `.gltf` is a regenerated export, never the source. Don't edit meshes — edit the table. The three locks (Guest Suite = 350 ft², Observatory setbacks, no accidental overlaps) are enforced in `src/model/compoundModel.js` (`validate()`), in `scripts/validate.py`, and by the test suite + CI.
 
 ## What it does
 - **Gallery** — the compound's renders as the primary surface, grouped by building.
-- **Room view** — a render as "you are standing here," with the writing, a **you-are-here minimap**, and a **walk to an adjoining space** strip (geometry-derived neighbors).
-- **3D massing** — every space generated from the room table; toggle massing / renders (diorama) / both; click to select; edit dimensions with the locks re-checking live.
-- **Shared + offline** — dimension edits sync between Helen and Jon (Supabase) and survive offline; installable PWA.
+- **The Walk** — phone-first, render-led wayfinding: each room's render fills the screen and you move to an adjoining space from a thumb-zone compass. **Fly mode** flies the camera through the 3D massing between rooms (toggle off for a flat wipe). Includes **Reading the room** (intent, feel, author-stamped notes) and **render pins** (tappable hotspots on the render).
+- **3D massing** — every space generated from the room table; toggle massing / renders / both + a sticky **Focus**; **grab a wall to resize** with the locks re-checking live; a **Bird's-eye** of the whole compound (building masses faded by build phase) that flies you down into any building.
+- **Shared + offline** — dimension edits, notes, and feel-chips sync between Helen and Jon (Supabase) and survive offline; installable PWA.
 - One unified view (the old Helen/Jon mode split is retired; identity is authorship only).
 
 ## Stack
@@ -34,8 +34,11 @@ src/
   data/    compound_rooms.json (truth) · rooms.js (merge) · room_join.js (render+writing join)
            legacy_content.json · adjacency.js (walk graph) · plan.js (map geometry)
   model/   compoundModel.js — roomBox() + validate() + PALETTE/LOCKS (framework-agnostic)
-  scene/   CompoundScene, RoomBox, Diorama, cameraBus (3D)
-  ui/      Gallery, RoomView, ModelView, Minimap, styles.css
+  scene/   CompoundScene, RoomBox, Diorama, WallHandles, BuildingMasses, Flythrough,
+           cameraBus, massing, flyto, wallEdit, buildingMasses (3D + helpers)
+  ui/      Gallery, Walk, ReadingSheet, WalkMap, ModelView, MassingCurtain,
+           RenderPins, styles.css, walk.css
+  data/    …also aliases, facings, feel, lineage, phases, pins.json + pins.js
   store/   geometryStore (shared room-edit sync) + useGeometry
   nav/     navStore + useNav (single current-room source)
 public/    lookbook_images/ (renders, WebP) · favicons · manifests
@@ -47,7 +50,7 @@ supabase/  schema.sql (room_state/notes/pins/... + room_overrides)
 ```
 
 ## Deploy
-GitHub Pages via Actions (`.github/workflows/deploy.yml`) — **dormant** until enabled. See [GH_PAGES_SETUP.md](GH_PAGES_SETUP.md). CI (`ci.yml`) runs the locks, tests, and build on every push.
+**Live** on GitHub Pages via Actions (`.github/workflows/deploy.yml`), triggered on push to `main`. See [GH_PAGES_SETUP.md](GH_PAGES_SETUP.md). CI (`ci.yml`) runs the locks, tests, and build on every push.
 
 ## Docs
 - [docs/HANDOFF_FOR_CLAUDE_CODE.md](docs/HANDOFF_FOR_CLAUDE_CODE.md) — the render-forward restructuring brief.

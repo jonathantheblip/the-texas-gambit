@@ -28,7 +28,7 @@ import { compoundPlan } from './data/plan.js';
 //             nx, ny, nw, nh }]                  // normalized 0..1, north up
 // }
 ```
-Rooms are axis-aligned rectangles, so each footprint **is** its bbox. North is up (angle 0). `src/ui/Minimap.jsx` is a working default you can replace or restyle.
+Rooms are axis-aligned rectangles, so each footprint **is** its bbox. North is up (angle 0). The live map is `src/ui/WalkMap.jsx` (unified building/compound scope; the old `Minimap.jsx` is retired) — restyle or replace it.
 
 ## 3. Single current-room source — `src/nav/navStore.js` + `useNav()`
 Crumbs, minimap, and the walk all read/write this one place, so they never disagree.
@@ -74,6 +74,22 @@ s.close();              // programmatic return to the same room's walk
 - **Return:** a "← Back to the walk" control returns to the same room; `s.close()` does it programmatically.
 - **The fade:** Code already holds the room's render full-frame and fades it out on ready (`styles.css` `.massing-curtain`, currently 550 ms). Tell us the timing/easing/dissolve and we'll match it.
 - The shared encoding (color = building, opacity = render-state) is preserved in the massing.
+
+## 7. Render pins — `src/data/pins.json` + `src/ui/RenderPins.jsx`
+Tappable hotspots on a room's render. **Content is authored by Claude Chat** (it has the Master Plan + specs); **Code displays it**; **Design owns the treatment.**
+```js
+// pins.json — one object keyed by canonical room id:
+"drawing_room_sw": [
+  { "x": 33, "y": 50,            // % across / % down the render (NOT pixels)
+    "label": "Limestone Fireplace",
+    "note": "one line…",
+    "kind": "material" | "view" | "feature" | "heritage" }
+]
+```
+The walk shows a **"N details"** chip; tapping opens a "look closer" overlay (`RenderPins.jsx`) that renders the image WHOLE in a 3:2 frame (the walk crops the sides on a phone) with the pins at their %, tap-to-read.
+- **Data contract is fixed** — positions are %, authored against the render; don't move them in Code or Design.
+- **Design owns:** the entry affordance, the dot, the callout card, motion, the "look closer" framing, and how the four `kind`s read (currently one accent dot + a text tag). Code's current look is a **placeholder** — send your treatment and Code swaps it in.
+- Hand off to Design once ~8–10 dwell rooms are pinned, so you design against real, varied content.
 
 ## Logistics (Design has no repo access)
 Don't pull the repo — design against this contract + the portable pack (`design-handoff/`, regenerable with `npm run export:design`). Send your spec or prototype back through Jon and **Code implements it into the app** against the live `neighborsOf` / `cameraBus` / `massing`, so it's the real thing. The shapes here are stable, so your Sunroom prototype drops straight in.

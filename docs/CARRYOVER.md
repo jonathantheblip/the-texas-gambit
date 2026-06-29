@@ -1,97 +1,74 @@
-# Carryover — state & overnight run
+# Carryover — state & orientation
 
-*As of 2026-06-29. Design's Walk is integrated and **DEPLOYED LIVE** at https://jonathantheblip.github.io/the-texas-gambit/ — `main` + `render-forward-3d` pushed at `e269646`, CI green, Pages deploy succeeded, live URL serves the new app. Read with [NORTH_STAR.md](NORTH_STAR.md) (forest) and [OVERNIGHT_LOG.md](OVERNIGHT_LOG.md) (this run's blow-by-blow).*
+*Living doc, last refreshed 2026-06-29. **Live** at https://jonathantheblip.github.io/the-texas-gambit/. Read alongside [NORTH_STAR.md](NORTH_STAR.md) (the forest) and [CODE_DESIGN_CONTRACT.md](CODE_DESIGN_CONTRACT.md) (the seam with Design). Memory auto-loads from `~/.claude/projects/-Users-jjackson-dev-the-texas-gambit/memory/` (MEMORY.md).*
 
-## Where things stand (built + working on the branch)
-- **Gallery** (renders grouped by building) → **Room view** (render hero + writing + ancestor chips + "you are here" minimap + "walk to an adjoining space" strip) → **step into the 3D massing** → **back to the walk**.
-- **3D massing**: boxes generated from the room table; view toggle **Both / Renders (diorama) / Massing**; click-to-select; **live-validated dimension editing** (locks re-check on every keystroke).
-- **Shared + offline**: dimension edits sync via Supabase (`geometryStore`); installable **PWA** (offline app shell); identity = authorship (Helen/Jon).
-- **Mobile**: portrait = render-led reading/walking + small map; phone landscape = survey (render + larger map). Renders are **WebP** (~12 MB total; lazy + cached). 3D engine is **code-split** (light first load).
-- **Quality gate**: Vitest suite (15 tests) + `validate.py` guard the locks; CI runs them on every push.
-- **Step-through** (render → massing): `massing.open()` holds the render full-frame, cross-fades to the 3D focused on the room (facing-aware arrival pose → free orbit), "← Back to the walk" returns.
+> **Anti-staleness rule for whoever edits this:** describe *mechanisms and how to get current truth*, not frozen snapshots. Say "run `npm test`", not "N tests". Say "`main` is live; verify by matching the deployed index chunk", not "live at commit abc123". Frozen facts are where rot starts (this doc has been bitten before).
 
-## Stack & layout
-Vite + React 18 + react-three-fiber/drei/three; Supabase; PWA. Key files:
-- `src/data/` — `compound_rooms.json` (truth) · `rooms.js` (merge + `applyOverrides`/round-trip) · `room_join.js` (render+writing join) · `legacy_content.json` · `adjacency.js` (`neighborsOf`, `ENTRY_ROOM`) · `plan.js` (`compoundPlan`)
-- `src/model/compoundModel.js` — `roomBox()`, `validate()`, `PALETTE`, `LOCKS`, `ANCHORS`
-- `src/scene/` — `CompoundScene`, `RoomBox`, `Diorama`, `cameraBus` (driftTo/onReady/onArrival), `massing` (open)
-- `src/ui/` — `Gallery`, `RoomView`, `ModelView`, `Minimap`, `MassingCurtain`, `styles.css`
-- `src/store/` — `geometryStore` + `useGeometry` (shared edit sync)
-- `src/nav/` — `navStore` + `useNav` (single current-room source)
-- `scripts/` — `validate.py`, `optimize_images.mjs`, `export_design_pack.mjs`, `extract_legacy_content.mjs`
+## What the app is now
+A **render-forward 3D PWA** of the Hill Country Estate compound. The spine:
+- **Gallery** — every room's colored-pencil render, grouped by building → tap one to enter the walk.
+- **The Walk** (`src/ui/Walk.jsx`, `walk.css`) — phone-first, dark, immersive. Each room's render fills the screen; you move to an adjoining space from a thumb-zone compass. **Fly mode** (default on) flies the camera through the 3D massing between rooms; off = the flat directional wipe. Portrait = immersive; phone-landscape = map-forward survey.
+- **Reading the room** (`ReadingSheet.jsx`) — intent, feel-chips, author-stamped notes (Helen/Jon).
+- **Render pins** (`RenderPins.jsx`) — a "N details" chip opens a "look closer" overlay: the whole render with tappable hotspots, each revealing a one-line note. (Content workstream — see below.)
+- **Step into the 3D massing** (`ModelView.jsx`) — boxes generated from the room table; **Both / Renders / Massing** view toggle + a sticky **Focus** toggle; **grab-a-wall** drag-to-resize with live lock validation; a **Bird's-eye** that pulls back to the whole compound (building masses faded by build phase) and flies you down into any building.
+- **Shared + offline** — dimension edits, notes, feel-chips sync via Supabase (local-first, degrades to local); installable PWA; identity = authorship.
 
-## The contracts (the seam with Design) — see [CODE_DESIGN_CONTRACT.md](CODE_DESIGN_CONTRACT.md)
-`neighborsOf(id)` → `{id, heading:N/E/S/W|null, vert:up/down|null, via:door/opening/stair}` · `compoundPlan` (footprints+bounds+north) · `navStore`/`useNav` (one current room) · `cameraBus.driftTo/onReady/onArrival` (Code owns the camera) · `massing.open(roomId,{facing,onReady,onExit})` (in-page step-through) · `ENTRY_ROOM='front_porch'`.
+## What's shipped (newest first — all live)
+- **Render pins — mechanism + content underway.** Data in `src/data/pins.json` (one object keyed by canonical room id; each pin `{x,y,label,note,kind}`, x/y = % of the render). `pins.js` imports it; `pinsFor(id)` canonicalizes. Overlay shows the render WHOLE (a 3:2 frame — the walk crops sides on a phone) so no pin is lost. **Pipeline: Claude Chat authors a JSON batch → drop it in chat → merge into `pins.json` → deploy.** 16 rooms wired so far; the rest of the keylist still to author. Entry chip + overlay treatment are **Code's first-pass placeholder for Design** (see Render-pins handoff below).
+- **All four of Design's next-layer items** (in `ModelView`/`CompoundScene`, the stepped-into 3D — they compose: bird's-eye → tap a building → fly in → land *focused* with *grabbable walls*):
+  - **Walk fly-to** (`flyto.js`, `Flythrough.jsx`) — camera flies through the massing between rooms. Fly toggle persists (`tg.fly`, default on). Substrate is one lazy `CompoundScene` under the render veil, `frameloop` demand↔always so idle costs ~no GPU; three.js stays code-split. Camera *arc* (lift over the masses) is on `driftToRoom({arc})` — bus flights only.
+  - **Sticky room-focus** — focus on the entered room now *persists* across the Both/Renders/Massing toggle (the Diorama is focus-aware); the **Focus** toggle is the explicit "see everything" escape.
+  - **Grab-a-wall** (`WallHandles.jsx` + pure `wallEdit.js`) — drag a wall grip to resize; far wall anchored, clamp 4ft, locks re-validate live; `setOverride(...,{sync:false})` keeps drag frames off the backend, release commits once. ⚠ **Drag gesture unverified on-device** — the sandbox can't drive r3f pointer picking; Jon to confirm the feel.
+  - **Bird's-eye** (`BuildingMasses.jsx` + pure `buildingMasses.js`) — overview of building masses faded by **real build phase** (`phases.js`, from Master Plan v3 Part V: 2A core/Wharf/walkway/Cedar · 2B Service/Orangery/Pool/Pergola · 2C Motor Barn/Observatory), tap-to-fly-in.
+- **Renders complete** — every room has art (the last placeholder, the aliased Octagonal Stair Hall, shows the Entry Hall). Drop new PNGs in `~/Downloads`, `optimize_images.mjs` → WebP, wire in `room_join.js`. *New back-of-house rooms have a render but no writing yet (`source:null`).*
+- **The Walk + Reading-the-Room + unified map** — Design's original Lookbook drop, integrated against the live APIs. Retired the old `RoomView.jsx` + `Minimap.jsx`.
+- **Entry Hall + Octagonal Stair Hall = one space** (`aliases.js`) — folds across walk/nav/massing/map; geometry/locks untouched (still two real volumes).
+- **Deployed + Supabase live** — Pages deploy + all sync paths. One open real-device check (below).
 
-## Design's Walk — INTEGRATED (this run)
-Design's drop (`Lookbook (1).zip`) is fully integrated against the live APIs:
-- **The Walk** (`src/ui/Walk.jsx`, `walk.css`) replaces the old `room` mode — dark immersive render-stage, directional arrival (enter-from-heading; stairs lift/drop), thumb-zone compass exit dock, crumbs + map button, arrival hint, travel wipe. Portrait-immersive / landscape-survey.
-- **Reading-the-Room** (`src/ui/ReadingSheet.jsx`) — intent, feel-chips, author-stamped notes, Helen/Jon toggle, step-into CTA.
-- **Unified map** (`src/ui/WalkMap.jsx`) — one shared plan at building + compound scope from `compoundPlan` + `neighborsOf`, lineage colors, tap-to-walk.
-- **Facings** (`src/data/facings.js`) → `navStore.enterMassing` defaults the arrival pose. **Cross-fade** push-through (4 tunable knobs in `styles.css`, counter-motion in `ModelView`).
-- **Notes/chips sync** (`src/store/roomLayerStore.js`) via the existing `notes` table + `room_state.mood` — **no schema change**; local-first, degrades to local.
-- New data: `src/data/lineage.js` (color = building/ancestor family), `feel.js`. Retired `RoomView.jsx` + `Minimap.jsx`.
-- **Open (deferred):** Design's next-layer items — **fly-to ✓, grab-a-wall ✓, bird's-eye ✓ now all built** (see sections below); only **spatial render pins** remain. Facings + cross-fade knobs are first-pass — tune live with Design.
+## Stack & key files
+Vite + React 18 + react-three-fiber/drei/three; Supabase; PWA. (`ls src/**` for the full tree — don't trust a frozen list here.)
+- `src/data/` — `compound_rooms.json` (truth) · `rooms.js` (merge/`applyOverrides`) · `room_join.js` (render+writing join; `.png` names → `.webp` at load) · `adjacency.js` (`neighborsOf`, `ENTRY_ROOM`) · `plan.js` (`compoundPlan`) · `aliases.js` · `facings.js` · `feel.js` · `lineage.js` · `phases.js` · **`pins.json` + `pins.js`** · `legacy_content.json`
+- `src/model/compoundModel.js` — `roomBox()`, `validate()`, `PALETTE`, `LOCKS`, `ANCHORS` (mirrors `scripts/validate.py`)
+- `src/scene/` — `CompoundScene`, `RoomBox`, `Diorama`, **`WallHandles`**, **`BuildingMasses`**, **`Flythrough`**, `cameraBus`, `massing`, `flyto`, `wallEdit`, `buildingMasses`
+- `src/ui/` — `Gallery`, `Walk`, `ReadingSheet`, `WalkMap`, `ModelView`, `MassingCurtain`, **`RenderPins`**, `styles.css`, `walk.css`
+- `src/store/` — `geometryStore`+`useGeometry` (dimension sync; `setOverride(id,patch,author,{sync})`) · `roomLayerStore`+`useRoomLayer` (notes/mood)
+- `src/nav/` — `navStore`+`useNav` (one current-room source) · `scripts/` — `validate.py`, `optimize_images.mjs`, `export_design_pack.mjs`
 
-## Parked
-The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, proven, not now. Don't spend overnight effort here.
+## The contracts (Code ↔ Design ↔ Chat seams) — see [CODE_DESIGN_CONTRACT.md](CODE_DESIGN_CONTRACT.md)
+- `neighborsOf(id)` → `{id, heading:N/E/S/W|null, vert:up/down|null, via}` · `compoundPlan` · `navStore`/`useNav` · `ENTRY_ROOM='front_porch'`.
+- **Camera (Code owns it):** `cameraBus.driftTo/onReady/onArrival`; `massing.open(roomId,{facing,onReady,onExit})`; `CompoundScene` props `frameloop/instantArrival/enableControls/background/birdsEye/onFlyIn`.
+- **Render pins (Chat authors, Code displays):** `pins.json` keyed by canonical room id, pins `{x,y (% of render), label, note, kind∈material|view|feature|heritage}`. Positions are %; don't change them in Code.
 
-## Run / verify
-- `npm install` (see Gotchas) · `npm run dev` · `npm run build` · `npm run preview` · `npm test` · `npm run validate`.
-- Preview via the **Claude_Preview MCP**: `preview_start "dev"` → `preview_screenshot` / `preview_eval` / `preview_resize`. Verify on phone viewports: **375×812 (portrait)**, **812×375 (landscape)**.
-- Always keep `npm test` + `npm run validate` green and the build clean before committing.
+## Render pins — the active workstream
+- **Authoring (Claude Chat):** has the Master Plan + specs + renders; produces one JSON batch per set of rooms, keyed by the room ids Code provides (dwell rooms first). Drops the JSON to Jon → Code.
+- **Wiring (Code):** merge the batch into `pins.json`, spot-check one room in the preview, deploy. (16 rooms in; ~36 left on the keylist.)
+- **Treatment (Design — handoff pending):** the entry affordance, the dot, the callout card, motion, the "look closer" framing, and the four `kind` categories (currently one accent dot + a text tag) are Code's placeholder. Hand to Design once ~8–10 dwell rooms are live so they design against *real, varied* content. The `pins.json` data contract is fixed; Design styles around it.
+- **Known content notes:** render is canon over the Master Plan where they disagree (Drawing Room is **red**, plan said white plaster — render wins; flag plan drift to Jon). The Drawing Room art-alcove (east wall) needs a *second* render looking east before it can get a pin.
+
+## Run / verify / deploy
+- `npm install` (see Gotchas) · `npm run dev` · `npm test` · `npm run validate` · `npm run build`. Keep all three green before committing.
+- **Preview (Claude_Preview MCP):** `preview_start "dev"` → `preview_eval`/`preview_screenshot`/`preview_resize`. Verify phone viewports **375×812** + **812×375**. NB: eval runs in an **isolated world** — DOM + drei `<Html>` are reachable; app JS globals and r3f 3D pointer-picking are not (see [[reference-preview-3d-verification]]). Unit-test pure logic instead of synthesizing 3D gestures.
+- **Deploy:** `main` is the live branch (push → `.github/workflows/deploy.yml` → Pages). Pattern: commit on `render-forward-3d`, push it (backup), `git branch -f main render-forward-3d`, push both. **Code can push `main` directly now** — Jon added the allow rule ([[reference-deploy-push-credential]]). Verify: Action green, then `curl` the live `index.html` and confirm its `index-*.js` chunk exists in your fresh `dist/`. Only deploy integrated + green + phone-verified.
 
 ## Gotchas
 - **npm EACCES** (root-owned `~/.npm`): pass `--cache /private/tmp/<scratchpad>/.npmcache`. Don't `sudo`.
-- **Supabase**: schema now complete — all tables exist incl. `room_overrides` (created 2026-06-29). All sync paths work live. Note: the sandbox preview CAN reach Supabase REST (it returns real errors), so "table not found" there is real, not a sandbox artifact (that's how we caught the missing table). Realtime websockets may not connect in-sandbox → it can read "Local only" there; verify true cross-device sync on real devices.
+- **Dev port:** `vite.config.js` honors `$PORT`; `.claude/launch.json` has `autoPort:true` so two chats can run side by side.
+- **Supabase:** schema complete (all tables incl. `room_overrides`). Sandbox preview can reach REST (real errors) but realtime websockets may not connect → it shows "Local only" there; verify true cross-device sync on real devices.
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
-## Iteration after launch (2026-06-29, live)
-Shipped to `main`/live in response to Jon's review of the live app:
-- **Plain-language names** — `room.displayName` drops the architect suffix ("(front, S-ctr)", "(SW)") everywhere Helen reads; full `r.name` kept for validation. Floors read Ground/Upper/Roof/Outdoor.
-- **Calm step-into** — stepping in from the walk lands in Massing (not the all-renders "Both" collage) AND focuses: camera frames the entered room, other rooms fade to ghosts, their renders gone; the room you're in stays prominent. Any view-toggle clears focus → see everything (panel stays user-agnostic).
-- **Old-icon 404 fix**: `public/{helen,jon,Hill Country Estate}.html` redirect into the app (Helen's existing home-screen icon works — no re-add; she "doesn't do homework").
-- **3 renders** (from Jon's Midjourney pass): Entry Hall (the grand octagonal stair — replaced the old faces-render), Drawing Room (red refresh, faces removed; writing/spec aligned to red), Glass Bridge (new — filled a placeholder). WebP via `optimize_images.mjs`. Renders-with-art 41→42/53.
-- **Entry Hall + staircase = one space** (`src/data/aliases.js`): `octagonal_stair_hall` folds into `entry_hall_front_s_ctr` across walk, nav, massing, and map — geometry/locks untouched (still two real volumes). The stair-up lives on the Entry Hall; you never walk "between" the halves.
-- **Glass Bridge caption** (`legacy_content` `glass-bridge` + join source) — makes the year-round comfort explicit (solar-control glass, brise-soleil, radiant + ridge vents).
-- **Caption legibility** (`walk.css`): hero captions washed out over bright renders (e.g. the pale stair) — added a localized scrim behind the caption + dark-glass feel-cue chips so text reads over any render. (This + plain-language names = both halves of Jon's "readability + S-ctr" ask.)
+## Open / next
+1. **Render pins — keep going:** Chat authors the remaining ~36 rooms (keylist order); Code wires + deploys each batch. Then hand the *treatment* to Design (≥8–10 rooms live).
+2. **Confirm grab-a-wall on a real device (Jon):** drag a wall, watch the locks re-check — the one piece the sandbox couldn't drive.
+3. **Real-device sync check (Jon):** note/edit on one device → appears on another. Low risk (additive, degrades to local), just unconfirmed end-to-end.
+4. **Writing for the back-of-house rooms** (`source:null` in `room_join.js`) — Design adds intent/specs when ready.
+5. **A second staircase view** — Jon wants it; Claude Chat has struggled to generate it. Parked.
+6. **First-pass tunables** (fine to leave): fly `dur`/arc + `--wk-fly-*`; grab-a-wall grip size/min-dim; bird's-eye `overview` angle; per-room facings; cross-fade knobs; pergola phase (inferred 2B).
 
-**Supabase — all sync live (resolved 2026-06-29):** Jon created the missing `room_overrides` table; verified via REST (read 200 + insert/delete round-trip). All four sync paths now work live: dimension edits (`room_overrides`), notes (`notes`), feel-chips (`room_state.mood`), plus the legacy `pins`/`journal`. The "one shared view" is fully wired.
+## Parked
+The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Proven, not now.
 
-## Deploy — DONE (live)
-**Shipped 2026-06-29.** `main` pushed at `e269646` → `.github/workflows/deploy.yml` published to **https://jonathantheblip.github.io/the-texas-gambit/** (CI green; live URL 200, serving the new app). Unblocked when Jon granted the session account (`jonathan-crescent`) Write on the repo — see [[reference-deploy-push-credential]]; future autonomous pushes work with that access in place. **One open post-deploy check:** confirm cross-device **sync** on a real device (note on one → appears on another); can't be tested in the sandbox (shows "Local only"). Per the north star, only deploy after integrated + green (`npm test` + `npm run validate` + build) + phone-verified — never half-built.
-
-## Fly-to between rooms — BUILT (2026-06-29)
-The first of Design's next-layer items. Walking to an adjoining space no longer flat-cross-fades — the leaving render **dissolves to reveal the 3D massing, the camera lifts up and over the building and flies to the next room (`cameraBus.driftTo` + `onArrival`), then that room's render settles back over it.** Render-first throughout: renders are the destinations, the 3D is the connective tissue.
-- **Fly toggle** (`src/scene/flyto.js` — `getFlyEnabled`/`setFlyEnabled`, persisted `tg.fly`; **default ON**, Jon's call) in the thumb dock + landscape survey. Off → the original directional wipe, and the substrate fully unmounts.
-- **The substrate** (`src/ui/Flythrough.jsx`, lazy) is one `CompoundScene` mounted under the render veil while Fly is on: massing-only, dark bg, non-interactive, `instantArrival` seats it where the eye already is. **Frameloop `demand`↔`always`** — idle costs ~no GPU; only flights pump frames. three.js stays code-split (`Flythrough` is a 0.5 kB chunk; engine in the shared `CompoundScene` chunk) so first paint stays light.
-- **The dissolve/settle** is the existing `wk-frame` pair driven by fly phase (`fly-veil`/`fly-hold`/`fly-land` in `walk.css`); **the camera arc** (lift up and over, scaled by distance) lives in `CompoundScene.driftToRoom({arc})` — only bus flights arc; the step-into glide is unchanged.
-- **New `CompoundScene` props** (all default to old behaviour, so ModelView is untouched): `frameloop`, `instantArrival`, `enableControls`, `background`. Verified: step-into massing + locks/editing still work.
-- **Tunables (first-pass, by feel):** flight `dur` (1.1s) + `arc` lift in `CompoundScene`; `--wk-fly-lift` / `--wk-fly-land` in `walk.css`; arrival facing in `flyto.arrivalFacing` (travel heading for flat moves, considered pose for stairs/teleport).
-- Reduced-motion: fly is disabled (button greyed) → wipe. Falls back to the wipe until the substrate is warm (`flyReady`) so a hop never starts cold.
-
-## Massing instrument — three more layers BUILT (2026-06-29, later)
-All in `ModelView` + `CompoundScene` (the stepped-into 3D). They compose: bird's-eye → tap a building → fly in → land **focused** with **grabbable walls**.
-- **Sticky room-focus** (a fix Jon asked for): stepping in focused the room (others ghosted, only its render), but the Both/Renders/Massing toggle used to *clear* focus and flood everything back. Now focus persists across the toggle; the **Diorama is focus-aware** (only the focused render shows); a new **Focus toggle** (`.focus-toggle`) is the one explicit way to drop focus and see the whole compound. Empty-click is sticky while focused.
-- **Grab-a-wall** (`src/scene/WallHandles.jsx` + pure `wallEdit.js`, unit-tested): drag a wall grip on the selected room (Massing mode) to resize it; far wall anchored, clamp 4ft, round to whole feet, **locks re-validate live** with a floating readout. `geometryStore.setOverride` gained `sync:false` so live drag frames don't spam the backend; release commits one synced write. **Note:** handles render + math is unit-tested, but the drag *gesture* is **unverified on-device** — the sandbox can't drive r3f's pointer raycasting (eval runs in an isolated world; synthetic events don't reach the 3D pick). Jon to confirm the feel on his phone.
-- **Whole-compound bird's-eye** (`src/scene/BuildingMasses.jsx` + pure `buildingMasses.js`, unit-tested): a **Bird's-eye** toggle pulls back to a high overview; each building is one translucent mass faded by **build phase**, labelled (Phase 2A/2B/2C), **tap-to-fly-in** (lands focused on the building's biggest rendered room). `CompoundScene` gained `birdsEye` + `onFlyIn` (`driftToPose` overview tween). **Phase data is now REAL** (`src/data/phases.js`), from Master Plan v3 Part V: 2A = Main Block + Wharf Wing + Covered Walkway + Cedar Pavilion; 2B = Service Wing + Orangery + Pool & Terrace + North Alley Pergola; 2C = Motor Barn + Observatory. (Pergola inferred to 2B — the plan doesn't phase the structure itself.)
-
-## Open / next session
-Four layers shipped (fly-to + the three above). 46 tests + validate + build green; phone-verified except the two flagged items below. What's left:
-1. **Real-device sync check (Jon only — can't be done in-sandbox):** open on two devices, leave a note (or nudge a wall) on one, confirm it appears on the other. Code is additive + degrades to local, so low risk; just unconfirmed end-to-end.
-2. **More renders — DONE (2026-06-29):** all 10 back-of-house placeholders filled (mechanical/laundry, tea station, pool bath, sauna, airlock, compute/research rooms, instrument bay, podcast studio, dome/oculus) + an Energy Forge refresh — **52/53 rooms now have art** (the 53rd is the aliased Octagonal Stair Hall, which shows the Entry Hall). Jon dropped them in `~/Downloads/Dreamhouse Renders 29Jun26/` already named to the `{prefix}_{room}_hero.png` convention; `optimize_images.mjs` → WebP, wired in `room_join.js`. *Next pass: these new rooms have a render but no writing yet (source:null) — Design can add intent/specs when ready.*
-3. **Confirm grab-a-wall on a real device (Jon):** drag a wall in the Massing view and watch the locks re-check — the one piece the sandbox couldn't drive. Low risk (math unit-tested, handles render), just unconfirmed end-to-end.
-4. **Design's last next-layer item:** spatial **render pins** (tappable hotspots on a render). The only one of the four not yet built.
-5. **A second staircase view** — Jon wants it eventually; Claude Chat is struggling to generate it. Parked, not blocking.
-6. **First-pass tunables** (fine to leave): the fly knobs; grab-a-wall grip size/min-dim (`WallHandles.jsx`/`wallEdit.js`); bird's-eye overview angle (`CompoundScene` `overview`); per-room facings + cross-fade knobs (`styles.css`); the compound-map squash from the Observatory outlier; the Glass Bridge's generic feel-chips.
-
-## Overnight-run protocol
-1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
-2. **Ask Jon** every clarifying question up front (scope, priorities, how far to deploy, no-go zones, anything missing from Design's drop like facing data).
-3. **Then run autonomously:** integrate Design's work against the live APIs; wire facing + cross-fade; build the unified wayfinding / Reading-the-Room as Design specs; add tests for new logic; **verify on a phone viewport**; commit checkpoints with clear messages.
-4. **Pre-authorized** (per Jon): commits, pushes, deployment — but only once integrated, green (`npm test` + `npm run validate` + build), and verified. Don't deploy half-built.
-5. **Don't** rabbit-hole, break the locks, touch the parked dream, or collide with Design's experience layer beyond integrating their handoff.
-6. **Leave a running log + a final summary**: what shipped, what's open, decisions made, and anything Jon must do (Pages + Supabase are already set, so likely nothing — but call out anything that surfaced).
+## Working agreement (per Jon)
+Jon is a non-coder; plain language, outcome over preservation. Sequence behind dependencies; let Jon set the pace; no time estimates. Commits/pushes/deploy are pre-authorized once integrated + green + phone-verified — never half-built. Design owns the experience; integrate their drops, don't pre-empt them. Don't rabbit-hole or break the locks.
 
 ## Pointers
-HANDOFF_FOR_CLAUDE_CODE.md (original brief) · DESIGN_BRIEF.md (what Design owns) · IMMERSIVE_PROMPTS.md (the dream) · ../SYNC.md · ../README.md · ../GH_PAGES_SETUP.md · `design-handoff/` (portable pack) · memory at `~/.claude/projects/-Users-jjackson-dev-the-texas-gambit/memory/` (MEMORY.md auto-loads).
+[CODE_DESIGN_CONTRACT.md](CODE_DESIGN_CONTRACT.md) · [NORTH_STAR.md](NORTH_STAR.md) · [DESIGN_BRIEF.md](DESIGN_BRIEF.md) (what Design owns) · HANDOFF_FOR_CLAUDE_CODE.md (original brief) · IMMERSIVE_PROMPTS.md (the dream) · ../README.md · ../SYNC.md · ../GH_PAGES_SETUP.md · `design-handoff/` (portable pack).
