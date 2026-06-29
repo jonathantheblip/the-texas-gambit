@@ -117,7 +117,10 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           <div className="title">3D Massing</div>
           <div className="meta">{visibleRooms.length} of {ALL_ROOMS.length} spaces · generated from the room table</div>
         </div>
-        <div className="stage-tip">drag to orbit · scroll to zoom · right-drag to pan · click a space</div>
+        <div className="stage-tip">
+          drag to orbit · scroll to zoom · click a space
+          {viewMode === 'massing' && selectedId ? ' · grab a wall to resize' : ''}
+        </div>
         <div className="viewmode">
           {[['both', 'Both'], ['diorama', 'Renders'], ['massing', 'Massing']].map(([m, label]) => (
             <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => pickMode(m)}>{label}</button>

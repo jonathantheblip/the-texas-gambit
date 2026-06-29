@@ -5,6 +5,7 @@ import { OrbitControls, Html } from '@react-three/drei';
 import { roomBox } from '../model/compoundModel.js';
 import RoomBox from './RoomBox.jsx';
 import Diorama from './Diorama.jsx';
+import WallHandles from './WallHandles.jsx';
 import { cameraBus } from './cameraBus.js';
 import { canonicalId } from '../data/aliases.js';
 
@@ -126,6 +127,9 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
   const northDir = useMemo(() => new THREE.Vector3(0, 0, -1), []);
   const northOrigin = useMemo(() => new THREE.Vector3(...framing.southBase), [framing.southBase]);
 
+  // The room whose walls are grabbable (the canonical selected room, with edits applied).
+  const editRoom = selectedId ? rooms.find((r) => r.id === selectedId) : null;
+
   return (
     <>
       <color attach="background" args={[background]} />
@@ -148,6 +152,9 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
       {mode !== 'massing' && (
         <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} focusId={focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       )}
+
+      {/* Grab-a-wall: drag handles on the selected room (massing mode), live-validated. */}
+      {mode === 'massing' && editRoom && <WallHandles room={editRoom} />}
 
       <OrbitControls ref={controls} makeDefault enabled={enableControls} enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
     </>

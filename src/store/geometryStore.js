@@ -47,14 +47,17 @@ export const getIdentity = () => { try { return localStorage.getItem(ID_KEY) || 
 export function setIdentity(id) { try { localStorage.setItem(ID_KEY, id); } catch {} }
 
 // ── Edits ──
-export function setOverride(roomId, patch, author = getIdentity()) {
+// `sync:false` updates local state + UI (and re-validates) WITHOUT queueing a
+// network write — used for the live frames of a wall-drag, so we don't spam the
+// backend on every pointer-move. The drag commits one synced write on release.
+export function setOverride(roomId, patch, author = getIdentity(), { sync = true } = {}) {
   const next = { ...(overrides[roomId] || {}) };
   for (const k of FIELDS) if (k in patch && patch[k] != null && !Number.isNaN(patch[k])) next[k] = patch[k];
   next.updatedAt = Date.now();
   next.updatedBy = author;
   overrides = { ...overrides, [roomId]: next };
   saveCache(); emit();
-  queueOp({ op: 'upsert', row: { room_id: roomId, ...pick(next, FIELDS), updated_at: new Date(next.updatedAt).toISOString(), updated_by: author } });
+  if (sync) queueOp({ op: 'upsert', row: { room_id: roomId, ...pick(next, FIELDS), updated_at: new Date(next.updatedAt).toISOString(), updated_by: author } });
 }
 
 export function resetOverride(roomId) {
