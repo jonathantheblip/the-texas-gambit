@@ -41,7 +41,7 @@ The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, prove
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
 ## Deploy
-Dormant. `.github/workflows/deploy.yml` deploys on push to `main` once the **repo's** Pages source is set to GitHub Actions — at `https://github.com/jonathantheblip/the-texas-gambit/settings/pages` (the repository Settings → Pages → Build and deployment → Source; *not* the account-level settings page). Jon's one-time switch. `ci.yml` runs locks + tests + build on every push. Per the north star: **deploy after Design's experience is integrated and verified** — not half-built.
+**Fully wired** (Jon set the repo's Pages source to GitHub Actions, 2026-06-28). A push to `main` runs `.github/workflows/deploy.yml` and publishes to **https://jonathantheblip.github.io/the-texas-gambit/**. That URL **currently serves the OLD app** (last deployed from the prior branch-based setup); the first push of this work to `main` replaces it with the render-forward app — i.e. **it goes straight to Helen.** `ci.yml` runs locks + tests + build on every push. Per the north star: deploy (merge `render-forward-3d` → `main`, push) only after Design's experience is integrated, green (`npm test` + `npm run validate` + build), and verified on a phone viewport — never half-built. After deploying, sanity-check the live URL loads.
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
@@ -49,7 +49,7 @@ Dormant. `.github/workflows/deploy.yml` deploys on push to `main` once the **rep
 3. **Then run autonomously:** integrate Design's work against the live APIs; wire facing + cross-fade; build the unified wayfinding / Reading-the-Room as Design specs; add tests for new logic; **verify on a phone viewport**; commit checkpoints with clear messages.
 4. **Pre-authorized** (per Jon): commits, pushes, deployment — but only once integrated, green (`npm test` + `npm run validate` + build), and verified. Don't deploy half-built.
 5. **Don't** rabbit-hole, break the locks, touch the parked dream, or collide with Design's experience layer beyond integrating their handoff.
-6. **Leave a running log + a final summary**: what shipped, what's open, decisions made, anything Jon must do (e.g. the one-time repo Pages source switch, if not already done).
+6. **Leave a running log + a final summary**: what shipped, what's open, decisions made, and anything Jon must do (Pages + Supabase are already set, so likely nothing — but call out anything that surfaced).
 
 ## Pointers
 HANDOFF_FOR_CLAUDE_CODE.md (original brief) · DESIGN_BRIEF.md (what Design owns) · IMMERSIVE_PROMPTS.md (the dream) · ../SYNC.md · ../README.md · ../GH_PAGES_SETUP.md · `design-handoff/` (portable pack) · memory at `~/.claude/projects/-Users-jjackson-dev-the-texas-gambit/memory/` (MEMORY.md auto-loads).
