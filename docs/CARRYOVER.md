@@ -1,6 +1,6 @@
 # Carryover — state & overnight run
 
-*As of 2026-06-28 (after the overnight integration run). Design's Walk is integrated; `render-forward-3d` **and** local `main` are at `0651f20` — verified + green but **not yet pushed** (push blocked on credentials — see Deploy). Live site still serves the OLD app until someone runs `git push origin main`. Read with [NORTH_STAR.md](NORTH_STAR.md) (forest) and [OVERNIGHT_LOG.md](OVERNIGHT_LOG.md) (this run's blow-by-blow).*
+*As of 2026-06-29. Design's Walk is integrated and **DEPLOYED LIVE** at https://jonathantheblip.github.io/the-texas-gambit/ — `main` + `render-forward-3d` pushed at `e269646`, CI green, Pages deploy succeeded, live URL serves the new app. Read with [NORTH_STAR.md](NORTH_STAR.md) (forest) and [OVERNIGHT_LOG.md](OVERNIGHT_LOG.md) (this run's blow-by-blow).*
 
 ## Where things stand (built + working on the branch)
 - **Gallery** (renders grouped by building) → **Room view** (render hero + writing + ancestor chips + "you are here" minimap + "walk to an adjoining space" strip) → **step into the 3D massing** → **back to the walk**.
@@ -46,10 +46,8 @@ The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, prove
 - **Supabase**: set up by Jon (schema included) — treat it as done, don't re-flag it. The sandbox preview shows "Local only" only because the preview can't reach realtime; that's the sandbox, not a missing table. Verify sync post-deploy, not in the sandbox.
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
-## Deploy — READY, awaiting `git push origin main` (blocked on credentials this run)
-**Fully wired** (Pages source = GitHub Actions). A push to `main` runs `.github/workflows/deploy.yml` → publishes to **https://jonathantheblip.github.io/the-texas-gambit/** → **straight to Helen.** All the north-star preconditions are met: Design's experience is **integrated, green** (`npm test` 26✓ + `npm run validate` locks-hold + `build`), and **verified on a phone viewport** (portrait + landscape) including a real production-build run. Local `main` is at `0651f20`, ready.
-
-**Why it's not live yet:** `git push` was denied 403 — the active credential here (`jonathan-crescent`) is READ-only, and switching to the owner account `jonathantheblip` was blocked by the credential-safety classifier (not worked around). **To ship:** from a terminal where Jon's own GitHub credentials are active, run `git push origin main`. Then sanity-check the live URL loads, and verify cross-device **sync** (leave a note on one device → see it on another; can't be tested in the sandbox, which shows "Local only"). Also push `render-forward-3d` for backup.
+## Deploy — DONE (live)
+**Shipped 2026-06-29.** `main` pushed at `e269646` → `.github/workflows/deploy.yml` published to **https://jonathantheblip.github.io/the-texas-gambit/** (CI green; live URL 200, serving the new app). Unblocked when Jon granted the session account (`jonathan-crescent`) Write on the repo — see [[reference-deploy-push-credential]]; future autonomous pushes work with that access in place. **One open post-deploy check:** confirm cross-device **sync** on a real device (note on one → appears on another); can't be tested in the sandbox (shows "Local only"). Per the north star, only deploy after integrated + green (`npm test` + `npm run validate` + build) + phone-verified — never half-built.
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
