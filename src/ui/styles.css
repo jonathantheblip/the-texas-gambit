@@ -19,13 +19,45 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 
 .loading-3d { display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
 
-/* Render-held cross-fade when stepping through a render into the 3D massing.
-   Opacity is set inline (1 → 0) so the transition fires deterministically. */
-.massing-curtain { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50; background: var(--bg); transition: opacity 550ms ease; pointer-events: none; }
+/* Render-held cross-fade — stepping THROUGH a render into the 3D massing.
+   The held render is a surface you pass THROUGH: it scales up and softens as it
+   dissolves, while the volume eases in behind it. Four tunable knobs (Design's
+   spec): duration, easing, how far you push in (scale), how soft it goes (blur).
+   The `.go` class is added one frame after onReady so the transition fires
+   deterministically (MassingCurtain forces a reflow first). */
+.massing-curtain {
+  position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50;
+  background: var(--bg); pointer-events: none; transform-origin: 50% 56%;
+  --xfade-dur: 780ms;
+  --xfade-ease: cubic-bezier(.42, .08, .16, 1);
+  --xfade-scale: 1.07;
+  --xfade-blur: 7px;
+  opacity: 1; transform: scale(1); filter: blur(0);
+}
+.massing-curtain.go {
+  opacity: 0;
+  transform: scale(var(--xfade-scale));
+  filter: blur(var(--xfade-blur));
+  transition:
+    opacity   var(--xfade-dur) var(--xfade-ease),
+    transform var(--xfade-dur) var(--xfade-ease),
+    filter    var(--xfade-dur) var(--xfade-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .massing-curtain.go { transform: none; filter: none; transition: opacity var(--xfade-dur) ease; }
+}
 
 .layout { display: flex; height: 100vh; width: 100vw; }
 .stage { flex: 1; position: relative; min-width: 0; }
 .stage canvas { display: block; touch-action: none; }
+/* Counter-motion: the 3D volume settles in behind the dissolving render when you
+   step through from the walk (paired with the curtain's push-through above). */
+.stage.arriving canvas { opacity: .5; transform: scale(1.045); transform-origin: 50% 50%; }
+.stage.arrived  canvas { opacity: 1; transform: none;
+  transition: opacity 515ms ease, transform 780ms cubic-bezier(.42, .08, .16, 1); }
+@media (prefers-reduced-motion: reduce) {
+  .stage.arriving canvas, .stage.arrived canvas { opacity: 1; transform: none; transition: opacity .2s ease; }
+}
 
 .stage-hud {
   position: absolute; left: 14px; top: 12px; z-index: 5;

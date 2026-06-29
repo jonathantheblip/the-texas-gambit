@@ -30,6 +30,7 @@ export default function App() {
           <ModelView
             initialSelectedId={view.focusId || view.roomId || null}
             facing={view.facing}
+            arriving={view.fromWalk}
             backLabel={view.fromWalk ? '← Back to the walk' : '← Compound'}
             onExit={() => (view.fromWalk ? nav.goRoom(view.focusId || view.roomId) : nav.goGallery())}
             onOpenRender={(id) => nav.goRoom(id)}

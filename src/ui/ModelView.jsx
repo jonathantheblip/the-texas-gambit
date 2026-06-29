@@ -1,5 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { validate, PALETTE } from '../model/compoundModel.js';
+import { cameraBus } from '../scene/cameraBus.js';
 import {
   ALL_ROOMS, BUILDINGS, FLOORS, ANCESTORS,
   applyOverrides, toGeometryTable, tableToOverrides,
@@ -24,8 +25,18 @@ function EditRow({ label, value, onChange }) {
 }
 
 /** The "stepped-into" 3D massing view: scene + locks/layers/edit panel. */
-export default function ModelView({ onExit, initialSelectedId = null, onOpenRender, facing = null, backLabel = '← Compound' }) {
+export default function ModelView({ onExit, initialSelectedId = null, onOpenRender, facing = null, backLabel = '← Compound', arriving = false }) {
   const [selectedId, setSelectedId] = useState(initialSelectedId);
+  // When stepping through from the walk, the 3D eases in behind the dissolving
+  // render (counter-motion to the curtain's push-through) — settle once it paints.
+  const [arrived, setArrived] = useState(!arriving);
+  useEffect(() => {
+    if (!arriving) return;
+    let t;
+    const off = cameraBus.onReady(() => { t = setTimeout(() => setArrived(true), 60); });
+    const safety = setTimeout(() => setArrived(true), 2500);
+    return () => { off(); clearTimeout(t); clearTimeout(safety); };
+  }, [arriving]);
   const [hiddenBuildings, setHiddenBuildings] = useState(() => new Set());
   const [hiddenFloors, setHiddenFloors] = useState(() => new Set());
   const [showProvisional, setShowProvisional] = useState(true);
@@ -86,7 +97,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
 
   return (
     <div className="layout">
-      <div className="stage">
+      <div className={`stage${arriving && !arrived ? ' arriving' : ''}${arriving && arrived ? ' arrived' : ''}`}>
         <div className="stage-hud">
           <button className="back-btn" onClick={onExit}>{backLabel}</button>
           <div className="title">3D Massing</div>

@@ -7,6 +7,7 @@
  * runs the render→massing cross-fade). `facing` is the N/E/S/W arrival pose.
  */
 import { ENTRY_ROOM } from '../data/adjacency.js';
+import { facingOf } from '../data/facings.js';
 
 let state = { mode: 'gallery', roomId: null, focusId: null, facing: null, fromWalk: false, lastHeading: null };
 const listeners = new Set();
@@ -23,8 +24,10 @@ export const nav = {
   stepTo: (id, heading = null) => set({ mode: 'room', roomId: id, fromWalk: false, lastHeading: heading }),
   enterWalk: () => set({ mode: 'room', roomId: ENTRY_ROOM, fromWalk: false, lastHeading: null }),
   openModel: (focusId = null) => set({ mode: 'model', focusId, roomId: focusId ?? state.roomId, facing: null, fromWalk: false }),
-  // step through a render into the massing, focused on the room (with arrival pose)
-  enterMassing: (id, facing = null) => set({ mode: 'model', focusId: id, roomId: id, facing, fromWalk: true }),
+  // step through a render into the massing, focused on the room (with arrival pose).
+  // Facing defaults to the room's considered pose (facings.js) so every step-into
+  // opens toward the render's viewpoint, then hands off to free orbit.
+  enterMassing: (id, facing = null) => set({ mode: 'model', focusId: id, roomId: id, facing: facing ?? facingOf(id), fromWalk: true }),
   back: () => set({ mode: 'gallery', roomId: null }),
   current: () => state.roomId,
 };
