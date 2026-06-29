@@ -1,11 +1,10 @@
 import { lazy, Suspense, useMemo } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
-import { neighborsOf } from './data/adjacency.js';
 import { useGeometry } from './store/useGeometry.js';
 import { nav } from './nav/navStore.js';
 import { useNav } from './nav/useNav.js';
 import Gallery from './ui/Gallery.jsx';
-import RoomView from './ui/RoomView.jsx';
+import Walk from './ui/Walk.jsx';
 import MassingCurtain from './ui/MassingCurtain.jsx';
 
 // The 3D view pulls in three.js / r3f / drei (~1 MB). Load it only when the
@@ -44,21 +43,7 @@ export default function App() {
   }
 
   if (view.mode === 'room') {
-    const room = rooms.find((r) => r.id === view.roomId);
-    const byId = (id) => rooms.find((r) => r.id === id);
-    const neighbors = neighborsOf(view.roomId)
-      .map((n) => { const r = byId(n.id); return r ? { ...r, heading: n.heading, vert: n.vert, via: n.via } : null; })
-      .filter(Boolean)
-      .slice(0, 6);
-    return (
-      <RoomView
-        room={room}
-        neighbors={neighbors}
-        onBack={() => nav.goGallery()}
-        onStepInto={(id) => nav.enterMassing(id)}
-        onGoRoom={(id, heading) => nav.stepTo(id, heading)}
-      />
-    );
+    return <Walk rooms={rooms} />;
   }
 
   return (

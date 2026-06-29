@@ -156,4 +156,6 @@ async function init() {
   setInterval(() => { if (navigator.onLine) pullAll(); }, RECONCILE_MS);
 }
 
-init();
+// Browser-only: skip the network/realtime side-effects under node (tests).
+if (typeof window !== 'undefined' && typeof navigator !== 'undefined') init();
+else setStatus('local');
