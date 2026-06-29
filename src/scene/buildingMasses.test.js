@@ -30,10 +30,14 @@ describe('buildingsOf', () => {
     }
   });
 
-  it('carries the building palette colour and a phase', () => {
+  it('carries the building palette colour and its real build phase (label + rank)', () => {
     expect(byName['Main Block'].color).toHaveLength(3);
-    expect(byName['Main Block'].phase).toBe(1);
-    expect(byName['Motor Barn'].phase).toBe(3);
+    expect(byName['Main Block'].phase).toBe('2A');
+    expect(byName['Main Block'].phaseRank).toBe(1);
+    expect(byName['Service Wing'].phase).toBe('2B');
+    expect(byName['Service Wing'].phaseRank).toBe(2);
+    expect(byName['Motor Barn'].phase).toBe('2C');
+    expect(byName['Motor Barn'].phaseRank).toBe(3);
   });
 });
 

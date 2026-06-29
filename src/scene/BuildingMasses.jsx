@@ -9,9 +9,9 @@ import { buildingsOf, phaseOpacity } from './buildingMasses.js';
  * and click-to-fly: tapping a mass (or its label) flies the camera down into that
  * building. Shown only in the bird's-eye; the per-room boxes return when you land.
  */
-function Mass({ b, maxPhase, onFlyIn }) {
+function Mass({ b, maxRank, onFlyIn }) {
   const color = useMemo(() => new THREE.Color(b.color[0], b.color[1], b.color[2]), [b.color]);
-  const opacity = phaseOpacity(b.phase, maxPhase);
+  const opacity = phaseOpacity(b.phaseRank, maxRank);
   const fly = (e) => { e.stopPropagation?.(); onFlyIn(b.flyToId); };
   return (
     <group>
@@ -38,6 +38,6 @@ function Mass({ b, maxPhase, onFlyIn }) {
 
 export default function BuildingMasses({ rooms, onFlyIn }) {
   const list = useMemo(() => buildingsOf(rooms), [rooms]);
-  const maxPhase = useMemo(() => Math.max(1, ...list.map((b) => b.phase || 0)), [list]);
-  return list.map((b) => <Mass key={b.building} b={b} maxPhase={maxPhase} onFlyIn={onFlyIn} />);
+  const maxRank = useMemo(() => Math.max(1, ...list.map((b) => b.phaseRank || 0)), [list]);
+  return list.map((b) => <Mass key={b.building} b={b} maxRank={maxRank} onFlyIn={onFlyIn} />);
 }

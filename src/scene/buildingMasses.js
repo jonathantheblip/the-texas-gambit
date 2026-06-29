@@ -8,7 +8,7 @@
  * just its biggest).
  */
 import { PALETTE } from '../model/compoundModel.js';
-import { phaseOf } from '../data/phases.js';
+import { phaseOf, phaseRankOf } from '../data/phases.js';
 
 export function buildingsOf(rooms) {
   const groups = {};
@@ -24,7 +24,8 @@ export function buildingsOf(rooms) {
     const flyTo = (withRender.length ? withRender : rs).reduce((a, b) => (b.w * b.d > a.w * a.d ? b : a));
     return {
       building,
-      phase: phaseOf(building),
+      phase: phaseOf(building),         // '2A' | '2B' | '2C' label
+      phaseRank: phaseRankOf(building), // 1..n, for the opacity fade
       color: PALETTE[building] || PALETTE.Other,
       center: [(minX + maxX) / 2, (minF + maxC) / 2, -((minY + maxY) / 2)],
       size: [Math.max(maxX - minX, 1), Math.max(maxC - minF, 1), Math.max(maxY - minY, 1)],
