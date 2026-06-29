@@ -1,0 +1,124 @@
+{
+  "drawing_room_sw": [
+    { "x": 35, "y": 22, "label": "Salon Art Hang", "kind": "heritage", "note": "Helen's private gallery — a restrained hang where quality outranks quantity, with a Freddy Hemley B&W architectural print in the formal register the Glebe demands." },
+    { "x": 33, "y": 50, "label": "Limestone Fireplace", "kind": "material", "note": "West-wall fireplace with herringbone firebox, sharing a chimney stack with the Oval Dining Room next door — the natural Georgian flue line rising through the center of the house." },
+    { "x": 82, "y": 30, "label": "Conservation Sash", "kind": "feature", "note": "West sash with conservation IGU (UV-filtering interlayer, low-solar-gain low-E) and motorized louvered shutters on a sun-angle automation circuit — defense in depth so Helen keeps the afternoon light and the collection stays safe." },
+    { "x": 13, "y": 35, "label": "South Garden View", "kind": "view", "note": "Twelve-over-twelve south sash framing the rear garden and canyon edge beyond, porch-shaded in summer — Glebe fenestration with Hill Country light." },
+    { "x": 57, "y": 47, "label": "Mustard Bookshelf", "kind": "heritage", "note": "Captain Jack's one deliberate eccentricity within Glebe formality — a mustard-painted bookshelf, its warmth set against the room's deep red walls." }
+  ],
+
+  "great_room_se": [
+    { "x": 52, "y": 18, "label": "Spindrift Wall", "kind": "material", "note": "The Spindrift principle: raw limestone and exposed timber above, white plaster below — one of the few places in the house where the stone speaks unfinished." },
+    { "x": 52, "y": 48, "label": "Bare Limestone Hearth", "kind": "material", "note": "Limestone fireplace wall facing the front porch — the stone left undressed so Hill Country ground claims the room's visual center." },
+    { "x": 12, "y": 32, "label": "Porch-Shaded Sash", "kind": "feature", "note": "South-facing twelve-over-twelve sash under the porch overhang; a continuous clerestory above lifts light over the porch roof into the room." },
+    { "x": 38, "y": 72, "label": "Sunday Afternoon", "kind": "heritage", "note": "Coffee table covered in Legos, open books, and children's drawings — Rule IV says the house is not a showroom, and this room proves it." },
+    { "x": 45, "y": 90, "label": "Blue Painted Floor", "kind": "material", "note": "Faded grey-blue painted wood — Captain Jack's ground layer, setting the room's casual register against the Glebe's formal proportions." }
+  ],
+
+  "library_ne": [
+    { "x": 45, "y": 52, "label": "Bay Window Seat", "kind": "feature", "note": "Canted bay on the north wall, mirrored by the Primary Suite's cantilevered cedar oriel directly above — the Glebe's paired bays reading the canyon." },
+    { "x": 45, "y": 28, "label": "Canyon North View", "kind": "view", "note": "Hill Country canopy rolling to the horizon — the Library's accepted 27 FC makes this the compound's one deliberately moody room." },
+    { "x": 10, "y": 35, "label": "Crammed Shelves", "kind": "heritage", "note": "White-painted shelves with books, pottery, photographs, and a geode interrupting the spines — genuinely used, never styled." },
+    { "x": 88, "y": 48, "label": "Limestone Fireplace", "kind": "material", "note": "Limestone hearth on the south wall with the fire lit — reading lamps are load-bearing in this room because the deep wall color absorbs daylight." },
+    { "x": 88, "y": 22, "label": "Deep Wall Color", "kind": "feature", "note": "Deep teal-green or rich navy (Imber's call) — Captain Jack's soul claiming the ground layer in the Glebe's most bookish room." }
+  ],
+
+  "oval_dining_nw": [
+    { "x": 40, "y": 28, "label": "Cedar Bay Frames", "kind": "material", "note": "Helen's decision: cedar over steel, locking warmth. The grain reads natural inside; outside, it weathers to silver-grey over decades." },
+    { "x": 50, "y": 8, "label": "Conical Roof", "kind": "feature", "note": "Timber rafters converging to a point above the curved bay — the Glebe c.1800 addition vocabulary at its most dramatic." },
+    { "x": 25, "y": 62, "label": "Limestone Window Seat", "kind": "material", "note": "Continuous stone seat running the full arc, cushioned in indigo linen — Thanksgiving guests pile in here." },
+    { "x": 88, "y": 30, "label": "Dusty Pink Plaster", "kind": "material", "note": "The only color in the Main Block's public rooms — a Glebe formality that reads as warmth, not decoration." },
+    { "x": 50, "y": 38, "label": "Canyon Through Cedar", "kind": "view", "note": "Five sash panels framing the north view — every season through cedar mullions, live oaks in foreground." }
+  ],
+
+  "kitchen": [
+    { "x": 42, "y": 55, "label": "La Cornue CornuFé", "kind": "feature", "note": "CornuFé 110 in Ivory and Polished Brass — installed Phase 2A before the kitchen is even finished, because this range waits for no one." },
+    { "x": 42, "y": 32, "label": "Teal Backsplash", "kind": "material", "note": "Glossy handmade teal subway tile behind the range only — Captain Jack's color note contained to one bold rectangle of wall." },
+    { "x": 42, "y": 18, "label": "Copper Hood", "kind": "material", "note": "Broad darkened copper greening at the edges — Hill Country craft tradition meeting Provincetown patina; it looks better every year." },
+    { "x": 50, "y": 78, "label": "Cobalt Island", "kind": "material", "note": "Deep cobalt blue polished concrete with Hill Country limestone aggregate visible in the surface — the kitchen's soul in one slab." },
+    { "x": 88, "y": 40, "label": "Herb Terrace Doors", "kind": "view", "note": "South-wall French doors to the herb terrace — rosemary and thyme three steps from the cutting board, live oaks framing the view." }
+  ],
+
+  "entry_hall_front_s_ctr": [
+    { "x": 40, "y": 82, "label": "Heated Limestone Floor", "kind": "material", "note": "Honed limestone flags with geothermal radiant heat in the slab — warm underfoot on January mornings, the Hill Country ground you walk in on." },
+    { "x": 75, "y": 42, "label": "Octagonal Grand Stair", "kind": "feature", "note": "Open-well stair wrapping a faceted perimeter with turned cedar balusters and walnut handrail — oculus light falls the full double height." },
+    { "x": 82, "y": 28, "label": "Stair Wall Photos", "kind": "heritage", "note": "Crowded mismatched frames climbing the wall — the compound's visual autobiography, started on move-in day and never finished." },
+    { "x": 40, "y": 10, "label": "Dome to Oculus", "kind": "feature", "note": "Helen's pick: sealed dome-to-oculus crown with a 6-foot glass pane — the falling light is the Entry Hall's soul moment." },
+    { "x": 65, "y": 90, "label": "Woven Rag Rug", "kind": "heritage", "note": "Captain Jack's on top of the Glebe's most formal material — color and wear on stone, because someone lives here." }
+  ],
+
+  "primary_bedroom_ne_over_library": [
+    { "x": 42, "y": 22, "label": "Vertical Beadboard", "kind": "material", "note": "White beadboard feature wall — Captain Jack's signature transplanted from the harbor, with Glebe proportions holding the room's Georgian bones." },
+    { "x": 42, "y": 32, "label": "Bedroom Gallery", "kind": "heritage", "note": "Mismatched landscapes and portraits on beadboard — the bedroom wall is personal and private, not curated for visitors." },
+    { "x": 82, "y": 38, "label": "Canyon Bluffs", "kind": "view", "note": "French doors to the Primary Terrace — the canyon's limestone bluffs visible from bed, morning coffee in bare feet." },
+    { "x": 30, "y": 10, "label": "Exposed Roof Timber", "kind": "material", "note": "Honest ceiling structure — Rule III says no coffered ceilings, no tray ceilings, no faux beams; what's there is what you see." },
+    { "x": 12, "y": 35, "label": "Morning East Light", "kind": "feature", "note": "Three east sash windows bringing morning light into the bedroom — the sunrise wall warms the room before the canyon does." }
+  ],
+
+  "sunroom": [
+    { "x": 42, "y": 22, "label": "Steel Pivot Panels", "kind": "feature", "note": "Black steel panels fold completely open — the boundary between inside and pool terrace dissolves to a single continuous limestone plane." },
+    { "x": 50, "y": 42, "label": "Pool and Canyon", "kind": "view", "note": "Zero-entry pool in foreground, Hill Country canyon dropping away behind — the Wharf Wing's defining view through open steel." },
+    { "x": 35, "y": 85, "label": "Continuous Limestone", "kind": "material", "note": "Honed limestone running without a break from inside to pool deck — no threshold, no transition, the ground is one surface." },
+    { "x": 78, "y": 58, "label": "Rattan and Stripe", "kind": "heritage", "note": "Rattan sofa with blue-white striped cushions — Captain Jack's casual permanence transplanted from the harbor to the canyon edge." },
+    { "x": 10, "y": 35, "label": "Limestone Party Wall", "kind": "material", "note": "Raw limestone from the Main Block — the Sunroom reads the house's stone body from inside the cedar-shingled Wharf Wing." }
+  ],
+
+  "everyday_dining_n_ctr": [
+    { "x": 42, "y": 15, "label": "Golden Ochre Walls", "kind": "material", "note": "Captain Jack's warmest color — the room the family eats in every day, from move-in morning through every decade after." },
+    { "x": 45, "y": 58, "label": "Pine Farmhouse Table", "kind": "heritage", "note": "Scrubbed pine with mismatched chairs — breakfast mess, homework, crayon marks that no one cleans up because they're the point." },
+    { "x": 40, "y": 42, "label": "Victorian Chest", "kind": "heritage", "note": "Worn white chest with photographs on top — the room's memory shelf, never dusted and never styled." },
+    { "x": 82, "y": 32, "label": "Orangery Doors", "kind": "view", "note": "Three French doors plus continuous transom opening north to the Orangery — morning coffee becomes a garden experience." }
+  ],
+
+  "guest_sitting": [
+    { "x": 30, "y": 22, "label": "Beadboard to Roofline", "kind": "material", "note": "White vertical beadboard running full height — full Captain Jack's, no limestone, no Glebe formality, no compromise." },
+    { "x": 18, "y": 40, "label": "Provincetown Salon", "kind": "heritage", "note": "Sailboats, harbor scenes, watercolors in mismatched frames — Provincetown's visual vocabulary covering the wall the way it does on the Wharf." },
+    { "x": 42, "y": 8, "label": "Vaulted Cedar", "kind": "material", "note": "Dark timber rafters over beadboard — honest structure exposed because Rule III demands it, and the harbor always showed its bones." },
+    { "x": 45, "y": 88, "label": "Grey Painted Floor", "kind": "material", "note": "Grey painted wood throughout the Guest Suite — quiet enough to let the art talk, worn enough to feel like it's always been here." },
+    { "x": 88, "y": 38, "label": "Pool Through Sash", "kind": "view", "note": "Tall sash windows onto the pool terrace — Captain Jack's harbor water reinterpreted as Texas waterside." }
+  ],
+
+  "guest_bedroom": [
+    { "x": 55, "y": 50, "label": "Iron Bed Frame", "kind": "heritage", "note": "White iron bed with plaid throw and navy pillows — mismatched and inherited, nothing that reads as purchased together." },
+    { "x": 25, "y": 38, "label": "Pool at the Door", "kind": "view", "note": "French doors opening directly onto the pool deck — the morning swim is three steps from the pillow." },
+    { "x": 55, "y": 28, "label": "Freddy's Provincetown", "kind": "heritage", "note": "Two or three Freddy Hemley photographs — harbor and waterfront, the Forum 49 connection felt most clearly in this room." },
+    { "x": 88, "y": 55, "label": "Red Painted Dresser", "kind": "heritage", "note": "Captain Jack's mismatched furniture rule: nothing matching, everything loved, every piece telling a different story." }
+  ],
+
+  "guest_en_suite": [
+    { "x": 38, "y": 58, "label": "Corner Clawfoot Tub", "kind": "feature", "note": "Porcelain tub with shell-foot detail — behind it, a 36×48 barrier-free shower rough-in waits for future aging-in-place." },
+    { "x": 25, "y": 30, "label": "Beadboard Wainscot", "kind": "material", "note": "Continuous with the sitting room and bedroom — the Guest Suite's vocabulary doesn't stop at the bathroom door." },
+    { "x": 38, "y": 42, "label": "Verdigris Faucet", "kind": "heritage", "note": "Salvage-look brass with natural patina — Captain Jack's insists hardware looks like it's been there for decades." },
+    { "x": 62, "y": 28, "label": "Live Oak Through Sash", "kind": "view", "note": "Dark-framed sash window with a live oak filling the view — a bath with a tree in it." }
+  ],
+
+  "right_passage_freddy_s_gallery": [
+    { "x": 10, "y": 40, "label": "Main Block Limestone", "kind": "heritage", "note": "The Main Block's stone face visible through the glass — Freddy's photographs hang on the solid walls, Haiti on one side, New England on the other." },
+    { "x": 45, "y": 35, "label": "Glass Between Worlds", "kind": "feature", "note": "Floor-to-ceiling glass joining limestone Main Block to cedar-shingled Wharf Wing — the compound's two materials face each other across this passage." },
+    { "x": 45, "y": 58, "label": "Pool and Canyon", "kind": "view", "note": "Every walk from the Great Room to the pool passes through Freddy's work with the canyon view beside it." },
+    { "x": 42, "y": 15, "label": "Picture Light", "kind": "feature", "note": "Gallery-grade wall-wash lighting in a passage — climate-controlled, museum-standard display for the collection's most public location." }
+  ],
+
+  "upper_gallery_landing": [
+    { "x": 18, "y": 35, "label": "Salon Hang", "kind": "heritage", "note": "Paintings, photographs, children's art mixed at different heights — the hang the family adds to for decades, never declared finished." },
+    { "x": 58, "y": 28, "label": "North Sash / Writing Desk", "kind": "feature", "note": "Tall sash at the north end with Hill Country view — a small writing desk sits here for letters and looking." },
+    { "x": 22, "y": 62, "label": "Walnut Handrail", "kind": "material", "note": "Walnut rail and white-painted balusters from the Georgian stair vocabulary — the Glebe's bones continued from the Entry Hall below." },
+    { "x": 60, "y": 68, "label": "Windowsill Life", "kind": "heritage", "note": "Photos propped on the sill, books stacked, candle left from last night — the gallery is a room in its own right, not a hallway." },
+    { "x": 42, "y": 8, "label": "Falling Oculus Light", "kind": "feature", "note": "Light from the dome-to-oculus descends through the open stair well — this is where you look up and see it land two floors below." }
+  ],
+
+  "orangery": [
+    { "x": 25, "y": 48, "label": "Swing Daybed", "kind": "heritage", "note": "Rope-hung daybed with striped cushions — children's nap space, sunset-watching perch, the room's most Captain Jack's gesture." },
+    { "x": 50, "y": 22, "label": "Canyon Sunset", "kind": "view", "note": "Glass walls facing the canyon — the Orangery is where sunset becomes architecture, not just a view." },
+    { "x": 88, "y": 30, "label": "Main Block Stone Face", "kind": "material", "note": "Raw limestone of the north elevation visible inside the Orangery — reading the house's body from outside its body." },
+    { "x": 75, "y": 62, "label": "Rattan Dining", "kind": "heritage", "note": "Wine, bread, rattan chairs — the informal supper that makes the Oval Dining Room's formality mean something by contrast." }
+  ],
+
+  "study_sw_over_drawing": [
+    { "x": 12, "y": 32, "label": "Working Shelves", "kind": "heritage", "note": "Floor-to-ceiling on both sides — the Study mirrors the Library below but belongs to Jon's working mind, not the family's browsing." },
+    { "x": 45, "y": 35, "label": "Live Oak View", "kind": "view", "note": "Bay window framing live oaks and Hill Country — the view Jon works in front of every day, deliberately not a screen." },
+    { "x": 88, "y": 48, "label": "Limestone Hearth", "kind": "material", "note": "Limestone fireplace flanking the shelves — Hill Country ground layer anchoring the Glebe proportions in a room built for thinking." },
+    { "x": 55, "y": 78, "label": "Desk Surface", "kind": "heritage", "note": "Open books, coffee, a pen — the desk is the room's purpose; everything else exists to make this surface productive." },
+    { "x": 45, "y": 52, "label": "Window Seat", "kind": "feature", "note": "Blue-striped cushion with books piled at one end — the reading position that isn't the desk, for when thinking needs to change posture." }
+  ]
+}
