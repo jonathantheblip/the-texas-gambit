@@ -56,6 +56,9 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
   // While focused, an empty-space click keeps the room isolated (focus is sticky);
   // clicking another space moves the focus there.
   const handleSelect = (id) => { if (id === null && focusActive) return; setSelectedId(id); };
+  // Whole-compound bird's-eye: pull back to the building masses; click one to fly in.
+  const [birdsEye, setBirdsEye] = useState(false);
+  const flyInTo = (roomId) => { setSelectedId(roomId); setViewMode('massing'); setFocusActive(true); setBirdsEye(false); };
   const [identity, setIdent] = useState(getIdentity);
   const fileRef = useRef();
 
@@ -118,24 +121,38 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           <div className="meta">{visibleRooms.length} of {ALL_ROOMS.length} spaces · generated from the room table</div>
         </div>
         <div className="stage-tip">
-          drag to orbit · scroll to zoom · click a space
-          {viewMode === 'massing' && selectedId ? ' · grab a wall to resize' : ''}
-        </div>
-        <div className="viewmode">
-          {[['both', 'Both'], ['diorama', 'Renders'], ['massing', 'Massing']].map(([m, label]) => (
-            <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => pickMode(m)}>{label}</button>
-          ))}
+          {birdsEye
+            ? 'the whole compound · faded by build phase · tap a building to fly in'
+            : `drag to orbit · scroll to zoom · click a space${viewMode === 'massing' && selectedId ? ' · grab a wall to resize' : ''}`}
         </div>
         <button
-          className={`focus-toggle${focusActive ? ' on' : ''}`}
-          onClick={toggleFocus}
-          disabled={!selectedId}
-          aria-pressed={focusActive}
-          title={selectedId ? 'Keep one space in focus and fade the rest' : 'Click a space to focus on it'}
+          className={`birdseye-btn${birdsEye ? ' on' : ''}`}
+          onClick={() => setBirdsEye((b) => !b)}
+          aria-pressed={birdsEye}
+          title="Pull back to a bird's-eye of the whole compound"
         >
-          <span className="dot" aria-hidden="true" />
-          {focusActive ? 'Focused' : 'Focus'}
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 13l9 5 9-5"/></svg>
+          {birdsEye ? 'Exit aerial' : "Bird's-eye"}
         </button>
+        {!birdsEye && (
+          <>
+            <div className="viewmode">
+              {[['both', 'Both'], ['diorama', 'Renders'], ['massing', 'Massing']].map(([m, label]) => (
+                <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => pickMode(m)}>{label}</button>
+              ))}
+            </div>
+            <button
+              className={`focus-toggle${focusActive ? ' on' : ''}`}
+              onClick={toggleFocus}
+              disabled={!selectedId}
+              aria-pressed={focusActive}
+              title={selectedId ? 'Keep one space in focus and fade the rest' : 'Click a space to focus on it'}
+            >
+              <span className="dot" aria-hidden="true" />
+              {focusActive ? 'Focused' : 'Focus'}
+            </button>
+          </>
+        )}
         <CompoundScene
           rooms={visibleRooms}
           framingRooms={ALL_ROOMS}
@@ -145,6 +162,8 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           mode={viewMode}
           entryFacing={facing}
           focusId={focusActive ? selectedId : null}
+          birdsEye={birdsEye}
+          onFlyIn={flyInTo}
         />
       </div>
 

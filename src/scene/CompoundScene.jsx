@@ -6,6 +6,7 @@ import { roomBox } from '../model/compoundModel.js';
 import RoomBox from './RoomBox.jsx';
 import Diorama from './Diorama.jsx';
 import WallHandles from './WallHandles.jsx';
+import BuildingMasses from './BuildingMasses.jsx';
 import { cameraBus } from './cameraBus.js';
 import { canonicalId } from '../data/aliases.js';
 
@@ -37,11 +38,12 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing, focusId, instantArrival = false, enableControls = true, background = '#e9e5db' }) {
+function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing, focusId, instantArrival = false, enableControls = true, background = '#e9e5db', birdsEye = false, onFlyIn }) {
   const controls = useRef();
   const { camera } = useThree();
   const tween = useRef(null);
   const inited = useRef(false);
+  const beInited = useRef(false);
   const { center, radius, gridSize, gridCenter, northTip } = framing;
 
   useEffect(() => {
@@ -101,9 +103,28 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
     controls.current.update();
   }
 
+  // An arbitrary camera pose (the bird's-eye overview), reusing the tween.
+  function driftToPose(pos, target, dur = 1.2) {
+    if (!controls.current) return;
+    tween.current = {
+      t: 0, dur, roomId: null, arcLift: 0,
+      fromPos: camera.position.clone(), toPos: pos.clone(),
+      fromTarget: controls.current.target.clone(), toTarget: target.clone(),
+    };
+  }
+
   // Design's camera API: cameraBus.driftTo(roomId, facing). Code owns the move.
   // Calls through the bus are flights between rooms → arc up and over the masses.
   useEffect(() => cameraBus._register((roomId, facing) => driftToRoom(roomId, facing, { arc: true })), [allRooms, camera]);
+
+  // Bird's-eye toggles the camera between the high overview and the room you land on
+  // (click-to-fly sets selectedId, then this drops you in). Skips the first run so it
+  // doesn't fight the arrival pose on mount.
+  useEffect(() => {
+    if (!beInited.current) { beInited.current = true; return; }
+    if (birdsEye) driftToPose(overview.pos, overview.target);
+    else if (selectedId) driftToRoom(selectedId, null);
+  }, [birdsEye]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useFrame((_, dt) => {
     if (!inited.current) {
@@ -127,6 +148,12 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
   const northDir = useMemo(() => new THREE.Vector3(0, 0, -1), []);
   const northOrigin = useMemo(() => new THREE.Vector3(...framing.southBase), [framing.southBase]);
 
+  // High, slightly-tilted overview that frames the whole compound from above.
+  const overview = useMemo(() => {
+    const [cx, cyC, cz] = framing.center; const rad = framing.radius;
+    return { pos: new THREE.Vector3(cx, cyC + rad * 1.35, cz + rad * 0.32), target: new THREE.Vector3(cx, cyC, cz) };
+  }, [framing]);
+
   // The room whose walls are grabbable (the canonical selected room, with edits applied).
   const editRoom = selectedId ? rooms.find((r) => r.id === selectedId) : null;
 
@@ -146,22 +173,27 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
       {/* Aliased rooms (e.g. Octagonal Stair Hall → Entry Hall) read as one space:
           both boxes select/highlight/focus together, and clicking either selects the
           canonical room. */}
-      {mode !== 'diorama' && rooms.map((r) => (
-        <RoomBox key={r.id} room={r} selected={canonicalId(r.id) === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && canonicalId(r.id) !== focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
-      ))}
-      {mode !== 'massing' && (
-        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} focusId={focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
+      {birdsEye ? (
+        <BuildingMasses rooms={allRooms} onFlyIn={onFlyIn} />
+      ) : (
+        <>
+          {mode !== 'diorama' && rooms.map((r) => (
+            <RoomBox key={r.id} room={r} selected={canonicalId(r.id) === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && canonicalId(r.id) !== focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
+          ))}
+          {mode !== 'massing' && (
+            <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} focusId={focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
+          )}
+          {/* Grab-a-wall: drag handles on the selected room (massing mode), live-validated. */}
+          {mode === 'massing' && editRoom && <WallHandles room={editRoom} />}
+        </>
       )}
-
-      {/* Grab-a-wall: drag handles on the selected room (massing mode), live-validated. */}
-      {mode === 'massing' && editRoom && <WallHandles room={editRoom} />}
 
       <OrbitControls ref={controls} makeDefault enabled={enableControls} enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />
     </>
   );
 }
 
-export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null, focusId = null, frameloop, instantArrival = false, enableControls = true, background = '#e9e5db' }) {
+export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null, focusId = null, frameloop, instantArrival = false, enableControls = true, background = '#e9e5db', birdsEye = false, onFlyIn = () => {} }) {
   const framing = useFraming(framingRooms);
   const camPos = useMemo(() => {
     const [cx, cy, cz] = framing.center;
@@ -176,7 +208,7 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} focusId={focusId} instantArrival={instantArrival} enableControls={enableControls} background={background} />
+      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} focusId={focusId} instantArrival={instantArrival} enableControls={enableControls} background={background} birdsEye={birdsEye} onFlyIn={onFlyIn} />
     </Canvas>
   );
 }

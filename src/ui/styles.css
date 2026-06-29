@@ -71,17 +71,38 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
   background: rgba(246,243,236,.7); padding: 4px 8px; border-radius: 6px; pointer-events: none;
 }
 .viewmode {
-  position: absolute; right: 14px; top: 12px; z-index: 6;
+  position: absolute; right: 14px; top: 47px; z-index: 6;
   display: flex; background: rgba(246,243,236,.9); border: 1px solid var(--panel-edge);
   border-radius: 999px; overflow: hidden;
 }
 .viewmode button { font-family: var(--sans); font-size: 12px; border: none; background: none; color: var(--ink-soft); padding: 5px 13px; cursor: pointer; }
 .viewmode button.on { background: var(--ink); color: #fff; }
 
-/* Focus toggle — sits under the view-mode pill; isolates the selected space and
+/* Bird's-eye toggle — top of the right-side control stack; always available. */
+.birdseye-btn {
+  position: absolute; right: 14px; top: 12px; z-index: 6;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--sans); font-size: 12px; color: var(--ink-soft);
+  background: rgba(246,243,236,.9); border: 1px solid var(--panel-edge);
+  border-radius: 999px; padding: 6px 13px; cursor: pointer;
+}
+.birdseye-btn svg { display: block; }
+.birdseye-btn.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* Building label in the bird's-eye (tap to fly in). */
+.mass-label {
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; cursor: pointer;
+  font-family: var(--sans); font-size: 12px; color: var(--ink);
+  background: rgba(246,243,236,.92); border: 1px solid var(--panel-edge);
+  border-radius: 999px; padding: 4px 11px; box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.mass-label .ph { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.mass-label:hover { border-color: var(--ink); }
+
+/* Focus toggle — under the view-mode pill; isolates the selected space and
    stays put across Both/Renders/Massing (the one explicit way to "see all" again). */
 .focus-toggle {
-  position: absolute; right: 14px; top: 47px; z-index: 6;
+  position: absolute; right: 14px; top: 82px; z-index: 6;
   display: inline-flex; align-items: center; gap: 7px;
   font-family: var(--sans); font-size: 12px; color: var(--ink-soft);
   background: rgba(246,243,236,.9); border: 1px solid var(--panel-edge);
