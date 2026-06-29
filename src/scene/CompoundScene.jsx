@@ -6,6 +6,7 @@ import { roomBox } from '../model/compoundModel.js';
 import RoomBox from './RoomBox.jsx';
 import Diorama from './Diorama.jsx';
 import { cameraBus } from './cameraBus.js';
+import { canonicalId } from '../data/aliases.js';
 
 /**
  * Compute a sensible framing of the whole compound in three.js world space.
@@ -111,11 +112,14 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
       <arrowHelper args={[northDir, northOrigin, Math.min(40, radius * 0.12), 0x9a3b2a, 10, 7]} />
       <Html position={northTip} center style={{ font: '600 13px Inter, sans-serif', color: '#9a3b2a', pointerEvents: 'none' }}>N</Html>
 
+      {/* Aliased rooms (e.g. Octagonal Stair Hall → Entry Hall) read as one space:
+          both boxes select/highlight/focus together, and clicking either selects the
+          canonical room. */}
       {mode !== 'diorama' && rooms.map((r) => (
-        <RoomBox key={r.id} room={r} selected={r.id === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && r.id !== focusId} onSelect={onSelect} />
+        <RoomBox key={r.id} room={r} selected={canonicalId(r.id) === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && canonicalId(r.id) !== focusId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       ))}
       {mode !== 'massing' && (
-        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={onSelect} />
+        <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={(rid) => onSelect(canonicalId(rid))} />
       )}
 
       <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={0.08} maxDistance={radius * 3} minDistance={5} />

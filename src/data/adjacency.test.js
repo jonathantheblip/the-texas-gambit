@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { neighborsOf } from './adjacency.js';
+import { canonicalId } from './aliases.js';
 
 const ids = (ns) => ns.map((n) => n.id);
 
@@ -35,5 +36,26 @@ describe('neighborsOf — the walk graph', () => {
   it('is symmetric for same-level neighbors', () => {
     expect(ids(neighborsOf('front_porch'))).toContain('entry_hall_front_s_ctr');
     expect(ids(neighborsOf('entry_hall_front_s_ctr'))).toContain('front_porch');
+  });
+});
+
+describe('aliased spaces — entry hall + staircase read as one', () => {
+  it('the octagonal stair hall folds into the entry hall', () => {
+    expect(canonicalId('octagonal_stair_hall')).toBe('entry_hall_front_s_ctr');
+  });
+
+  it('you never walk "between" the two halves; the stair-up lives on the entry hall', () => {
+    const ns = neighborsOf('entry_hall_front_s_ctr');
+    expect(ids(ns)).not.toContain('octagonal_stair_hall');   // not a separate destination
+    const up = ns.find((n) => n.id === 'upper_gallery_landing');
+    expect(up).toBeTruthy();
+    expect(up.vert).toBe('up');                               // the stair's connection folded in
+  });
+
+  it('coming down the stair lands on the entry hall, never the stair hall', () => {
+    const ns = neighborsOf('upper_gallery_landing');
+    expect(ids(ns)).not.toContain('octagonal_stair_hall');
+    const down = ns.find((n) => n.id === 'entry_hall_front_s_ctr');
+    expect(down?.vert).toBe('down');
   });
 });

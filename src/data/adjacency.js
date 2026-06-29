@@ -11,6 +11,7 @@
  */
 import roomsData from './compound_rooms.json';
 import { rectDist, ANCHORS } from '../model/compoundModel.js';
+import { canonicalId, spaceGroup } from './aliases.js';
 
 const rooms = roomsData.rooms;
 const nameToId = Object.fromEntries(rooms.map((r) => [r.name, r.id]));
@@ -49,7 +50,8 @@ function heading(a, b) {
   return Math.abs(dx) >= Math.abs(dy) ? (dx >= 0 ? 'E' : 'W') : (dy >= 0 ? 'N' : 'S');
 }
 
-export function neighborsOf(id) {
+// Raw geometry-derived neighbors of ONE room id (before merging aliased spaces).
+function rawNeighborsOf(id) {
   const r = rooms.find((x) => x.id === id);
   if (!r) return [];
   const out = [];
@@ -75,5 +77,25 @@ export function neighborsOf(id) {
     if (o) out.push({ id: other, heading: null, vert: level(o) > level(r) ? 'up' : 'down', via: 'stair', strength: STAIR_STRENGTH });
   }
 
-  return out.sort((a, b) => b.strength - a.strength);
+  return out;
+}
+
+/**
+ * Walkable neighbors of a room, with aliased spaces folded together (see aliases.js).
+ * Rooms that share one presented space (Entry Hall + Octagonal Stair Hall) are
+ * treated as a single node: their neighbors merge, links between them are dropped,
+ * and every neighbor id is returned canonical — so the walk never steps "between"
+ * two halves of the same space, and the stair's connections live on the Entry Hall.
+ */
+export function neighborsOf(id) {
+  const group = spaceGroup(id);                 // canonical id + any absorbed ids
+  const raw = group.flatMap(rawNeighborsOf);
+  const best = new Map();                        // canonical neighbor id → strongest link
+  for (const n of raw) {
+    const ncid = canonicalId(n.id);
+    if (group.includes(ncid)) continue;          // skip links within the same space
+    const prev = best.get(ncid);
+    if (!prev || n.strength > prev.strength) best.set(ncid, { ...n, id: ncid });
+  }
+  return [...best.values()].sort((a, b) => b.strength - a.strength);
 }

@@ -108,7 +108,7 @@
       "specs": [
         {
           "k": "Walls",
-          "v": "Level-5 plaster, white"
+          "v": "Level-5 plaster, deep red"
         },
         {
           "k": "Fireplace",
@@ -121,6 +121,39 @@
         {
           "file": "mbg_drawingroom_hero.png",
           "caption": "The Fireplace Wall, Art Everywhere"
+        }
+      ]
+    },
+    "glass-bridge": {
+      "name": "The Glass Bridge",
+      "tag": "Walk Inside the Light",
+      "phase": null,
+      "building": "wharf-wing",
+      "floor": "ground",
+      "ancestors": [
+        "ptown"
+      ],
+      "intent": "The glass crossing to the Wharf Wing — you walk it inside the daylight, the canyon falling away on both sides. It's built to stay easy year-round even with the Texas sun on it: low-iron solar-control glass, a deep timber brise-soleil throwing shade across the worst of the afternoon, radiant limestone underfoot, and louvered ridge vents that pull the heat up and out. Weather all around you, never on you.",
+      "specs": [
+        {
+          "k": "Glazing",
+          "v": "Low-iron, solar-control"
+        },
+        {
+          "k": "Shade",
+          "v": "Timber brise-soleil"
+        },
+        {
+          "k": "Comfort",
+          "v": "Radiant limestone + ridge vents, year-round"
+        }
+      ],
+      "helenNote": null,
+      "zones": null,
+      "images": [
+        {
+          "file": "ww_glassbridge_hero.png",
+          "caption": "The crossing to the Wharf Wing"
         }
       ]
     },

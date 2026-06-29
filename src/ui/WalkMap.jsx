@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { compoundPlan } from '../data/plan.js';
 import { neighborsOf } from '../data/adjacency.js';
 import { lineageOf } from '../data/lineage.js';
+import { canonicalId, isAlias } from '../data/aliases.js';
 
 /**
  * The ONE shared map. Crumbs, this map, and the compass all read the single
@@ -70,7 +71,7 @@ export default function WalkMap({ scope = 'building', currentId, names = {}, onP
       {ids.map((id) => {
         const p = BY[id]; if (!p) return null;
         const anc = lineageOf(p.building);
-        const isCur = id === currentId;
+        const isCur = canonicalId(id) === currentId;
         const isNb = nb.has(id);
         const x = p.nx * 100, y = p.ny * 100 * ASPECT, w = Math.max(p.nw * 100, unit * 0.8), h = Math.max(p.nh * 100 * ASPECT, unit * 0.8);
         const fill = isCur ? anc.hex : isNb ? anc.soft : (scope === 'building' ? anc.soft : 'rgba(236,228,212,.07)');
@@ -86,13 +87,13 @@ export default function WalkMap({ scope = 'building', currentId, names = {}, onP
               strokeWidth={isCur ? sw * 1.6 : isNb ? sw : sw * 0.7}
               strokeDasharray={isNb && !isCur ? `${unit * 1.4} ${unit * 1.0}` : undefined}
               opacity={isCur || isNb ? 1 : (scope === 'building' ? 0.9 : 0.62)}
-              onClick={(e) => { e.stopPropagation(); onPick && onPick(id); }} />
+              onClick={(e) => { e.stopPropagation(); onPick && onPick(canonicalId(id)); }} />
             {/* touch halo for tiny rects */}
             {(w < unit * 3 || h < unit * 3) && (
               <rect x={x - unit} y={y - unit} width={w + unit * 2} height={h + unit * 2} fill="transparent"
-                style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); onPick && onPick(id); }} />
+                style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); onPick && onPick(canonicalId(id)); }} />
             )}
-            {showLabels && (
+            {showLabels && !isAlias(id) && (
               <text className="wk-rlabel" x={x + w / 2} y={y + h / 2 + unit * 0.9} textAnchor="middle"
                 style={{ fontSize: `${unit * 2.4}px` }} fill={isCur ? '#0e0c08' : 'rgba(236,228,212,.85)'}>
                 {(() => { const s = short(ROOM_NAME[id], id); return s.length > 16 ? s.slice(0, 15) + '…' : s; })()}
