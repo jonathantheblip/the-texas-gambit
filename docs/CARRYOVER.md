@@ -31,7 +31,7 @@ Design's drop (`Lookbook (1).zip`) is fully integrated against the live APIs:
 - **Facings** (`src/data/facings.js`) → `navStore.enterMassing` defaults the arrival pose. **Cross-fade** push-through (4 tunable knobs in `styles.css`, counter-motion in `ModelView`).
 - **Notes/chips sync** (`src/store/roomLayerStore.js`) via the existing `notes` table + `room_state.mood` — **no schema change**; local-first, degrades to local.
 - New data: `src/data/lineage.js` (color = building/ancestor family), `feel.js`. Retired `RoomView.jsx` + `Minimap.jsx`.
-- **Open (deferred):** ④ richer whole-compound bird's-eye (building masses + phase opacity + click-to-fly); Design's other next-layer items (grab-a-wall editing, spatial render pins). **Walk-between fly-to in 3D is now built** — see its section below. Facings + cross-fade knobs are first-pass — tune live with Design.
+- **Open (deferred):** Design's next-layer items — **fly-to ✓, grab-a-wall ✓, bird's-eye ✓ now all built** (see sections below); only **spatial render pins** remain. Facings + cross-fade knobs are first-pass — tune live with Design.
 
 ## Parked
 The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, proven, not now. Don't spend overnight effort here.
@@ -70,13 +70,21 @@ The first of Design's next-layer items. Walking to an adjoining space no longer 
 - **Tunables (first-pass, by feel):** flight `dur` (1.1s) + `arc` lift in `CompoundScene`; `--wk-fly-lift` / `--wk-fly-land` in `walk.css`; arrival facing in `flyto.arrivalFacing` (travel heading for flat moves, considered pose for stairs/teleport).
 - Reduced-motion: fly is disabled (button greyed) → wipe. Falls back to the wipe until the substrate is warm (`flyReady`) so a hop never starts cold.
 
+## Massing instrument — three more layers BUILT (2026-06-29, later)
+All in `ModelView` + `CompoundScene` (the stepped-into 3D). They compose: bird's-eye → tap a building → fly in → land **focused** with **grabbable walls**.
+- **Sticky room-focus** (a fix Jon asked for): stepping in focused the room (others ghosted, only its render), but the Both/Renders/Massing toggle used to *clear* focus and flood everything back. Now focus persists across the toggle; the **Diorama is focus-aware** (only the focused render shows); a new **Focus toggle** (`.focus-toggle`) is the one explicit way to drop focus and see the whole compound. Empty-click is sticky while focused.
+- **Grab-a-wall** (`src/scene/WallHandles.jsx` + pure `wallEdit.js`, unit-tested): drag a wall grip on the selected room (Massing mode) to resize it; far wall anchored, clamp 4ft, round to whole feet, **locks re-validate live** with a floating readout. `geometryStore.setOverride` gained `sync:false` so live drag frames don't spam the backend; release commits one synced write. **Note:** handles render + math is unit-tested, but the drag *gesture* is **unverified on-device** — the sandbox can't drive r3f's pointer raycasting (eval runs in an isolated world; synthetic events don't reach the 3D pick). Jon to confirm the feel on his phone.
+- **Whole-compound bird's-eye** (`src/scene/BuildingMasses.jsx` + pure `buildingMasses.js`, unit-tested): a **Bird's-eye** toggle pulls back to a high overview; each building is one translucent mass faded by **build phase**, labelled, **tap-to-fly-in** (lands focused on the building's biggest rendered room). `CompoundScene` gained `birdsEye` + `onFlyIn` (`driftToPose` overview tween). **Phase data is a first-pass GUESS in `src/data/phases.js`** (core→wings→outbuildings) — the room table has no phase field; Jon/Design correct the numbers there.
+
 ## Open / next session
-Fly-to shipped this session. 35 tests + validate + build green; phone-verified portrait + landscape; no known bugs. What's left:
+Four layers shipped (fly-to + the three above). 46 tests + validate + build green; phone-verified except the two flagged items below. What's left:
 1. **Real-device sync check (Jon only — can't be done in-sandbox):** open on two devices, leave a note (or nudge a wall) on one, confirm it appears on the other. Code is additive + degrades to local, so low risk; just unconfirmed end-to-end.
 2. **More renders:** 11 rooms still show the striped placeholder (mostly back-of-house: mechanical/laundry, tea station, pool bath, sauna, airlock, compute/research rooms, instrument bay, podcast studio, dome/oculus). Fill the *experienced* ones as Midjourney produces them — Jon drops files in `~/Downloads` named by room, Code converts (`optimize_images.mjs`) + wires the join. The reusable Midjourney kickoff prompt is in this session's history.
-3. **Design's remaining next-layer items:** grab-a-wall tactile editing (number inputs today), spatial pins on the render, and ④ the whole-compound **bird's-eye** (building masses + phase opacity + click-to-fly). (Walk-between fly-to ✓ done.)
-4. **A second staircase view** — Jon wants it eventually; Claude Chat is struggling to generate it. Parked, not blocking.
-5. **First-pass tunables** (fine to leave): the fly knobs above, per-room facings + the cross-fade knobs (in `styles.css`), the compound-map squash from the Observatory outlier, and the Glass Bridge's generic feel-chips (no seeded set).
+3. **Confirm grab-a-wall on a real device (Jon):** drag a wall in the Massing view and watch the locks re-check — the one piece the sandbox couldn't drive. Low risk (math unit-tested, handles render), just unconfirmed end-to-end.
+4. **Correct the build phases** (`src/data/phases.js`): the bird's-eye fade uses a first-pass guess for which building goes up when — edit the numbers to the real 2026→2038 sequence.
+5. **Design's last next-layer item:** spatial **render pins** (tappable hotspots on a render). The only one of the four not yet built.
+6. **A second staircase view** — Jon wants it eventually; Claude Chat is struggling to generate it. Parked, not blocking.
+7. **First-pass tunables** (fine to leave): the fly knobs; grab-a-wall grip size/min-dim (`WallHandles.jsx`/`wallEdit.js`); bird's-eye overview angle (`CompoundScene` `overview`); per-room facings + cross-fade knobs (`styles.css`); the compound-map squash from the Observatory outlier; the Glass Bridge's generic feel-chips.
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
