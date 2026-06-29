@@ -21,7 +21,7 @@ export const ROOM_PINS = {
     { x: 13, y: 35, label: 'South Garden View', kind: 'view',
       note: 'Twelve-over-twelve south sash framing the rear garden and canyon edge beyond, porch-shaded in summer — Glebe fenestration with Hill Country light.' },
     { x: 57, y: 47, label: 'Mustard Bookshelf', kind: 'heritage',
-      note: "Captain Jack's one deliberate eccentricity within Glebe formality — a painted bookshelf providing the room's primary color note against white plaster walls." },
+      note: "Captain Jack's one deliberate eccentricity within Glebe formality — a mustard-painted bookshelf, its warmth set against the room's deep red walls." },
   ],
 };
 
