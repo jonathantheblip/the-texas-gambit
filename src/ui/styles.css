@@ -19,6 +19,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 
 .loading-3d { display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
 
+/* Render-held cross-fade when stepping through a render into the 3D massing.
+   Opacity is set inline (1 → 0) so the transition fires deterministically. */
+.massing-curtain { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 50; background: var(--bg); transition: opacity 550ms ease; pointer-events: none; }
+
 .layout { display: flex; height: 100vh; width: 100vw; }
 .stage { flex: 1; position: relative; min-width: 0; }
 .stage canvas { display: block; touch-action: none; }

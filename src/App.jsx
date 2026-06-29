@@ -6,6 +6,7 @@ import { nav } from './nav/navStore.js';
 import { useNav } from './nav/useNav.js';
 import Gallery from './ui/Gallery.jsx';
 import RoomView from './ui/RoomView.jsx';
+import MassingCurtain from './ui/MassingCurtain.jsx';
 
 // The 3D view pulls in three.js / r3f / drei (~1 MB). Load it only when the
 // user steps into the massing, so the render-forward gallery stays light on mobile.
@@ -22,14 +23,22 @@ export default function App() {
   const rooms = useMemo(() => applyOverrides(ALL_ROOMS, overrides), [overrides]);
 
   if (view.mode === 'model') {
+    const focusRoom = rooms.find((r) => r.id === (view.focusId || view.roomId));
     return (
-      <Suspense fallback={<div className="loading-3d">Loading the 3D model…</div>}>
-        <ModelView
-          initialSelectedId={view.focusId || view.roomId || null}
-          onExit={() => nav.goGallery()}
-          onOpenRender={(id) => nav.goRoom(id)}
-        />
-      </Suspense>
+      <>
+        <Suspense fallback={<div className="loading-3d">Loading the 3D model…</div>}>
+          <ModelView
+            initialSelectedId={view.focusId || view.roomId || null}
+            facing={view.facing}
+            backLabel={view.fromWalk ? '← Back to the walk' : '← Compound'}
+            onExit={() => (view.fromWalk ? nav.goRoom(view.focusId || view.roomId) : nav.goGallery())}
+            onOpenRender={(id) => nav.goRoom(id)}
+          />
+        </Suspense>
+        {/* Held render that cross-fades into the 3D when you step through (kept
+            OUTSIDE Suspense so it covers the lazy-load too — no "Loading" flash). */}
+        {view.fromWalk && focusRoom?.renderImage && <MassingCurtain src={focusRoom.renderImage} />}
+      </>
     );
   }
 
@@ -45,7 +54,7 @@ export default function App() {
         room={room}
         neighbors={neighbors}
         onBack={() => nav.goGallery()}
-        onStepInto={(id) => nav.openModel(id)}
+        onStepInto={(id) => nav.enterMassing(id)}
         onGoRoom={(id, heading) => nav.stepTo(id, heading)}
       />
     );

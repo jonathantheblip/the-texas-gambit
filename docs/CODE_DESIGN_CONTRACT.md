@@ -58,5 +58,22 @@ Code runs the actual move (ease-in-out, ~1.1s) inside the scene and emits arriva
 ## 5. "Walk from the front door"
 Just a **start id**: `ENTRY_ROOM === 'front_porch'`. The walk is free from there (adjacency-driven) — Helen wanders. If you want a gentle guided first route, say so and Code will add `suggestedRoute()`.
 
-## Logistics
-Same repo, same files — pull and import. Prototyping the arrival feel in the Sunroom group now and wiring to `neighborsOf` when convenient is exactly right; the shapes above are stable, so that prototype will drop straight in.
+## 6. Stepping through a render into the massing  (in-page)
+The app is a single page → **in-page, not a route** (there is no `diorama.html`) — which is exactly what lets the render cross-fade into the canvas in place. Room ids are the same `walk_graph.json` ids throughout.
+```js
+import { massing } from './scene/massing.js';
+const s = massing.open(roomId, {
+  facing,               // 'N'|'E'|'S'|'W' arrival pose (optional; isometric default otherwise)
+  onReady: (id) => {},  // first frame painted — cross-fade the render out now
+  onExit:  (id) => {},  // user returned to the walk
+});
+s.close();              // programmatic return to the same room's walk
+```
+- **Arrival pose:** pass `facing` (your N/E/S/W per room) → the camera opens roughly to that wall, then hands off to free orbit (the hybrid arrival).
+- **Ready:** `cameraBus.onReady` fires on first paint (no empty-canvas flash); `cameraBus.onArrival` fires when the drift settles.
+- **Return:** a "← Back to the walk" control returns to the same room; `s.close()` does it programmatically.
+- **The fade:** Code already holds the room's render full-frame and fades it out on ready (`styles.css` `.massing-curtain`, currently 550 ms). Tell us the timing/easing/dissolve and we'll match it.
+- The shared encoding (color = building, opacity = render-state) is preserved in the massing.
+
+## Logistics (Design has no repo access)
+Don't pull the repo — design against this contract + the portable pack (`design-handoff/`, regenerable with `npm run export:design`). Send your spec or prototype back through Jon and **Code implements it into the app** against the live `neighborsOf` / `cameraBus` / `massing`, so it's the real thing. The shapes here are stable, so your Sunroom prototype drops straight in.

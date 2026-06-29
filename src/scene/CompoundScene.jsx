@@ -35,10 +35,11 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode }) {
+function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing }) {
   const controls = useRef();
   const { camera } = useThree();
   const tween = useRef(null);
+  const inited = useRef(false);
   const { center, radius, gridSize, gridCenter, northTip } = framing;
 
   useEffect(() => {
@@ -46,23 +47,42 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
     if (c) { c.target.set(center[0], center[1], center[2]); c.update(); }
   }, [center]);
 
-  // Camera drift API — Design calls cameraBus.driftTo(roomId); Code owns the move.
-  useEffect(() => cameraBus._register((roomId) => {
+  // Place the camera on the side you "came from" so arrival ≈ the render's viewpoint.
+  function offsetFor(facing, dist) {
+    const h = dist * 0.5;
+    switch (facing) {
+      case 'N': return [0, h, dist];      // looking north (−z) → camera to the south (+z)
+      case 'S': return [0, h, -dist];
+      case 'E': return [-dist, h, 0];     // looking east (+x) → camera to the west (−x)
+      case 'W': return [dist, h, 0];
+      default:  return [dist * 0.6, h, dist * 0.7]; // isometric default
+    }
+  }
+  function driftToRoom(roomId, facing = null) {
     const room = allRooms?.find((r) => r.id === roomId);
     if (!room || !controls.current) return;
     const b = roomBox(room);
     const target = new THREE.Vector3(b.position[0], b.position[1], b.position[2]);
     const dist = Math.max(room.w, room.d, room.height) * 2.4 + 16;
+    const [ox, oy, oz] = offsetFor(facing, dist);
     tween.current = {
       t: 0, dur: 1.1, roomId,
       fromPos: camera.position.clone(),
-      toPos: target.clone().add(new THREE.Vector3(dist * 0.6, dist * 0.55, dist * 0.7)),
+      toPos: target.clone().add(new THREE.Vector3(ox, oy, oz)),
       fromTarget: controls.current.target.clone(),
       toTarget: target,
     };
-  }), [allRooms, camera]);
+  }
+
+  // Design's camera API: cameraBus.driftTo(roomId, facing). Code owns the move.
+  useEffect(() => cameraBus._register((roomId, facing) => driftToRoom(roomId, facing)), [allRooms, camera]);
 
   useFrame((_, dt) => {
+    if (!inited.current) {
+      inited.current = true;
+      if (selectedId) driftToRoom(selectedId, entryFacing); // arrival pose on entry
+      cameraBus._ready(selectedId || null);                  // first frame painted → safe to cross-fade
+    }
     const tw = tween.current;
     if (!tw || !controls.current) return;
     tw.t = Math.min(1, tw.t + dt / tw.dur);
@@ -101,7 +121,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
   );
 }
 
-export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both' }) {
+export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null }) {
   const framing = useFraming(framingRooms);
   const camPos = useMemo(() => {
     const [cx, cy, cz] = framing.center;
@@ -115,7 +135,7 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} />
+      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} />
     </Canvas>
   );
 }

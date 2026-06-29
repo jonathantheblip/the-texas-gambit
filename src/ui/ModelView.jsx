@@ -24,7 +24,7 @@ function EditRow({ label, value, onChange }) {
 }
 
 /** The "stepped-into" 3D massing view: scene + locks/layers/edit panel. */
-export default function ModelView({ onExit, initialSelectedId = null, onOpenRender }) {
+export default function ModelView({ onExit, initialSelectedId = null, onOpenRender, facing = null, backLabel = '← Compound' }) {
   const [selectedId, setSelectedId] = useState(initialSelectedId);
   const [hiddenBuildings, setHiddenBuildings] = useState(() => new Set());
   const [hiddenFloors, setHiddenFloors] = useState(() => new Set());
@@ -88,7 +88,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
     <div className="layout">
       <div className="stage">
         <div className="stage-hud">
-          <button className="back-btn" onClick={onExit}>← Compound</button>
+          <button className="back-btn" onClick={onExit}>{backLabel}</button>
           <div className="title">3D Massing</div>
           <div className="meta">{visibleRooms.length} of {ALL_ROOMS.length} spaces · generated from the room table</div>
         </div>
@@ -105,6 +105,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           onSelect={setSelectedId}
           xray={xray}
           mode={viewMode}
+          entryFacing={facing}
         />
       </div>
 
