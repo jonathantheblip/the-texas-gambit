@@ -35,7 +35,7 @@ function useFraming(rooms) {
   }, [rooms]);
 }
 
-function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing }) {
+function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, mode, entryFacing, focusId }) {
   const controls = useRef();
   const { camera } = useThree();
   const tween = useRef(null);
@@ -63,7 +63,9 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
     if (!room || !controls.current) return;
     const b = roomBox(room);
     const target = new THREE.Vector3(b.position[0], b.position[1], b.position[2]);
-    const dist = Math.max(room.w, room.d, room.height) * 2.4 + 16;
+    // Frame the room closely so stepping in lands ON that space, not the whole estate
+    // — but with enough room to read its full shape against the faded neighbors.
+    const dist = Math.max(room.w, room.d, room.height) * 2.0 + 16;
     const [ox, oy, oz] = offsetFor(facing, dist);
     tween.current = {
       t: 0, dur: 1.1, roomId,
@@ -110,7 +112,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
       <Html position={northTip} center style={{ font: '600 13px Inter, sans-serif', color: '#9a3b2a', pointerEvents: 'none' }}>N</Html>
 
       {mode !== 'diorama' && rooms.map((r) => (
-        <RoomBox key={r.id} room={r} selected={r.id === selectedId} xray={xray || mode === 'both'} onSelect={onSelect} />
+        <RoomBox key={r.id} room={r} selected={r.id === selectedId} xray={xray || mode === 'both'} dim={Boolean(focusId) && r.id !== focusId} onSelect={onSelect} />
       ))}
       {mode !== 'massing' && (
         <Diorama rooms={rooms.filter((r) => r.renderImage)} selectedId={selectedId} onSelect={onSelect} />
@@ -121,7 +123,7 @@ function SceneContents({ rooms, framing, allRooms, selectedId, onSelect, xray, m
   );
 }
 
-export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null }) {
+export default function CompoundScene({ rooms, framingRooms, selectedId, onSelect, xray, mode = 'both', entryFacing = null, focusId = null }) {
   const framing = useFraming(framingRooms);
   const camPos = useMemo(() => {
     const [cx, cy, cz] = framing.center;
@@ -135,7 +137,7 @@ export default function CompoundScene({ rooms, framingRooms, selectedId, onSelec
       onPointerMissed={() => onSelect(null)}
       dpr={[1, 2]}
     >
-      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} />
+      <SceneContents rooms={rooms} framing={framing} allRooms={framingRooms} selectedId={selectedId} onSelect={onSelect} xray={xray} mode={mode} entryFacing={entryFacing} focusId={focusId} />
     </Canvas>
   );
 }

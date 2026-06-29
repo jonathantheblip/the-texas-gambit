@@ -10,12 +10,17 @@ const BASE_EDGE = '#2c281f';
  * One room rendered as a box, generated from the room table via roomBox().
  * Geometry is a unit cube scaled to [W, height, D] — never authored directly.
  */
-export default function RoomBox({ room, selected, xray, onSelect }) {
+const DIM_EDGE = '#cfc8ba';
+
+export default function RoomBox({ room, selected, xray, dim, onSelect }) {
   const box = useMemo(() => roomBox(room), [room]);
   const color = useMemo(() => new THREE.Color(box.color[0], box.color[1], box.color[2]), [box.color]);
 
   // X-ray makes everything translucent so you can read interior layout.
-  const opacity = xray ? Math.min(box.opacity, 0.22) : box.opacity;
+  const base = xray ? Math.min(box.opacity, 0.22) : box.opacity;
+  // `dim` ghosts the rooms you're NOT focused on (step-into from the walk), so the
+  // room you're in reads clearly. Faded box + near-background edges.
+  const opacity = dim ? Math.min(base, 0.06) : base;
   const transparent = opacity < 1;
 
   return (
@@ -35,12 +40,11 @@ export default function RoomBox({ room, selected, xray, onSelect }) {
         roughness={0.92}
         metalness={0}
         emissive={SELECT_EDGE}
-        emissiveIntensity={selected ? 0.22 : 0}
+        emissiveIntensity={selected && !dim ? 0.22 : 0}
       />
       <Edges
         threshold={15}
-        color={selected ? SELECT_EDGE : BASE_EDGE}
-        // container shells read fainter so carved children pop
+        color={dim ? DIM_EDGE : selected ? SELECT_EDGE : BASE_EDGE}
         scale={1}
       />
     </mesh>

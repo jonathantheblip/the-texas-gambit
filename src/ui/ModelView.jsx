@@ -45,6 +45,11 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
   // lit), not Both (which billboards all 41 renders into an overlapping collage).
   // The renders live in the Walk you just came from; the 3D is for volume.
   const [viewMode, setViewMode] = useState(arriving ? 'massing' : 'both');
+  // Focus mode (step-in from the walk): frame the room close, fade the others to
+  // ghosts, show only this room's render. Clears the moment the view mode is
+  // changed — the panel stays user-agnostic, anyone can choose to see everything.
+  const [focusActive, setFocusActive] = useState(arriving);
+  const pickMode = (m) => { setViewMode(m); setFocusActive(false); };
   const [identity, setIdent] = useState(getIdentity);
   const fileRef = useRef();
 
@@ -109,7 +114,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
         <div className="stage-tip">drag to orbit · scroll to zoom · right-drag to pan · click a space</div>
         <div className="viewmode">
           {[['both', 'Both'], ['diorama', 'Renders'], ['massing', 'Massing']].map(([m, label]) => (
-            <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => setViewMode(m)}>{label}</button>
+            <button key={m} className={viewMode === m ? 'on' : ''} onClick={() => pickMode(m)}>{label}</button>
           ))}
         </div>
         <CompoundScene
@@ -120,6 +125,7 @@ export default function ModelView({ onExit, initialSelectedId = null, onOpenRend
           xray={xray}
           mode={viewMode}
           entryFacing={facing}
+          focusId={focusActive ? selectedId : null}
         />
       </div>
 
