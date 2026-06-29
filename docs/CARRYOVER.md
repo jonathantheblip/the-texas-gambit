@@ -43,19 +43,31 @@ The **dream** (Marble/Skybox immersive 360) — needs new 360 art. Tested, prove
 
 ## Gotchas
 - **npm EACCES** (root-owned `~/.npm`): pass `--cache /private/tmp/<scratchpad>/.npmcache`. Don't `sudo`.
-- **Supabase**: set up by Jon (schema included) — treat it as done, don't re-flag it. The sandbox preview shows "Local only" only because the preview can't reach realtime; that's the sandbox, not a missing table. Verify sync post-deploy, not in the sandbox.
+- **Supabase**: schema now complete — all tables exist incl. `room_overrides` (created 2026-06-29). All sync paths work live. Note: the sandbox preview CAN reach Supabase REST (it returns real errors), so "table not found" there is real, not a sandbox artifact (that's how we caught the missing table). Realtime websockets may not connect in-sandbox → it can read "Local only" there; verify true cross-device sync on real devices.
 - App code may use `Date.now()`/`Math.random()` freely (the ban is only inside Workflow scripts).
 
 ## Iteration after launch (2026-06-29, live)
 Shipped to `main`/live in response to Jon's review of the live app:
 - **Plain-language names** — `room.displayName` drops the architect suffix ("(front, S-ctr)", "(SW)") everywhere Helen reads; full `r.name` kept for validation. Floors read Ground/Upper/Roof/Outdoor.
 - **Calm step-into** — stepping in from the walk lands in Massing (not the all-renders "Both" collage) AND focuses: camera frames the entered room, other rooms fade to ghosts, their renders gone; the room you're in stays prominent. Any view-toggle clears focus → see everything (panel stays user-agnostic).
-- **Old-icon 404 fix** earlier: `public/{helen,jon,Hill Country Estate}.html` redirect into the app (Helen's existing home-screen icon works — no re-add; she "doesn't do homework").
+- **Old-icon 404 fix**: `public/{helen,jon,Hill Country Estate}.html` redirect into the app (Helen's existing home-screen icon works — no re-add; she "doesn't do homework").
+- **3 renders** (from Jon's Midjourney pass): Entry Hall (the grand octagonal stair — replaced the old faces-render), Drawing Room (red refresh, faces removed; writing/spec aligned to red), Glass Bridge (new — filled a placeholder). WebP via `optimize_images.mjs`. Renders-with-art 41→42/53.
+- **Entry Hall + staircase = one space** (`src/data/aliases.js`): `octagonal_stair_hall` folds into `entry_hall_front_s_ctr` across walk, nav, massing, and map — geometry/locks untouched (still two real volumes). The stair-up lives on the Entry Hall; you never walk "between" the halves.
+- **Glass Bridge caption** (`legacy_content` `glass-bridge` + join source) — makes the year-round comfort explicit (solar-control glass, brise-soleil, radiant + ridge vents).
+- **Caption legibility** (`walk.css`): hero captions washed out over bright renders (e.g. the pale stair) — added a localized scrim behind the caption + dark-glass feel-cue chips so text reads over any render. (This + plain-language names = both halves of Jon's "readability + S-ctr" ask.)
 
 **Supabase — all sync live (resolved 2026-06-29):** Jon created the missing `room_overrides` table; verified via REST (read 200 + insert/delete round-trip). All four sync paths now work live: dimension edits (`room_overrides`), notes (`notes`), feel-chips (`room_state.mood`), plus the legacy `pins`/`journal`. The "one shared view" is fully wired.
 
 ## Deploy — DONE (live)
 **Shipped 2026-06-29.** `main` pushed at `e269646` → `.github/workflows/deploy.yml` published to **https://jonathantheblip.github.io/the-texas-gambit/** (CI green; live URL 200, serving the new app). Unblocked when Jon granted the session account (`jonathan-crescent`) Write on the repo — see [[reference-deploy-push-credential]]; future autonomous pushes work with that access in place. **One open post-deploy check:** confirm cross-device **sync** on a real device (note on one → appears on another); can't be tested in the sandbox (shows "Local only"). Per the north star, only deploy after integrated + green (`npm test` + `npm run validate` + build) + phone-verified — never half-built.
+
+## Open / next session
+The app is shipped, live, and clean — no known bugs; 31 tests + validate + build green. What's genuinely left:
+1. **Real-device sync check (Jon only — can't be done in-sandbox):** open on two devices, leave a note (or nudge a wall) on one, confirm it appears on the other. Code is additive + degrades to local, so low risk; just unconfirmed end-to-end.
+2. **More renders:** 11 rooms still show the striped placeholder (mostly back-of-house: mechanical/laundry, tea station, pool bath, sauna, airlock, compute/research rooms, instrument bay, podcast studio, dome/oculus). Fill the *experienced* ones as Midjourney produces them — Jon drops files in `~/Downloads` named by room, Code converts (`optimize_images.mjs`) + wires the join. The reusable Midjourney kickoff prompt is in this session's history.
+3. **Design's next-layer items** (still on the table): walk-between fly-to *in 3D* (`cameraBus.driftTo` + `onArrival`), grab-a-wall tactile editing (number inputs today), spatial pins on the render, and ④ the whole-compound **bird's-eye** (building masses + phase opacity + click-to-fly).
+4. **A second staircase view** — Jon wants it eventually; Claude Chat is struggling to generate it. Parked, not blocking.
+5. **First-pass tunables** (fine to leave): per-room facings + the cross-fade knobs (in `styles.css`), the compound-map squash from the Observatory outlier, and the Glass Bridge's generic feel-chips (no seeded set).
 
 ## Overnight-run protocol
 1. **Ingest** Design's dropped file. Read NORTH_STAR.md + this file + skim CODE_DESIGN_CONTRACT.md.
