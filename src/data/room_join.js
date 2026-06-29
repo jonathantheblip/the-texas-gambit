@@ -39,7 +39,7 @@ export const ROOM_JOIN = {
   primary_terrace:                            { source: 'primary-suite',  render: 'mbu_primaryterrace_hero.png' },
 
   // ── Main Block · crown ──
-  dome_oculus:                                { source: null,             render: null },
+  dome_oculus:                                { source: null,             render: 'mbg_oculus-staircase_hero.png' },
 
   // ── Orangery ──
   orangery:                                   { source: 'orangery',       render: 'mbg_orangery_hero.png' },
@@ -52,8 +52,8 @@ export const ROOM_JOIN = {
   pantry_wine_room:                           { source: 'pantry',         render: 'sw_pantry_hero.png' }, // combined Pantry + Wine Room
   scullery:                                   { source: 'scullery',       render: 'sw_scullery_hero.png' },
   mudroom:                                    { source: 'mudroom',        render: 'sw_mudroom_hero.png' },
-  mechanical_laundry:                         { source: null,             render: null },
-  tea_station:                                { source: null,             render: null },
+  mechanical_laundry:                         { source: null,             render: 'sw_laundry_hero.png' },
+  tea_station:                                { source: null,             render: 'sw_teastation_hero.png' },
 
   // ── Wharf Wing ──
   glass_bridge:                               { source: 'glass-bridge',   render: 'ww_glassbridge_hero.png' },
@@ -62,23 +62,23 @@ export const ROOM_JOIN = {
   guest_bedroom:                              { source: 'guest-suite',    render: 'ww_guestbedroom_hero.png' },
   guest_sitting:                              { source: 'guest-suite',    render: 'ww_guestsitting_hero.png' },
   guest_en_suite:                             { source: 'guest-suite',    render: 'ww_guestensuite_hero.png' },
-  pool_bath:                                  { source: null,             render: null },
-  sauna:                                      { source: null,             render: null },
+  pool_bath:                                  { source: null,             render: 'ww_poolbath_hero.png' },
+  sauna:                                      { source: null,             render: 'ob_sauna_hero.png' },
 
   // ── Motor Barn ──
   cornelia_s_greenhouse:                      { source: 'greenhouse',     render: 'ob_motorbarngreenhouse_hero.png' },
   vehicle_bay_1:                              { source: 'garage',         render: 'ob_motorbarngarage_hero.png' },
   vehicle_bay_2:                              { source: 'garage',         render: 'ob_motorbarngarage_hero.png' },
   vehicle_bay_3:                              { source: 'garage',         render: 'ob_motorbarngarage_hero.png' },
-  energy_forge:                               { source: 'motor-barn-utility', render: 'ob_motorbarnutility_hero.png' },
-  airlock:                                    { source: null,             render: null },
-  compute_room:                               { source: null,             render: null },
-  research_room:                              { source: null,             render: null },
-  instrument_bay_upgrade:                     { source: null,             render: null },
+  energy_forge:                               { source: 'motor-barn-utility', render: 'ob_motorbarn-energyforge_hero.png' },
+  airlock:                                    { source: null,             render: 'ob_motorbarn-airlock_hero.png' },
+  compute_room:                               { source: null,             render: 'ob_motorbarn-computeroom_hero.png' },
+  research_room:                              { source: null,             render: 'ob_motorbarn-researchroom_hero.png' },
+  instrument_bay_upgrade:                     { source: null,             render: 'ob_motorbarn-instrumentbay_hero.png' },
 
   // ── Motor Barn · loft ──
   loft:                                       { source: 'motor-barn-loft',render: 'ob_motorbarnloft_hero.png' },
-  podcast_studio:                             { source: 'motor-barn-loft',render: null }, // carved inside the Loft
+  podcast_studio:                             { source: 'motor-barn-loft',render: 'ob_motorbarn-podcaststudio_hero.png' }, // carved inside the Loft
 
   // ── Observatory ──
   observatory_tower:                          { source: 'observatory',    render: 'ob_observatoryint_hero.png' },
