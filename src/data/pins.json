@@ -365,5 +365,21 @@
     { "x": 20, "y": 35, "label": "Limestone Tower Walls", "kind": "material", "note": "Raw limestone with multiple sash windows — the Observatory reads as a Glebe folly from outside, an instrument room from inside." },
     { "x": 75, "y": 55, "label": "Reading Corner", "kind": "heritage", "note": "Leather chair and bookshelf between the windows — the room doubles as a retreat when the telescope isn't in use." },
     { "x": 48, "y": 80, "label": "Setback Validation", "kind": "feature", "note": "At least 200 feet from Pool, 150 feet from Motor Barn — locked distances enforced by the compound model's validation gates." }
+  ],
+
+  "vehicle_bay_2": [
+    { "x": 38, "y": 35, "label": "Arched Bays", "kind": "material", "note": "Limestone arches opening onto the drive — Georgian proportions scaled to trucks, not carriages." },
+    { "x": 55, "y": 45, "label": "EV Charger", "kind": "feature", "note": "Wall-mounted charger between bays — V2G pre-wired Phase 2A, the compound's energy system starts at the vehicle." },
+    { "x": 48, "y": 10, "label": "Barrel-Vault Ceiling", "kind": "material", "note": "Cedar barrel vault — the Motor Barn's interior reads as architecture, not garage." },
+    { "x": 18, "y": 55, "label": "Walnut Workbench", "kind": "heritage", "note": "Coffee cup, radio, leather tool roll — the bay is a workshop that happens to store vehicles." },
+    { "x": 48, "y": 85, "label": "Storm Shelter Access", "kind": "feature", "note": "Flush-mount pit beneath the slab — Shelter #3, prefab steel, brass hinged door, PoE/Wi-Fi via buried conduit." }
+  ],
+
+  "vehicle_bay_3": [
+    { "x": 38, "y": 35, "label": "Arched Bays", "kind": "material", "note": "Limestone arches opening onto the drive — Georgian proportions scaled to trucks, not carriages." },
+    { "x": 55, "y": 45, "label": "EV Charger", "kind": "feature", "note": "Wall-mounted charger between bays — V2G pre-wired Phase 2A, the compound's energy system starts at the vehicle." },
+    { "x": 48, "y": 10, "label": "Barrel-Vault Ceiling", "kind": "material", "note": "Cedar barrel vault — the Motor Barn's interior reads as architecture, not garage." },
+    { "x": 18, "y": 55, "label": "Walnut Workbench", "kind": "heritage", "note": "Coffee cup, radio, leather tool roll — the bay is a workshop that happens to store vehicles." },
+    { "x": 48, "y": 85, "label": "Storm Shelter Access", "kind": "feature", "note": "Flush-mount pit beneath the slab — Shelter #3, prefab steel, brass hinged door, PoE/Wi-Fi via buried conduit." }
   ]
 }
