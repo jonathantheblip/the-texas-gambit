@@ -214,10 +214,23 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 .g-cta.ghost { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.65); }
 .g-cta.ghost:hover { background: rgba(255,255,255,.3); }
 
-.g-building { padding: 30px 32px 6px; }
-.g-building h2 { font-family: var(--serif-display); font-weight: 600; font-size: 22px; margin: 0 0 16px; display: flex; align-items: center; gap: 14px; color: var(--ink); }
-.g-building h2::after { content: ''; flex: 1; height: 1px; background: var(--panel-edge); }
+.g-building { padding: 0 32px; }
+/* Building header = the collapse control (name · count · rule · chevron). */
+.g-building-head { width: 100%; border: 0; background: none; margin: 0; padding: 18px 0; cursor: pointer; font: inherit;
+  display: flex; align-items: center; gap: 14px; color: var(--ink); text-align: left; -webkit-tap-highlight-color: transparent; }
+.g-building-name { font-family: var(--serif-display); font-weight: 600; font-size: 22px; }
+.g-building-count { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.g-building-head .g-rule { flex: 1; height: 1px; background: var(--panel-edge); }
+.g-chevron { width: 16px; height: 16px; flex: none; color: var(--ink-soft); transition: transform .25s ease; }
+.g-building.open .g-chevron { transform: rotate(90deg); }
+.g-building-head:hover .g-building-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+/* Body collapses via the 0fr→1fr grid-rows trick (animates without a fixed height). */
+.g-building-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.2,.7,.2,1); }
+.g-building.open .g-building-body { grid-template-rows: 1fr; }
+.g-building-inner { overflow: hidden; }
+.g-building.open .g-building-inner { padding: 2px 0 24px; }
 .g-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+@media (prefers-reduced-motion: reduce) { .g-building-body, .g-chevron { transition: none; } }
 .g-card { border: none; background: none; padding: 0; cursor: pointer; text-align: left; font: inherit; }
 .g-card-img { aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; background: #e6e1d6; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
 .g-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }

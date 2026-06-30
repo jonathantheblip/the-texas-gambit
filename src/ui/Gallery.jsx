@@ -1,9 +1,19 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { BUILDINGS, ANCESTORS, compoundRender } from '../data/rooms.js';
+
+const OPEN_KEY = 'tg.gallery.open';
+// Which building sections are expanded — collapsed by default, remembered for the
+// session so opening a room and coming back doesn't re-collapse what you were in.
+function loadOpen() {
+  try { const v = sessionStorage.getItem(OPEN_KEY); return new Set(v ? JSON.parse(v) : []); }
+  catch { return new Set(); }
+}
 
 /**
  * Render-forward home: the compound's colored-pencil illustrations ARE the
  * surface. Each room is its render; clicking one steps you toward its 3D massing.
+ * Buildings are collapsible sections (collapsed by default) so the non-Main-Block
+ * wings are one tap away instead of a long scroll.
  */
 export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk }) {
   // Only rooms that have a render belong on the lookbook wall; the back-of-house
@@ -13,6 +23,14 @@ export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk })
     () => BUILDINGS.map((b) => [b, rendered.filter((r) => r.building === b)]).filter(([, rs]) => rs.length),
     [rendered]
   );
+
+  const [open, setOpen] = useState(loadOpen);
+  const toggle = (b) => setOpen((prev) => {
+    const next = new Set(prev);
+    next.has(b) ? next.delete(b) : next.add(b);
+    try { sessionStorage.setItem(OPEN_KEY, JSON.stringify([...next])); } catch { /* private mode */ }
+    return next;
+  });
 
   return (
     <div className="gallery">
@@ -28,26 +46,42 @@ export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk })
         </div>
       </header>
 
-      {groups.map(([b, rs]) => (
-        <section className="g-building" key={b}>
-          <h2>{b}</h2>
-          <div className="g-grid">
-            {rs.map((r) => (
-              <button className="g-card" key={r.id} onClick={() => onOpenRoom(r.id)}>
-                <div className="g-card-img"><img src={r.renderImage} alt={r.displayName} loading="lazy" /></div>
-                <div className="g-card-cap">
-                  <span className="g-card-name">{r.displayName}</span>
-                  {r.ancestors?.[0] && (
-                    <span className="g-card-anc" style={{ '--chip': ANCESTORS[r.ancestors[0]]?.color || '#999' }}>
-                      {ANCESTORS[r.ancestors[0]]?.name || r.ancestors[0]}
-                    </span>
-                  )}
+      {groups.map(([b, rs]) => {
+        const isOpen = open.has(b);
+        const bodyId = `g-body-${b.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+        return (
+          <section className={`g-building${isOpen ? ' open' : ''}`} key={b}>
+            <button type="button" className="g-building-head" onClick={() => toggle(b)}
+              aria-expanded={isOpen} aria-controls={bodyId}>
+              <span className="g-building-name">{b}</span>
+              <span className="g-building-count">{rs.length}</span>
+              <span className="g-rule" aria-hidden="true" />
+              <svg className="g-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <div className="g-building-body" id={bodyId} role="region" aria-label={b}>
+              <div className="g-building-inner">
+                <div className="g-grid">
+                  {rs.map((r) => (
+                    <button className="g-card" key={r.id} onClick={() => onOpenRoom(r.id)} tabIndex={isOpen ? 0 : -1}>
+                      <div className="g-card-img"><img src={r.renderImage} alt={r.displayName} loading="lazy" /></div>
+                      <div className="g-card-cap">
+                        <span className="g-card-name">{r.displayName}</span>
+                        {r.ancestors?.[0] && (
+                          <span className="g-card-anc" style={{ '--chip': ANCESTORS[r.ancestors[0]]?.color || '#999' }}>
+                            {ANCESTORS[r.ancestors[0]]?.name || r.ancestors[0]}
+                          </span>
+                        )}
+                      </div>
+                    </button>
+                  ))}
                 </div>
-              </button>
-            ))}
-          </div>
-        </section>
-      ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
 
       <footer className="g-foot">
         Provisional feel-model · room dimensions re-derive at the architect's Design Development (~2031)
