@@ -7,6 +7,7 @@ import { FEEL } from '../data/feel.js';
 import { cameraBus } from '../scene/cameraBus.js';
 import { getFlyEnabled, setFlyEnabled as persistFlyEnabled, arrivalFacing } from '../scene/flyto.js';
 import { pinsFor } from '../data/pins.js';
+import { decisionPinsFor } from '../data/decisions.js';
 import WalkMap from './WalkMap.jsx';
 import ReadingSheet from './ReadingSheet.jsx';
 import RenderPins from './RenderPins.jsx';
@@ -28,15 +29,20 @@ const firstSentence = (t) => { const m = t && t.match(/^[^.]+\./); return m ? m[
 /** A render frame — the "you are standing here" surface, with its caption.
  *  Render pins (Design's entry affordance) breathe on the render itself — no chip;
  *  they're passed only to the room you're standing in, never the one leaving. */
-function Frame({ room, anim, onReadMore, pins = null, onOpenPin }) {
+function Frame({ room, anim, onReadMore, pins = null, decisionPins = [], onOpenPin, onOpenDecision }) {
   const anc = lineageOf(room.building);
   const cues = (FEEL[room.id] || []).slice(0, 2);
+  // Decision pins (kind:'decision') ride the same resting-ring layer as the four
+  // content kinds, appended after them so `onOpenPin`'s index still lines up with
+  // the plain `pins` array RenderPins uses for the look-closer.
+  const restPins = pins ? [...pins, ...decisionPins] : (decisionPins.length ? decisionPins : null);
   return (
     <div className={`wk-frame ${room.renderImage ? 'has-render' : 'no-render'} ${anim}`}
       style={room.renderImage ? { backgroundImage: `url("${room.renderImage}")` } : undefined}>
       {!room.renderImage && <div className="wk-massing-mark"><div className="box" /></div>}
-      {room.renderImage && pins && pins.length > 0 && (
-        <RestingPins render={room.renderImage} pins={pins} onOpen={onOpenPin} />
+      {room.renderImage && restPins && restPins.length > 0 && (
+        <RestingPins render={room.renderImage} pins={restPins}
+          onOpen={(i) => { const p = restPins[i]; p.kind === 'decision' ? onOpenDecision(p.decisionId) : onOpenPin(i); }} />
       )}
       <div className="wk-cap">
         <div className="wk-cap-meta">
@@ -69,6 +75,7 @@ export default function Walk({ rooms }) {
   const roomId = view.roomId;
   const room = byId[roomId];
   const pins = useMemo(() => pinsFor(roomId), [roomId]);
+  const decisionPins = useMemo(() => decisionPinsFor(roomId), [roomId]);
 
   const [reading, setReading] = useState(false);
   const [lcPin, setLcPin] = useState(null);   // look-closer: null = closed, else the tapped pin index
@@ -216,7 +223,8 @@ export default function Walk({ rooms }) {
         <Frame key={current.key} room={current.room || room}
           anim={current.kind === 'fly' ? (flyPhase === 'land' ? 'fly-land' : 'fly-hold') : `enter-${current.dir}`}
           onReadMore={() => setReading(true)}
-          pins={pins} onOpenPin={(i) => setLcPin(i)} />
+          pins={pins} decisionPins={decisionPins} onOpenPin={(i) => setLcPin(i)}
+          onOpenDecision={(id) => nav.goDecisions(id)} />
       </div>
 
       {exiting && <div className="wk-wipe" key={`w${exiting.key}`} style={{ '--wk-wipe-angle': WIPE_ANGLE[exiting.dir] || '90deg' }} />}

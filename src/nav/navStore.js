@@ -10,7 +10,7 @@ import { ENTRY_ROOM } from '../data/adjacency.js';
 import { facingOf } from '../data/facings.js';
 import { canonicalId } from '../data/aliases.js';
 
-let state = { mode: 'gallery', roomId: null, focusId: null, facing: null, fromWalk: false, lastHeading: null };
+let state = { mode: 'gallery', roomId: null, focusId: null, facing: null, fromWalk: false, lastHeading: null, decisionId: null };
 const listeners = new Set();
 const emit = () => { for (const fn of listeners) fn(state); };
 
@@ -20,7 +20,7 @@ export const subscribeNav = (fn) => { listeners.add(fn); return () => listeners.
 function set(next) { state = { ...state, ...next }; emit(); }
 
 export const nav = {
-  goGallery: () => set({ mode: 'gallery', roomId: null, focusId: null, facing: null, fromWalk: false, lastHeading: null }),
+  goGallery: () => set({ mode: 'gallery', roomId: null, focusId: null, facing: null, fromWalk: false, lastHeading: null, decisionId: null }),
   // ids are canonicalized (aliases.js) so you never land on a room that's really
   // half of another space — e.g. the Octagonal Stair Hall resolves to the Entry Hall.
   goRoom: (id) => set({ mode: 'room', roomId: canonicalId(id), fromWalk: false, lastHeading: null }),
@@ -33,4 +33,8 @@ export const nav = {
   enterMassing: (id, facing = null) => { const cid = canonicalId(id); set({ mode: 'model', focusId: cid, roomId: cid, facing: facing ?? facingOf(cid), fromWalk: true }); },
   back: () => set({ mode: 'gallery', roomId: null }),
   current: () => state.roomId,
+  // Open Decisions: a standalone surface, reachable from the primary nav (Gallery)
+  // or by deep-linking off a decision pin. `roomId` is left untouched so "back"
+  // returns to wherever you came from (a room, or the gallery).
+  goDecisions: (decisionId = null) => set({ mode: 'decisions', decisionId }),
 };

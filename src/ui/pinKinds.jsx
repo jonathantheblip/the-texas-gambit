@@ -5,12 +5,13 @@
  * vision. Colours/sizes themselves live as tokens in walk.css; this is the shared
  * vocabulary (labels, hints, icons) + the two ring SVGs the pins draw with.
  */
-export const KIND_LABEL = { material: 'Material', view: 'View', feature: 'Feature', heritage: 'Heritage' };
+export const KIND_LABEL = { material: 'Material', view: 'View', feature: 'Feature', heritage: 'Heritage', decision: 'Open decision' };
 export const KIND_HINT = {
   material: 'stone · wood · cloth',
   view: 'what the room looks onto',
   feature: 'a designed move',
   heritage: 'a family thread',
+  decision: 'tap to compare options',
 };
 
 /** The non-colour channel for the kind: a small line icon in the note's tick. */
@@ -36,6 +37,20 @@ export function RestRing() {
     <svg className="wk-pin-svg" viewBox="0 0 44 44" aria-hidden="true">
       <circle className="ring" cx="22" cy="22" r="10" />
       <circle className="dot" cx="22" cy="22" r="2" />
+    </svg>
+  );
+}
+
+/** Decision pin — the resting ring's distinct sibling, marking an open decision on
+ *  the render. Same breathing/hit-target mechanics as RestRing (driven by the
+ *  shared .wk-pinrest button + its ::after halo), but it takes the amber
+ *  --pin-decision colour (walk.css) and its glyph is a small fork — two paths
+ *  diverging — instead of a dot, so it reads as "tap to decide," not "tap to read." */
+export function DecisionRestRing() {
+  return (
+    <svg className="wk-pin-svg wk-pin-decision" viewBox="0 0 44 44" aria-hidden="true">
+      <circle className="ring" cx="22" cy="22" r="10" />
+      <path className="fork" d="M22 17v3M22 20l-3.2 3.6M22 20l3.2 3.6" />
     </svg>
   );
 }

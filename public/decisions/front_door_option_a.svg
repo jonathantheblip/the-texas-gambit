@@ -1,0 +1,197 @@
+<svg viewBox="0 0 720 980" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <linearGradient id="glassA" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#D6E0E4"/>
+      <stop offset="1" stop-color="#B7C6CD"/>
+    </linearGradient>
+    <radialGradient id="bullseyeA" cx="0.42" cy="0.4" r="0.75">
+      <stop offset="0" stop-color="#ECF2F2"/>
+      <stop offset="0.55" stop-color="#C6D4D8"/>
+      <stop offset="1" stop-color="#A5B9C0"/>
+    </radialGradient>
+    <linearGradient id="doorA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3E474F"/>
+      <stop offset="1" stop-color="#454F58"/>
+    </linearGradient>
+  </defs>
+
+  <!-- paper -->
+  <rect width="720" height="980" fill="#FAF7F0"/>
+
+  <!-- stone field behind composition -->
+  <rect x="140" y="206" width="440" height="666" fill="#E7E0CE"/>
+  <!-- coursing joints -->
+  <g stroke="#D9D0B9" stroke-width="1.1">
+    <line x1="140" y1="430" x2="580" y2="430"/>
+    <line x1="140" y1="520" x2="580" y2="520"/>
+    <line x1="140" y1="610" x2="580" y2="610"/>
+    <line x1="140" y1="700" x2="580" y2="700"/>
+  </g>
+
+  <!-- ===== ENTABLATURE (straight, full) ===== -->
+  <!-- cornice crown -->
+  <rect x="128" y="206" width="464" height="18" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+  <rect x="134" y="224" width="452" height="6" fill="#E2DAC5"/>
+  <!-- dentil course -->
+  <rect x="140" y="230" width="440" height="18" fill="#EBE4D3"/>
+  <g fill="#DED5BE">
+    <rect x="150" y="233" width="10" height="12"/><rect x="168" y="233" width="10" height="12"/>
+    <rect x="186" y="233" width="10" height="12"/><rect x="204" y="233" width="10" height="12"/>
+    <rect x="222" y="233" width="10" height="12"/><rect x="240" y="233" width="10" height="12"/>
+    <rect x="258" y="233" width="10" height="12"/><rect x="276" y="233" width="10" height="12"/>
+    <rect x="294" y="233" width="10" height="12"/><rect x="312" y="233" width="10" height="12"/>
+    <rect x="330" y="233" width="10" height="12"/><rect x="348" y="233" width="10" height="12"/>
+    <rect x="366" y="233" width="10" height="12"/><rect x="384" y="233" width="10" height="12"/>
+    <rect x="402" y="233" width="10" height="12"/><rect x="420" y="233" width="10" height="12"/>
+    <rect x="438" y="233" width="10" height="12"/><rect x="456" y="233" width="10" height="12"/>
+    <rect x="474" y="233" width="10" height="12"/><rect x="492" y="233" width="10" height="12"/>
+    <rect x="510" y="233" width="10" height="12"/><rect x="528" y="233" width="10" height="12"/>
+    <rect x="546" y="233" width="10" height="12"/><rect x="562" y="233" width="8" height="12"/>
+  </g>
+  <!-- frieze -->
+  <rect x="146" y="248" width="428" height="48" fill="#EAE3D1" stroke="#D9D0B9" stroke-width="1"/>
+  <!-- architrave: two fascia -->
+  <rect x="146" y="296" width="428" height="14" fill="#E4DCC8" stroke="#D6CCB2" stroke-width="1"/>
+  <rect x="150" y="310" width="420" height="16" fill="#EDE6D6" stroke="#D6CCB2" stroke-width="1"/>
+  <!-- shadow under cornice -->
+  <line x1="140" y1="248" x2="580" y2="248" stroke="#C9BFA4" stroke-width="1.4"/>
+
+  <!-- ===== PILASTERS ===== -->
+  <g>
+    <!-- capitals -->
+    <rect x="150" y="326" width="64" height="26" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="506" y="326" width="64" height="26" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+    <!-- shafts -->
+    <rect x="156" y="352" width="52" height="444" fill="#ECE6D6" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="512" y="352" width="52" height="444" fill="#ECE6D6" stroke="#D6CCB2" stroke-width="1.2"/>
+    <!-- recessed shaft panels -->
+    <rect x="166" y="366" width="32" height="416" fill="none" stroke="#D9D0B9" stroke-width="1.6"/>
+    <rect x="522" y="366" width="32" height="416" fill="none" stroke="#D9D0B9" stroke-width="1.6"/>
+    <!-- plinths -->
+    <rect x="148" y="796" width="68" height="56" fill="#E4DCC8" stroke="#D0C6AA" stroke-width="1.2"/>
+    <rect x="504" y="796" width="68" height="56" fill="#E4DCC8" stroke="#D0C6AA" stroke-width="1.2"/>
+  </g>
+
+  <!-- ===== STONE PANELS ABOVE SIDELIGHTS ===== -->
+  <rect x="208" y="326" width="44" height="66" fill="#E7E0CE" stroke="#D6CCB2" stroke-width="1"/>
+  <rect x="214" y="333" width="32" height="52" fill="none" stroke="#D9D0B9" stroke-width="1.4"/>
+  <rect x="468" y="326" width="44" height="66" fill="#E7E0CE" stroke="#D6CCB2" stroke-width="1"/>
+  <rect x="474" y="333" width="32" height="52" fill="none" stroke="#D9D0B9" stroke-width="1.4"/>
+
+  <!-- ===== TRANSOM — four square lights, crown-glass bullseyes ===== -->
+  <!-- ivory frame block -->
+  <rect x="250" y="326" width="220" height="66" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1.2"/>
+  <!-- glazing openings -->
+  <g>
+    <rect x="262" y="336" width="44" height="46" fill="url(#glassA)"/>
+    <rect x="313" y="336" width="44" height="46" fill="url(#glassA)"/>
+    <rect x="364" y="336" width="44" height="46" fill="url(#glassA)"/>
+    <rect x="415" y="336" width="44" height="46" fill="url(#glassA)"/>
+  </g>
+  <!-- bullseyes -->
+  <g>
+    <g transform="translate(284,359)">
+      <circle r="19" fill="url(#bullseyeA)"/>
+      <circle r="17.5" fill="none" stroke="#8FA5AE" stroke-width="1.1" opacity="0.35"/>
+      <circle r="13.5" fill="none" stroke="#8FA5AE" stroke-width="1.2" opacity="0.45"/>
+      <circle r="9.5" fill="none" stroke="#8FA5AE" stroke-width="1.3" opacity="0.55"/>
+      <circle r="5.5" fill="none" stroke="#879CA6" stroke-width="1.4" opacity="0.65"/>
+      <circle r="2.6" fill="#8AA0AA"/>
+      <ellipse cx="-5" cy="-6" rx="6" ry="3.4" fill="#FFFFFF" opacity="0.35" transform="rotate(-32)"/>
+    </g>
+    <g transform="translate(335,359)">
+      <circle r="19" fill="url(#bullseyeA)"/>
+      <circle r="17.5" fill="none" stroke="#8FA5AE" stroke-width="1.1" opacity="0.35"/>
+      <circle r="13.5" fill="none" stroke="#8FA5AE" stroke-width="1.2" opacity="0.45"/>
+      <circle r="9.5" fill="none" stroke="#8FA5AE" stroke-width="1.3" opacity="0.55"/>
+      <circle r="5.5" fill="none" stroke="#879CA6" stroke-width="1.4" opacity="0.65"/>
+      <circle r="2.6" fill="#8AA0AA"/>
+      <ellipse cx="-5" cy="-6" rx="6" ry="3.4" fill="#FFFFFF" opacity="0.35" transform="rotate(-32)"/>
+    </g>
+    <g transform="translate(386,359)">
+      <circle r="19" fill="url(#bullseyeA)"/>
+      <circle r="17.5" fill="none" stroke="#8FA5AE" stroke-width="1.1" opacity="0.35"/>
+      <circle r="13.5" fill="none" stroke="#8FA5AE" stroke-width="1.2" opacity="0.45"/>
+      <circle r="9.5" fill="none" stroke="#8FA5AE" stroke-width="1.3" opacity="0.55"/>
+      <circle r="5.5" fill="none" stroke="#879CA6" stroke-width="1.4" opacity="0.65"/>
+      <circle r="2.6" fill="#8AA0AA"/>
+      <ellipse cx="-5" cy="-6" rx="6" ry="3.4" fill="#FFFFFF" opacity="0.35" transform="rotate(-32)"/>
+    </g>
+    <g transform="translate(437,359)">
+      <circle r="19" fill="url(#bullseyeA)"/>
+      <circle r="17.5" fill="none" stroke="#8FA5AE" stroke-width="1.1" opacity="0.35"/>
+      <circle r="13.5" fill="none" stroke="#8FA5AE" stroke-width="1.2" opacity="0.45"/>
+      <circle r="9.5" fill="none" stroke="#8FA5AE" stroke-width="1.3" opacity="0.55"/>
+      <circle r="5.5" fill="none" stroke="#879CA6" stroke-width="1.4" opacity="0.65"/>
+      <circle r="2.6" fill="#8AA0AA"/>
+      <ellipse cx="-5" cy="-6" rx="6" ry="3.4" fill="#FFFFFF" opacity="0.35" transform="rotate(-32)"/>
+    </g>
+  </g>
+  <!-- muntins over glass edges -->
+  <g fill="#F3EFE3" stroke="#D9D2BF" stroke-width="0.8">
+    <rect x="306" y="336" width="7" height="46"/>
+    <rect x="357" y="336" width="7" height="46"/>
+    <rect x="408" y="336" width="7" height="46"/>
+  </g>
+  <!-- transom bar under lights -->
+  <rect x="250" y="382" width="220" height="12" fill="#EFEADD" stroke="#D9D2BF" stroke-width="1"/>
+
+  <!-- ===== SIDELIGHTS ===== -->
+  <g>
+    <rect x="208" y="392" width="44" height="460" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1.2"/>
+    <rect x="468" y="392" width="44" height="460" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1.2"/>
+    <!-- glazing -->
+    <rect x="214" y="400" width="32" height="288" fill="url(#glassA)"/>
+    <rect x="474" y="400" width="32" height="288" fill="url(#glassA)"/>
+    <!-- subtle warp highlight -->
+    <polygon points="214,400 232,400 218,688 214,688" fill="#FFFFFF" opacity="0.14"/>
+    <polygon points="474,400 492,400 478,688 474,688" fill="#FFFFFF" opacity="0.14"/>
+    <!-- glazing bars -->
+    <g fill="#F3EFE3" stroke="#D9D2BF" stroke-width="0.8">
+      <rect x="214" y="468" width="32" height="8"/><rect x="214" y="540" width="32" height="8"/><rect x="214" y="612" width="32" height="8"/>
+      <rect x="474" y="468" width="32" height="8"/><rect x="474" y="540" width="32" height="8"/><rect x="474" y="612" width="32" height="8"/>
+    </g>
+    <!-- base panels -->
+    <rect x="212" y="700" width="36" height="140" fill="#EFEADD" stroke="#D9D2BF" stroke-width="1"/>
+    <rect x="217" y="708" width="26" height="124" fill="none" stroke="#D9D2BF" stroke-width="1.4"/>
+    <rect x="472" y="700" width="36" height="140" fill="#EFEADD" stroke="#D9D2BF" stroke-width="1"/>
+    <rect x="477" y="708" width="26" height="124" fill="none" stroke="#D9D2BF" stroke-width="1.4"/>
+  </g>
+
+  <!-- door frame posts -->
+  <rect x="250" y="394" width="12" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1"/>
+  <rect x="458" y="394" width="12" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1"/>
+
+  <!-- ===== DOOR — six panel ===== -->
+  <rect x="262" y="392" width="196" height="460" fill="url(#doorA)"/>
+  <g>
+    <!-- panels: recess line then raised field -->
+    <rect x="280" y="410" width="71" height="60" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="417" width="57" height="46" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="410" width="71" height="60" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="417" width="57" height="46" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+
+    <rect x="280" y="486" width="71" height="114" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="493" width="57" height="100" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="486" width="71" height="114" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="493" width="57" height="100" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+
+    <rect x="280" y="618" width="71" height="188" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="625" width="57" height="174" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="618" width="71" height="188" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="625" width="57" height="174" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+  </g>
+  <!-- hand-forged iron hardware -->
+  <rect x="425" y="592" width="16" height="58" rx="6" fill="#28292B"/>
+  <circle cx="433" cy="612" r="8" fill="#232426"/>
+  <circle cx="430.5" cy="609.5" r="2.4" fill="#4A4C4F" opacity="0.8"/>
+  <circle cx="433" cy="636" r="2.6" fill="#0F1011"/>
+
+  <!-- ===== STEPS ===== -->
+  <rect x="200" y="852" width="320" height="18" fill="#E0D8C2" stroke="#CFC5A9" stroke-width="1"/>
+  <rect x="180" y="870" width="360" height="18" fill="#E7E0CE" stroke="#CFC5A9" stroke-width="1"/>
+
+  <!-- ===== CAPTION ===== -->
+  <text x="360" y="928" text-anchor="middle" font-size="18" letter-spacing="4" fill="#6E6555">OPTION A &#183; THE 72</text>
+  <text x="360" y="952" text-anchor="middle" font-size="13" letter-spacing="1" fill="#988D7C">Flat transom &#183; four crown-glass bullseyes &#183; straight entablature</text>
+</svg>

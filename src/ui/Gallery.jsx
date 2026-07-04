@@ -15,7 +15,7 @@ function loadOpen() {
  * Buildings are collapsible sections (collapsed by default) so the non-Main-Block
  * wings are one tap away instead of a long scroll.
  */
-export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk }) {
+export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk, onOpenDecisions }) {
   // Only rooms that have a render belong on the lookbook wall; the back-of-house
   // spaces (compute room, sauna, airlock…) live in the 3D model.
   const rendered = useMemo(() => rooms.filter((r) => r.renderImage), [rooms]);
@@ -42,6 +42,7 @@ export default function Gallery({ rooms, onOpenRoom, onOpenModel, onEnterWalk })
           <div className="g-cta-row">
             <button className="g-cta" onClick={onEnterWalk}>Walk from the front door →</button>
             <button className="g-cta ghost" onClick={onOpenModel}>Explore the 3D massing</button>
+            <button className="g-cta ghost" onClick={onOpenDecisions}>Open Decisions</button>
           </div>
         </div>
       </header>

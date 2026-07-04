@@ -133,3 +133,29 @@ alter publication supabase_realtime add table public.room_overrides;
 alter table public.room_overrides enable row level security;
 drop policy if exists "anon all" on public.room_overrides;
 create policy "anon all" on public.room_overrides for all to anon using (true) with check (true);
+
+-- ── decisions: the Open Decisions surface ──────────────────────
+-- Extends the original thin `decisions` table (id/pick/t/decided_by) with a
+-- status column (open | decided | flagged-for-conversation | deferred-to-site),
+-- and adds decision_notes — same shape as `notes`, but keyed to a decision (and
+-- optionally one of its options) instead of a room. Content (title/options/
+-- context) is NOT stored here — it's static in src/data/decisions.json; only the
+-- live choice/status/notes live in the database.
+-- (Added for the Open Decisions surface, 2026-07.)
+alter table public.decisions add column if not exists status text default 'open';
+
+create table if not exists public.decision_notes (
+  id           text primary key,
+  decision_id  text references public.decisions(id) on delete cascade,
+  option_id    text,
+  t            bigint not null,
+  text         text not null,
+  author       text
+);
+create index if not exists decision_notes_decision_idx on public.decision_notes(decision_id);
+
+alter publication supabase_realtime add table public.decision_notes;
+
+alter table public.decision_notes enable row level security;
+drop policy if exists "anon all" on public.decision_notes;
+create policy "anon all" on public.decision_notes for all to anon using (true) with check (true);

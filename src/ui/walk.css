@@ -21,6 +21,7 @@
   --kind-view:#2E8C84;     --kind-view-soft:#5FBFB4;
   --kind-feature:#5867AE;  --kind-feature-soft:#97A2DC;
   --kind-heritage:#9B566B; --kind-heritage-soft:#D08AA0;
+  --pin-decision:#C9922E; --pin-decision-soft:#E4B563;
   --pin-hit:44px; --pin-ring-d:20px; --pin-ring-stroke:1.8px;
   --pin-ring-shadow:drop-shadow(0 0 1px rgba(0,0,0,.78)) drop-shadow(0 1px 2px rgba(0,0,0,.55));
   --lc-z:12; --lc-dim:rgba(6,5,3,.80); --lc-dim-blur:3px; --lc-render-inset:.94;
@@ -301,6 +302,15 @@
 .wk-pin-svg .dot{ fill:var(--pin-rest); }
 .wk-pinrest:active .wk-pin-svg{ transform:scale(.9); }
 @media (hover:hover){ .wk-pinrest:hover .ring{ stroke-width:calc(var(--pin-ring-stroke) + .7px); } }
+
+/* decision pin — a visually distinct sibling of the resting ring (amber, forked
+   glyph) so "tap to decide" reads differently from "tap to read" at a glance. */
+.wk-pinrest[data-kind="decision"]::after{
+  background:radial-gradient(circle, rgba(201,146,46,.55), rgba(201,146,46,0) 70%);
+}
+.wk-pin-decision .ring{ stroke:var(--pin-decision); }
+.wk-pin-decision .fork{ fill:none; stroke:var(--pin-decision); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+@media (hover:hover){ .wk-pinrest[data-kind="decision"]:hover .ring{ stroke-width:calc(var(--pin-ring-stroke) + .7px); } }
 
 /* the look-closer (full-stage lift) */
 .wk-lc{ position:absolute; inset:0; z-index:var(--lc-z); animation:wkLcFade var(--lc-lift) var(--wk-arrive) both; }

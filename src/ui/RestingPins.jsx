@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { coverPin, onFrame } from './pinGeom.js';
 import { loadAspect } from './pinImage.js';
-import { RestRing } from './pinKinds.jsx';
-import { KIND_LABEL } from './pinKinds.jsx';
+import { RestRing, DecisionRestRing, KIND_LABEL } from './pinKinds.jsx';
 
 /**
  * RestingPins — Design's entry affordance: the pins ARE the invitation. Each pin is
@@ -59,9 +58,11 @@ export default function RestingPins({ render, pins, onOpen }) {
             data-kind={p.kind}
             style={{ left: `${left}px`, top: `${top}px` }}
             onClick={(e) => { e.stopPropagation(); onOpen(i); }}
-            aria-label={`${KIND_LABEL[p.kind] || 'Detail'}: ${p.label}. ${p.note} — look closer.`}
+            aria-label={p.kind === 'decision'
+              ? `Open decision: ${p.label}. ${p.note || ''}`.trim()
+              : `${KIND_LABEL[p.kind] || 'Detail'}: ${p.label}. ${p.note} — look closer.`}
           >
-            <RestRing />
+            {p.kind === 'decision' ? <DecisionRestRing /> : <RestRing />}
           </button>
         );
       })}

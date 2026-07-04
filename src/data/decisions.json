@@ -1,0 +1,76 @@
+{
+  "decisions": [
+    {
+      "id": "front_door_glass",
+      "element": "Front door — glass above the door",
+      "title": "Front door — glass above the door",
+      "context": "The plain radiating-muntin fanlight is out. Both remaining options use warped, hand-blown glass — the question is how it's held. A quieter Option B (tracery only, no bullseyes) exists on request.",
+      "contextAsset": null,
+      "pin": { "roomId": "entry_hall_front_s_ctr", "x": 50, "y": 26 },
+      "options": [
+        {
+          "id": "a",
+          "label": "A — The 72",
+          "asset": "front_door_option_a.svg",
+          "caption": "Flat four-light transom · crown-glass bullseyes · straight entablature",
+          "ancestorTrace": "Glebe bones reshaped · Captain Jack's glazing"
+        },
+        {
+          "id": "c",
+          "label": "C — The Lens",
+          "asset": "front_door_option_c.svg",
+          "caption": "Semi-circular fanlight · fine tracery · crown-glass bullion at the hub",
+          "ancestorTrace": "Glebe bones intact · Captain Jack's glazing at the hub"
+        }
+      ]
+    },
+    {
+      "id": "wharfwing_glass_bridge_seam",
+      "element": "Wharf Wing — the Glass Bridge seam",
+      "title": "Wharf Wing — the Glass Bridge seam",
+      "context": "The Wharf Wing is moving to a two-siding scheme: white-painted clapboard on the gables, weathered grey cedar shingle on the flanks. Where the wing meets the Glass Bridge, the shingle can return around the bridge-side gable — keeping the named limestone↔shingle seam — or the gable can go clapboard, so the seam becomes limestone↔clapboard.",
+      "contextAsset": "buildingRender:Wharf Wing",
+      "pin": { "roomId": "glass_bridge", "x": 58, "y": 32 },
+      "options": [
+        {
+          "id": "shingle",
+          "label": "Shingle returns around the bridge-side gable",
+          "asset": "wharf_seam_option_a_shingle.svg",
+          "caption": "Grey shingle turns the corner and meets the glass walkway.",
+          "ancestorTrace": null
+        },
+        {
+          "id": "clapboard",
+          "label": "Gable goes clapboard",
+          "asset": "wharf_seam_option_b_clapboard.svg",
+          "caption": "White siding meets the glass walkway; grey stays on the long side.",
+          "ancestorTrace": null
+        }
+      ]
+    },
+    {
+      "id": "wharfwing_shutter_color",
+      "element": "Wharf Wing — shutter color",
+      "title": "Wharf Wing — shutter color",
+      "context": "The compound-wide lock is dark green shutters. But the Wharf Wing trim rule is blue-family only — no greens — and the Captain Jack's reference building wears blue shutters.",
+      "contextAsset": "buildingRender:Wharf Wing",
+      "pin": null,
+      "options": [
+        {
+          "id": "blue",
+          "label": "Blue-family",
+          "asset": "swatch_blue.svg",
+          "caption": "Matches the Wharf Wing trim rule and the Captain Jack's reference.",
+          "ancestorTrace": "Captain Jack's reference"
+        },
+        {
+          "id": "green",
+          "label": "Dark green",
+          "asset": "swatch_green.svg",
+          "caption": "Matches the compound-wide shutter lock.",
+          "ancestorTrace": "Compound lock"
+        }
+      ]
+    }
+  ]
+}

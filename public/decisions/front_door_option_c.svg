@@ -1,0 +1,175 @@
+<svg viewBox="0 0 720 980" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <linearGradient id="glassC" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#D6E0E4"/>
+      <stop offset="1" stop-color="#B7C6CD"/>
+    </linearGradient>
+    <radialGradient id="fanGlass" cx="0.5" cy="1" r="1">
+      <stop offset="0" stop-color="#E2EAEC"/>
+      <stop offset="0.6" stop-color="#C8D6DA"/>
+      <stop offset="1" stop-color="#AEC1C8"/>
+    </radialGradient>
+    <radialGradient id="bullionC" cx="0.45" cy="0.42" r="0.8">
+      <stop offset="0" stop-color="#F0F5F4"/>
+      <stop offset="0.55" stop-color="#C9D7DA"/>
+      <stop offset="1" stop-color="#A3B8BF"/>
+    </radialGradient>
+    <linearGradient id="doorC" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3E474F"/>
+      <stop offset="1" stop-color="#454F58"/>
+    </linearGradient>
+  </defs>
+
+  <!-- paper -->
+  <rect width="720" height="980" fill="#FAF7F0"/>
+
+  <!-- stone field -->
+  <rect x="140" y="206" width="440" height="666" fill="#E7E0CE"/>
+  <g stroke="#D9D0B9" stroke-width="1.1">
+    <line x1="140" y1="430" x2="580" y2="430"/>
+    <line x1="140" y1="520" x2="580" y2="520"/>
+    <line x1="140" y1="610" x2="580" y2="610"/>
+    <line x1="140" y1="700" x2="580" y2="700"/>
+  </g>
+
+  <!-- ===== CORNICE ABOVE ARCH ===== -->
+  <rect x="128" y="166" width="464" height="18" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+  <rect x="134" y="184" width="452" height="6" fill="#E2DAC5"/>
+  <rect x="140" y="190" width="440" height="16" fill="#EBE4D3"/>
+  <line x1="140" y1="206" x2="580" y2="206" stroke="#C9BFA4" stroke-width="1.4"/>
+
+  <!-- ===== FANLIGHT GLASS (behind tracery) ===== -->
+  <path d="M 216 380 A 144 144 0 0 1 504 380 Z" fill="url(#fanGlass)"/>
+  <!-- faint radial warp streaks -->
+  <g stroke="#FFFFFF" stroke-width="2" opacity="0.14">
+    <line x1="360" y1="380" x2="452" y2="270"/>
+    <line x1="360" y1="380" x2="310" y2="248"/>
+    <line x1="360" y1="380" x2="242" y2="330"/>
+  </g>
+
+  <!-- ===== TRACERY ===== -->
+  <!-- radiating muntins (8 segments) -->
+  <g stroke="#F3EFE3" stroke-width="4.6" stroke-linecap="round">
+    <line x1="391.4" y1="367.0" x2="493.0" y2="324.9"/>
+    <line x1="384.0" y1="356.0" x2="461.8" y2="278.2"/>
+    <line x1="373.0" y1="348.6" x2="415.1" y2="247.0"/>
+    <line x1="360.0" y1="346.0" x2="360.0" y2="236.0"/>
+    <line x1="347.0" y1="348.6" x2="304.9" y2="247.0"/>
+    <line x1="336.0" y1="356.0" x2="258.2" y2="278.2"/>
+    <line x1="328.6" y1="367.0" x2="227.0" y2="324.9"/>
+  </g>
+  <!-- concentric ring muntin -->
+  <path d="M 248 380 A 112 112 0 0 1 472 380" fill="none" stroke="#F3EFE3" stroke-width="3"/>
+  <!-- teardrop loops between spokes -->
+  <g fill="none" stroke="#F3EFE3" stroke-width="2.6">
+    <ellipse cx="435.5" cy="365.0" rx="29" ry="9" transform="rotate(-11.25 435.5 365.0)"/>
+    <ellipse cx="424.0" cy="337.2" rx="29" ry="9" transform="rotate(-33.75 424.0 337.2)"/>
+    <ellipse cx="402.8" cy="315.9" rx="29" ry="9" transform="rotate(-56.25 402.8 315.9)"/>
+    <ellipse cx="375.0" cy="304.5" rx="29" ry="9" transform="rotate(-78.75 375.0 304.5)"/>
+    <ellipse cx="345.0" cy="304.5" rx="29" ry="9" transform="rotate(-101.25 345.0 304.5)"/>
+    <ellipse cx="317.2" cy="315.9" rx="29" ry="9" transform="rotate(-123.75 317.2 315.9)"/>
+    <ellipse cx="296.0" cy="337.2" rx="29" ry="9" transform="rotate(-146.25 296.0 337.2)"/>
+    <ellipse cx="284.5" cy="365.0" rx="29" ry="9" transform="rotate(-168.75 284.5 365.0)"/>
+  </g>
+
+  <!-- ===== HUB BULLION — the lens ===== -->
+  <g>
+    <circle cx="360" cy="380" r="34" fill="url(#bullionC)" stroke="#F3EFE3" stroke-width="4"/>
+    <circle cx="360" cy="380" r="27" fill="none" stroke="#8FA5AE" stroke-width="1.2" opacity="0.4"/>
+    <circle cx="360" cy="380" r="20" fill="none" stroke="#8FA5AE" stroke-width="1.3" opacity="0.5"/>
+    <circle cx="360" cy="380" r="13" fill="none" stroke="#879CA6" stroke-width="1.4" opacity="0.6"/>
+    <circle cx="360" cy="380" r="7" fill="none" stroke="#7F949E" stroke-width="1.5" opacity="0.7"/>
+    <circle cx="360" cy="380" r="3.2" fill="#849AA4"/>
+    <ellipse cx="351" cy="369" rx="8" ry="4.4" fill="#FFFFFF" opacity="0.4" transform="rotate(-30 351 369)"/>
+  </g>
+
+  <!-- inner glazing frame arc -->
+  <path d="M 216 380 A 144 144 0 0 1 504 380" fill="none" stroke="#F3EFE3" stroke-width="5"/>
+
+  <!-- ===== ARCHIVOLT ===== -->
+  <path d="M 192 380 A 168 168 0 0 1 528 380 L 504 380 A 144 144 0 0 0 216 380 Z"
+        fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.4"/>
+  <!-- radial voussoir joints -->
+  <g stroke="#D9D0B9" stroke-width="1.2">
+    <line x1="484.7" y1="308.0" x2="505.5" y2="296.0"/>
+    <line x1="461.8" y1="278.2" x2="478.8" y2="261.2"/>
+    <line x1="432.0" y1="255.3" x2="444.0" y2="234.5"/>
+    <line x1="235.3" y1="308.0" x2="214.5" y2="296.0"/>
+    <line x1="258.2" y1="278.2" x2="241.2" y2="261.2"/>
+    <line x1="288.0" y1="255.3" x2="276.0" y2="234.5"/>
+  </g>
+  <!-- keystone -->
+  <polygon points="336,248 384,248 392,192 328,192" fill="#F1EBDC" stroke="#D0C6AA" stroke-width="1.4"/>
+
+  <!-- ===== SPANDREL EDGE LINES ===== -->
+  <line x1="156" y1="380" x2="192" y2="380" stroke="#D9D0B9" stroke-width="1.2"/>
+  <line x1="528" y1="380" x2="564" y2="380" stroke="#D9D0B9" stroke-width="1.2"/>
+
+  <!-- ===== PILASTERS (capitals at impost level) ===== -->
+  <g>
+    <rect x="150" y="354" width="64" height="26" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="506" y="354" width="64" height="26" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="156" y="380" width="52" height="416" fill="#ECE6D6" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="512" y="380" width="52" height="416" fill="#ECE6D6" stroke="#D6CCB2" stroke-width="1.2"/>
+    <rect x="166" y="394" width="32" height="388" fill="none" stroke="#D9D0B9" stroke-width="1.6"/>
+    <rect x="522" y="394" width="32" height="388" fill="none" stroke="#D9D0B9" stroke-width="1.6"/>
+    <rect x="148" y="796" width="68" height="56" fill="#E4DCC8" stroke="#D0C6AA" stroke-width="1.2"/>
+    <rect x="504" y="796" width="68" height="56" fill="#E4DCC8" stroke="#D0C6AA" stroke-width="1.2"/>
+  </g>
+
+  <!-- ===== IMPOST BAND ===== -->
+  <rect x="204" y="380" width="312" height="14" fill="#EFE9DA" stroke="#D6CCB2" stroke-width="1.2"/>
+
+  <!-- ===== SIDELIGHTS ===== -->
+  <g>
+    <rect x="208" y="394" width="44" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1.2"/>
+    <rect x="468" y="394" width="44" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1.2"/>
+    <rect x="214" y="402" width="32" height="286" fill="url(#glassC)"/>
+    <rect x="474" y="402" width="32" height="286" fill="url(#glassC)"/>
+    <polygon points="214,402 232,402 218,688 214,688" fill="#FFFFFF" opacity="0.14"/>
+    <polygon points="474,402 492,402 478,688 474,688" fill="#FFFFFF" opacity="0.14"/>
+    <g fill="#F3EFE3" stroke="#D9D2BF" stroke-width="0.8">
+      <rect x="214" y="470" width="32" height="8"/><rect x="214" y="542" width="32" height="8"/><rect x="214" y="614" width="32" height="8"/>
+      <rect x="474" y="470" width="32" height="8"/><rect x="474" y="542" width="32" height="8"/><rect x="474" y="614" width="32" height="8"/>
+    </g>
+    <rect x="212" y="700" width="36" height="140" fill="#EFEADD" stroke="#D9D2BF" stroke-width="1"/>
+    <rect x="217" y="708" width="26" height="124" fill="none" stroke="#D9D2BF" stroke-width="1.4"/>
+    <rect x="472" y="700" width="36" height="140" fill="#EFEADD" stroke="#D9D2BF" stroke-width="1"/>
+    <rect x="477" y="708" width="26" height="124" fill="none" stroke="#D9D2BF" stroke-width="1.4"/>
+  </g>
+
+  <!-- door frame posts -->
+  <rect x="250" y="394" width="12" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1"/>
+  <rect x="458" y="394" width="12" height="458" fill="#F3EFE3" stroke="#D9D2BF" stroke-width="1"/>
+
+  <!-- ===== DOOR — six panel (identical to Option A) ===== -->
+  <rect x="262" y="394" width="196" height="458" fill="url(#doorC)"/>
+  <g>
+    <rect x="280" y="412" width="71" height="60" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="419" width="57" height="46" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="412" width="71" height="60" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="419" width="57" height="46" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+
+    <rect x="280" y="488" width="71" height="114" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="495" width="57" height="100" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="488" width="71" height="114" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="495" width="57" height="100" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+
+    <rect x="280" y="620" width="71" height="186" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="287" y="627" width="57" height="172" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+    <rect x="369" y="620" width="71" height="186" fill="none" stroke="#2E353C" stroke-width="2"/>
+    <rect x="376" y="627" width="57" height="172" fill="#48525B" stroke="#525D66" stroke-width="1"/>
+  </g>
+  <rect x="425" y="594" width="16" height="58" rx="6" fill="#28292B"/>
+  <circle cx="433" cy="614" r="8" fill="#232426"/>
+  <circle cx="430.5" cy="611.5" r="2.4" fill="#4A4C4F" opacity="0.8"/>
+  <circle cx="433" cy="638" r="2.6" fill="#0F1011"/>
+
+  <!-- ===== STEPS ===== -->
+  <rect x="200" y="852" width="320" height="18" fill="#E0D8C2" stroke="#CFC5A9" stroke-width="1"/>
+  <rect x="180" y="870" width="360" height="18" fill="#E7E0CE" stroke="#CFC5A9" stroke-width="1"/>
+
+  <!-- ===== CAPTION ===== -->
+  <text x="360" y="928" text-anchor="middle" font-size="18" letter-spacing="4" fill="#6E6555">OPTION C &#183; THE LENS</text>
+  <text x="360" y="952" text-anchor="middle" font-size="13" letter-spacing="1" fill="#988D7C">Fanlight with fine tracery &#183; crown-glass bullion at the hub</text>
+</svg>

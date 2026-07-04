@@ -1,10 +1,12 @@
 import { lazy, Suspense, useMemo } from 'react';
 import { ALL_ROOMS, applyOverrides } from './data/rooms.js';
 import { useGeometry } from './store/useGeometry.js';
+import { useDecisions } from './store/useDecisions.js';
 import { nav } from './nav/navStore.js';
 import { useNav } from './nav/useNav.js';
 import Gallery from './ui/Gallery.jsx';
 import Walk from './ui/Walk.jsx';
+import OpenDecisions from './ui/OpenDecisions.jsx';
 import MassingCurtain from './ui/MassingCurtain.jsx';
 
 // The 3D view pulls in three.js / r3f / drei (~1 MB). Load it only when the
@@ -20,6 +22,21 @@ export default function App() {
   const view = useNav();
   const { overrides } = useGeometry();
   const rooms = useMemo(() => applyOverrides(ALL_ROOMS, overrides), [overrides]);
+  const decisions = useDecisions();
+
+  if (view.mode === 'decisions') {
+    return (
+      <OpenDecisions
+        decisions={decisions.decisions}
+        initialDecisionId={view.decisionId}
+        onBack={() => (view.roomId ? nav.goRoom(view.roomId) : nav.goGallery())}
+        chooseOption={decisions.chooseOption}
+        flagForConversation={decisions.flagForConversation}
+        undoDecision={decisions.undoDecision}
+        addNote={decisions.addNote}
+      />
+    );
+  }
 
   if (view.mode === 'model') {
     const focusRoom = rooms.find((r) => r.id === (view.focusId || view.roomId));
@@ -52,6 +69,7 @@ export default function App() {
       onOpenRoom={(id) => nav.goRoom(id)}
       onOpenModel={() => nav.openModel()}
       onEnterWalk={() => nav.enterWalk()}
+      onOpenDecisions={() => nav.goDecisions()}
     />
   );
 }
